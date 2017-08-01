@@ -33,10 +33,11 @@
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="mapperLocations" value="classpath:main/java/dao/i/carMessageDao.xml"></property>
+        <property name="mapperLocations" value="classpath:dao/i/*Dao.xml"></property>
         <property name="configLocation" value="classpath:mybatis-config.xml" />
+        <property name="typeAliasesPackage" value="entity"/>
 
-    <!--<property name="typeAliasesPackage" valmain.java.entitytity"/>-->
+    <!--<property name="typeAliasesPackage" value="entity"/>-->
         <!--<property name="plugins">-->
             <!--<array>-->
                 <!--<bean class="com.github.pagehelper.PageHelper">-->
@@ -60,7 +61,7 @@
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="main.java.dao.i"/>
+        <property name="basePackage" value="dao.i"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
 
