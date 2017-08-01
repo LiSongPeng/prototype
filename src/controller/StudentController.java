@@ -20,7 +20,7 @@ public class StudentController {
         this.studentDao = studentDao;
     }
 
-    @GetMapping(name = "/queryStudent.do")
+    @GetMapping(path = "/queryStudent.do")
     public String queryStudent(@RequestParam("id") int id, ModelMap map) {
         Student stu = studentDao.queryStudent(id);
         map.put("stu", stu);
