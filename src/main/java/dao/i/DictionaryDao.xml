@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="main.java.dao.i.DictionaryDao">
+    <insert id="saveDictionary">
+        insert into dic_form(dic_name,dic_type) values (#{dic_name},#{dic_type})
+    </insert>
+    <delete id="deleteDictionaryById">
+        delete from dic_form where id=#{id}
+    </delete>
+    <select id="selectDictionaryByName" parameterType="String" resultMap="dictionaryMap">
+        select * from dic_form where dic_name like #{dic_name}
+    </select>
+    <resultMap type="main.java.entity.Dictionary" id="dictionaryMap">
+        <id column="id" property="id"/>
+        <result column="dic_name" property="dic_name"/>
+        <result column="dic_type" property="dic_type"/>
+    </resultMap>
+</mapper>
