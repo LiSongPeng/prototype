@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prototype.dao.FenceDao">
+    <select id="queryById" parameterType="fence" resultType="com.prototype.entity.Fence">
+        SELECT * FROM master_fence WHERE id=#{id}
+    </select>
+
+    <insert id="addFence" parameterType="fence">
+        INSERT INTO
+    </insert>
+</mapper>

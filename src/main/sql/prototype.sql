@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-07-30 17:59:22
+Date: 2017-08-02 15:10:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,8 +28,7 @@ CREATE TABLE `accidentrecord` (
   `claimStatus` varchar(200) DEFAULT NULL,
   `amount` float(12,2) DEFAULT NULL,
   PRIMARY KEY (`accidentId`),
-  UNIQUE KEY `licenseId` (`licenseId`) USING BTREE,
-  CONSTRAINT `accidentrecord_ibfk_1` FOREIGN KEY (`licenseId`) REFERENCES `carmessage` (`licenseId`)
+  UNIQUE KEY `licenseId` (`licenseId`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -41,17 +40,17 @@ CREATE TABLE `accidentrecord` (
 -- ----------------------------
 DROP TABLE IF EXISTS `alarm`;
 CREATE TABLE `alarm` (
-  `aid` varchar(36) NOT NULL,
-  `car_id` varchar(36) NOT NULL,
+  `id` varchar(36) NOT NULL,
+  `carId` varchar(36) NOT NULL,
   `content` varchar(255) DEFAULT NULL,
   `crossTime` datetime NOT NULL,
   `returnTime` datetime NOT NULL,
-  `fence_id` varchar(36) NOT NULL,
-  PRIMARY KEY (`aid`),
-  KEY `fence_id` (`fence_id`),
-  KEY `car_id` (`car_id`),
-  CONSTRAINT `alarm_ibfk_1` FOREIGN KEY (`fence_id`) REFERENCES `master_fence` (`fid`),
-  CONSTRAINT `alarm_ibfk_2` FOREIGN KEY (`car_id`) REFERENCES `carmessage` (`carId`)
+  `fid` varchar(36) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fence_id` (`fid`),
+  KEY `car_id` (`carId`),
+  CONSTRAINT `alarm_ibfk_1` FOREIGN KEY (`fid`) REFERENCES `master_fence` (`id`),
+  CONSTRAINT `alarm_ibfk_2` FOREIGN KEY (`carId`) REFERENCES `carmessage` (`carId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -68,8 +67,7 @@ CREATE TABLE `annualrecord` (
   `annualTime` datetime DEFAULT NULL,
   `annualText` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`annualId`),
-  UNIQUE KEY `licenseId` (`licenseId`) USING BTREE,
-  CONSTRAINT `annualrecord_ibfk_1` FOREIGN KEY (`licenseId`) REFERENCES `carmessage` (`licenseId`)
+  UNIQUE KEY `licenseId` (`licenseId`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -98,7 +96,7 @@ CREATE TABLE `application_form` (
   `stauts` varchar(10) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `applicantId` (`applicantId`),
-  CONSTRAINT `application_form_ibfk_1` FOREIGN KEY (`applicantId`) REFERENCES `person` (`u_id`)
+  CONSTRAINT `application_form_ibfk_1` FOREIGN KEY (`applicantId`) REFERENCES `person` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -116,7 +114,7 @@ CREATE TABLE `assets` (
   `icon` varchar(50) DEFAULT NULL,
   `type` varchar(20) NOT NULL,
   `create_time` datetime NOT NULL,
-  `createPersonId` varchar(36) NOT NULL,
+  `p_id` varchar(36) DEFAULT NULL,
   `parentId` varchar(36) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -143,12 +141,13 @@ CREATE TABLE `carmessage` (
   PRIMARY KEY (`carId`),
   UNIQUE KEY `licenseId` (`licenseId`),
   KEY `carmessage_ibfk_1` (`companyUnits`),
-  CONSTRAINT `carmessage_ibfk_1` FOREIGN KEY (`companyUnits`) REFERENCES `company` (`c_id`)
+  CONSTRAINT `carmessage_ibfk_1` FOREIGN KEY (`companyUnits`) REFERENCES `company` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of carmessage
 -- ----------------------------
+INSERT INTO `carmessage` VALUES ('1', '1', '1', '1', '1', '1', '1.00', '1', '1', '1');
 
 -- ----------------------------
 -- Table structure for `cartype`
@@ -176,40 +175,20 @@ CREATE TABLE `cartype` (
 -- ----------------------------
 DROP TABLE IF EXISTS `company`;
 CREATE TABLE `company` (
-  `c_id` varchar(36) NOT NULL,
-  `principal_id` varchar(36) DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `p_id` varchar(36) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `create_time` datetime NOT NULL,
   `parentId` varchar(36) DEFAULT NULL,
-  PRIMARY KEY (`c_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of company
 -- ----------------------------
-
--- ----------------------------
--- Table structure for `condition`
--- ----------------------------
-DROP TABLE IF EXISTS `condition`;
-CREATE TABLE `condition` (
-  `cid` varchar(36) NOT NULL,
-  `car_id` varchar(36) NOT NULL,
-  `latitude` double(10,6) NOT NULL,
-  `longitude` double(10,6) NOT NULL,
-  `alarm` varchar(20) DEFAULT NULL,
-  `speed` float(7,2) DEFAULT NULL,
-  `direction` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`cid`),
-  KEY `car_id` (`car_id`),
-  CONSTRAINT `condition_ibfk_1` FOREIGN KEY (`car_id`) REFERENCES `carmessage` (`carId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of condition
--- ----------------------------
+INSERT INTO `company` VALUES ('1', '1', '1', '1', '11', '2017-08-06 11:05:06', '1');
 
 -- ----------------------------
 -- Table structure for `dic_class`
@@ -261,12 +240,33 @@ CREATE TABLE `dispatching_form` (
   PRIMARY KEY (`id`),
   KEY `driver_id` (`driverId`),
   KEY `car_type` (`carType`),
-  CONSTRAINT `dispatching_form_ibfk_1` FOREIGN KEY (`driverId`) REFERENCES `person` (`u_id`),
+  CONSTRAINT `dispatching_form_ibfk_1` FOREIGN KEY (`driverId`) REFERENCES `person` (`id`),
   CONSTRAINT `dispatching_form_ibfk_2` FOREIGN KEY (`carType`) REFERENCES `cartype` (`typeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dispatching_form
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `dynamic`
+-- ----------------------------
+DROP TABLE IF EXISTS `dynamic`;
+CREATE TABLE `dynamic` (
+  `id` varchar(36) NOT NULL,
+  `carId` varchar(36) NOT NULL,
+  `longitude` double(10,6) NOT NULL,
+  `latitude` double(10,6) NOT NULL,
+  `alarm` varchar(20) DEFAULT NULL,
+  `speed` float(7,2) DEFAULT NULL,
+  `direction` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `car_id` (`carId`),
+  CONSTRAINT `dynamic_ibfk_1` FOREIGN KEY (`carId`) REFERENCES `carmessage` (`carId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of dynamic
 -- ----------------------------
 
 -- ----------------------------
@@ -281,8 +281,7 @@ CREATE TABLE `insurancerecords` (
   `insuranceAmount` float(12,2) DEFAULT NULL,
   `insuranceText` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`insuranceId`),
-  UNIQUE KEY `licenseId` (`licenseId`) USING BTREE,
-  CONSTRAINT `insurancerecords_ibfk_1` FOREIGN KEY (`licenseId`) REFERENCES `carmessage` (`licenseId`)
+  UNIQUE KEY `licenseId` (`licenseId`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -294,19 +293,20 @@ CREATE TABLE `insurancerecords` (
 -- ----------------------------
 DROP TABLE IF EXISTS `location`;
 CREATE TABLE `location` (
-  `lid` varchar(36) NOT NULL,
-  `car_id` varchar(36) NOT NULL,
-  `latitude` double(10,6) NOT NULL,
+  `id` varchar(36) NOT NULL,
+  `carId` varchar(36) NOT NULL,
   `longitude` double(10,6) NOT NULL,
-  `uploadTime` datetime NOT NULL,
-  PRIMARY KEY (`lid`),
-  KEY `car_id` (`car_id`),
-  CONSTRAINT `location_ibfk_1` FOREIGN KEY (`car_id`) REFERENCES `carmessage` (`carId`)
+  `latitude` double(10,6) NOT NULL,
+  `uploadTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `car_id` (`carId`),
+  CONSTRAINT `location_ibfk_1` FOREIGN KEY (`carId`) REFERENCES `carmessage` (`carId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of location
 -- ----------------------------
+INSERT INTO `location` VALUES ('1', '1', '12.220000', '22.220000', '2017-07-18 14:58:55');
 
 -- ----------------------------
 -- Table structure for `maintenancerecord`
@@ -320,8 +320,7 @@ CREATE TABLE `maintenancerecord` (
   `maintenanceAmount` float(12,2) DEFAULT NULL,
   `beforeKilometers` float(12,2) DEFAULT NULL,
   PRIMARY KEY (`maintenanceId`),
-  UNIQUE KEY `licenseId` (`licenseId`) USING BTREE,
-  CONSTRAINT `maintenancerecord_ibfk_1` FOREIGN KEY (`licenseId`) REFERENCES `carmessage` (`licenseId`)
+  UNIQUE KEY `licenseId` (`licenseId`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -333,26 +332,27 @@ CREATE TABLE `maintenancerecord` (
 -- ----------------------------
 DROP TABLE IF EXISTS `master_fence`;
 CREATE TABLE `master_fence` (
-  `fid` varchar(36) NOT NULL,
+  `id` varchar(36) NOT NULL,
   `fenceName` varchar(20) NOT NULL,
-  `r_longitude` double(10,6) NOT NULL,
-  `r_latitude` double(10,6) NOT NULL,
+  `longitude` double(10,6) NOT NULL,
+  `latitude` double(10,6) NOT NULL,
   `radius` double(10,6) NOT NULL,
-  `area` varchar(30) DEFAULT NULL,
-  `type` int(2) DEFAULT NULL,
-  PRIMARY KEY (`fid`)
+  `area` varchar(30) NOT NULL,
+  `type` int(2) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of master_fence
 -- ----------------------------
+INSERT INTO `master_fence` VALUES ('1', 'ww', '12.200000', '22.200000', '22.000000', 'ww', '1');
 
 -- ----------------------------
 -- Table structure for `person`
 -- ----------------------------
 DROP TABLE IF EXISTS `person`;
 CREATE TABLE `person` (
-  `u_id` varchar(36) NOT NULL COMMENT '用户id',
+  `id` varchar(36) NOT NULL,
   `name` varchar(32) DEFAULT NULL,
   `sex` varchar(5) DEFAULT NULL,
   `age` int(3) DEFAULT NULL,
@@ -360,16 +360,19 @@ CREATE TABLE `person` (
   `phone` varchar(20) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `birthday` datetime DEFAULT NULL,
-  `create_time` datetime NOT NULL,
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `loginName` varchar(12) NOT NULL,
-  `passWord` varchar(20) NOT NULL,
-  PRIMARY KEY (`u_id`),
+  `password` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `loginName` (`loginName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户账户表';
 
 -- ----------------------------
 -- Records of person
 -- ----------------------------
+INSERT INTO `person` VALUES ('1', 'root', '男', '11', '1111', '111', '111', '2017-07-18 10:13:57', '2017-07-07 10:13:59', '111', '111');
+INSERT INTO `person` VALUES ('c41c5293-60fa-4fc3-aa9a-2fe304768cff', '张三', '男', null, '20170905', null, '天津西青区公安局交警大队', null, '2017-07-04 10:28:03', 'root', '123456');
+INSERT INTO `person` VALUES ('e26801b5-bc41-4b87-adea-bf356ca64041', '张三', '男', '28', '20170905', '13984214136', '天津西青区公安局交警大队', '1984-08-04 00:00:00', '2017-07-18 15:04:42', 'root1', '123456');
 
 -- ----------------------------
 -- Table structure for `person_company`
@@ -382,8 +385,8 @@ CREATE TABLE `person_company` (
   PRIMARY KEY (`id`,`pid`,`cid`),
   KEY `pid` (`pid`),
   KEY `cid` (`cid`),
-  CONSTRAINT `person_company_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `person` (`u_id`),
-  CONSTRAINT `person_company_ibfk_2` FOREIGN KEY (`cid`) REFERENCES `company` (`c_id`)
+  CONSTRAINT `person_company_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `person` (`id`),
+  CONSTRAINT `person_company_ibfk_2` FOREIGN KEY (`cid`) REFERENCES `company` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -401,8 +404,8 @@ CREATE TABLE `person_role` (
   PRIMARY KEY (`id`,`pid`,`rid`),
   KEY `pid` (`pid`),
   KEY `rid` (`rid`),
-  CONSTRAINT `person_role_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `person` (`u_id`),
-  CONSTRAINT `person_role_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `role` (`r_id`)
+  CONSTRAINT `person_role_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `person` (`id`),
+  CONSTRAINT `person_role_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -414,13 +417,13 @@ CREATE TABLE `person_role` (
 -- ----------------------------
 DROP TABLE IF EXISTS `polygon_fence`;
 CREATE TABLE `polygon_fence` (
-  `pid` varchar(36) NOT NULL,
-  `p_longitude` double(10,6) NOT NULL,
-  `p_latitude` double(10,6) NOT NULL,
-  `f_id` varchar(36) NOT NULL,
-  PRIMARY KEY (`pid`),
-  KEY `f_id` (`f_id`),
-  CONSTRAINT `polygon_fence_ibfk_1` FOREIGN KEY (`f_id`) REFERENCES `master_fence` (`fid`)
+  `id` varchar(36) NOT NULL,
+  `longitude` double(10,6) NOT NULL,
+  `latitude` double(10,6) NOT NULL,
+  `fid` varchar(36) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `f_id` (`fid`),
+  CONSTRAINT `polygon_fence_ibfk_1` FOREIGN KEY (`fid`) REFERENCES `master_fence` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -440,7 +443,7 @@ CREATE TABLE `return_form` (
   `returnTime` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `testPeopleName` (`testPeopleName`),
-  CONSTRAINT `return_form_ibfk_1` FOREIGN KEY (`testPeopleName`) REFERENCES `person` (`u_id`)
+  CONSTRAINT `return_form_ibfk_1` FOREIGN KEY (`testPeopleName`) REFERENCES `person` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -452,11 +455,11 @@ CREATE TABLE `return_form` (
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
-  `r_id` varchar(36) NOT NULL,
+  `id` varchar(36) NOT NULL,
   `roleName` varchar(12) NOT NULL,
   `liable_id` varchar(36) NOT NULL,
   `update_time` datetime NOT NULL,
-  PRIMARY KEY (`r_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -474,7 +477,7 @@ CREATE TABLE `role_assets` (
   PRIMARY KEY (`id`,`rid`,`aid`),
   KEY `rid` (`rid`),
   KEY `aid` (`aid`),
-  CONSTRAINT `role_assets_ibfk_1` FOREIGN KEY (`rid`) REFERENCES `role` (`r_id`),
+  CONSTRAINT `role_assets_ibfk_1` FOREIGN KEY (`rid`) REFERENCES `role` (`id`),
   CONSTRAINT `role_assets_ibfk_2` FOREIGN KEY (`aid`) REFERENCES `assets` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -488,14 +491,16 @@ CREATE TABLE `role_assets` (
 DROP TABLE IF EXISTS `syssetting_form`;
 CREATE TABLE `syssetting_form` (
   `id` varchar(36) NOT NULL,
-  `settingName` varchar(20) NOT NULL,
-  `setKey` varchar(20) NOT NULL,
-  `value` varchar(20) NOT NULL,
-  `modifyPerson` varchar(20) NOT NULL,
+  `sysName` varchar(20) DEFAULT NULL,
+  `sysKey` varchar(20) DEFAULT NULL,
+  `sysKeyValue` varchar(20) DEFAULT NULL,
+  `modifyPersonId` varchar(20) DEFAULT NULL,
   `modifyTime` datetime NOT NULL,
   `status` varchar(5) DEFAULT NULL,
   `remarks` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `modifyPersonId` (`modifyPersonId`),
+  CONSTRAINT `syssetting_form_ibfk_1` FOREIGN KEY (`modifyPersonId`) REFERENCES `person` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -522,14 +527,14 @@ CREATE TABLE `terminal` (
 -- ----------------------------
 DROP TABLE IF EXISTS `track`;
 CREATE TABLE `track` (
-  `tid` varchar(36) NOT NULL,
-  `car_id` varchar(36) NOT NULL,
-  `latitude` double(10,6) NOT NULL,
+  `id` varchar(36) NOT NULL,
+  `carId` varchar(36) NOT NULL,
   `longitude` double(10,6) NOT NULL,
-  `uploadTime` datetime NOT NULL,
-  PRIMARY KEY (`tid`),
-  KEY `car_id` (`car_id`),
-  CONSTRAINT `track_ibfk_1` FOREIGN KEY (`car_id`) REFERENCES `carmessage` (`carId`)
+  `latitude` double(10,6) NOT NULL,
+  `uploadTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `car_id` (`carId`),
+  CONSTRAINT `track_ibfk_1` FOREIGN KEY (`carId`) REFERENCES `carmessage` (`carId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
