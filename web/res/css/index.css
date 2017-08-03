@@ -62,7 +62,11 @@ body {
 .body {
     border: hidden;
 }
-
+.body a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
 .rotateUp {
 
     transform-origin: center center;
