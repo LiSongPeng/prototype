@@ -16,7 +16,7 @@
     <div class="col l2" id="left">
         <ul class="collapsible white-text" data-collapsible="expandable" id="menu">
             <li>
-                <a id="index" class="waves-effect waves-light" ng-click="itemClicked('首页','main')">首页</a>
+                <a id="index" class="waves-effect waves-light" ng-click="itemClicked('首页','main',$event.target)">首页</a>
             </li>
             <!--循环生成左侧菜单-->
             <li ng-repeat="firstMenu in menus">
@@ -26,7 +26,7 @@
                 <div class="collapsible-body white-text body">
                     <ul>
                         <li class="item waves-effect waves-light" ng-repeat="secondMenu in firstMenu.secondMenus">
-                            <a ng-click="itemClicked(firstMenu.title,secondMenu.link,secondMenu.title)">{{secondMenu.title}}</a>
+                            <a ng-click="itemClicked(firstMenu.title,secondMenu.link,$event.target,secondMenu.title)">{{secondMenu.title}}</a>
                         </li>
                     </ul>
                 </div>

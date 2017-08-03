@@ -1,12 +1,18 @@
 angular.module('manager', ['ngRoute'])
     .controller('menuController', ['$scope', function ($scope) {
         $scope.navItems = ['首页'];//导航条
-        $scope.itemClicked = function (firstTitle, link, secondTitle) {
+        var lastClickedItem = null;
+        $scope.itemClicked = function (firstTitle, link, target, secondTitle) {
             if (secondTitle)
                 $scope.navItems = [firstTitle, secondTitle];
             else
                 $scope.navItems = [firstTitle];
             $scope.link = "embed/" + link + ".html";
+            if (lastClickedItem != target)
+                target.style.color = 'green';
+            if (lastClickedItem)
+                lastClickedItem.style.color = 'white';
+            lastClickedItem = target;
         }
         $scope.menus = [{
             'picture': 'settings',
@@ -69,7 +75,6 @@ $(document).ready(function () {
             stopPropagation: false // Stops event propagation
         }
     );
-
     $('.header').click(function () {
         var arrow = $($(this).children('.right'));
         if (arrow.hasClass('rotateUp')) {
@@ -79,14 +84,5 @@ $(document).ready(function () {
             arrow.removeClass('rotateDown');
             arrow.addClass('rotateUp');
         }
-    })
-    var lastClickedMenu = null;
-    $('#left .item a').click(function () {
-        if (!(lastClickedMenu == this)) {
-            $(this).css('color', 'green');
-        }
-        if (lastClickedMenu && lastClickedMenu != this)
-            $(lastClickedMenu).css('color', 'white');
-        lastClickedMenu = this;
     });
 });
