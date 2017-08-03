@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>车辆调度平台首页</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../../res/css/materialize.min.css">
+    <script type="application/javascript" src="../../res/js/jquery-3.0.0.min.js"></script>
+    <script type="application/javascript" src="../../res/js/materialize.min.js"></script>
+    <script type="application/javascript" src="../../res/js/angular.min.js"></script>
+    <style>
+        #left .item {
+            display: block;
+            min-height: 3rem;
+            line-height: 3rem;
+            padding: 0 1rem;
+            text-align: center;
+            background-color: #232E40;
+            color: white;
+        }
+
+        html, body, #container {
+            height: 100%;
+        }
+
+        #left {
+            background-color: #353E58;
+            padding: 0px;
+            border: hidden;
+            height: 100%;
+        }
+
+        body {
+            overflow-x: hidden;
+            overflow-y: hidden;
+        }
+
+        #left .item:hover {
+            background-color: #48556A;
+        }
+
+        .collapsible-header:hover {
+            background-color: #48556A;
+        }
+
+        #index {
+            background-color: #353E58;
+            display: block;
+            min-height: 3rem;
+            line-height: 3rem;
+            padding: 0 1rem;
+            text-align: center;
+        }
+
+        #index:hover {
+            background-color: #48556A;
+        }
+
+        #menu {
+            margin: 0px;
+            border: hidden;
+            width: 100%
+        }
+
+        .header {
+            background-color: #353E58;
+            border: hidden;
+        }
+
+        .body {
+            border: hidden;
+        }
+
+        .rotateUp {
+
+            transform-origin: center center;
+            transform: rotate(180deg);
+
+            -webkit-transform: rotate(180deg);
+
+            -moz-transform: rotate(180deg);
+
+            -ms-transform: rotate(180deg);
+
+            -o-transform: rotate(180deg);
+
+            transition: transform 0.2s;
+            -moz-transition: -moz-transform 0.2s;
+
+            -moz-transition: -moz-transform 0.2s;
+
+            -o-transition: -o-transform 0.2s;
+
+            -ms-transition: -ms-transform 0.2s;
+
+        }
+
+        .rotateDown {
+
+            transform-origin: center center;
+
+            transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+
+            -moz-transform: rotate(0deg);
+
+            -ms-transform: rotate(0deg);
+
+            -o-transform: rotate(0deg);
+
+            transition: transform 0.2s;
+
+            -moz-transition: -moz-transform 0.2s;
+
+            -moz-transition: -moz-transform 0.2s;
+
+            -o-transition: -o-transform 0.2s;
+
+            -ms-transition: -ms-transform 0.2s;
+
+        }
+    </style>
+</head>
+<body>
+<div class="row" id="container">
+    <div class="col l2" id="left">
+        <ul class="collapsible white-text" data-collapsible="expandable" id="menu">
+            <li>
+                <a href="#" id="index" class="waves-effect waves-light">首页</a>
+            </li>
+            <li>
+                <a class="collapsible-header waves-effect waves-light white-text header">
+                    <i class="material-icons">filter_drama</i>信息<i class="material-icons right">expand_more</i> </a>
+                <div class="collapsible-body white-text body">
+                    <ul>
+                        <li class="item waves-effect waves-light">个人信息</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a class="collapsible-header waves-effect waves-light white-text header">
+                    <i class="material-icons">filter_drama</i>信息<i class="material-icons right"
+                    ">expand_more</i> </a>
+                <div class="collapsible-body white-text body">
+                    <ul>
+                        <li class="item waves-effect waves-light">个人信息</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a class="collapsible-header waves-effect waves-light white-text header">
+                    <i class="material-icons">filter_drama</i>信息<i class="material-icons right"
+                >expand_more</i> </a>
+                <div class="collapsible-body white-text body">
+                    <ul>
+                        <li class="item waves-effect waves-light">个人信息</li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="col l10" style="padding: 0px">
+        <div class="row" style="margin: 0px">
+            <!--<div class="navbar-fixed">-->
+            <nav>
+                <div class="nav-wrapper">
+                    <div class="col s12">
+                        <a href="#" class="brand-logo right dropdown-button" data-activates="dropdown1"><i
+                                class="material-icons"
+                        >menu</i></a>
+                        <a href="#!" class="breadcrumb">First</a>
+                        <a href="#!" class="breadcrumb">Second</a>
+                        <a href="#!" class="breadcrumb">Third</a>
+                    </div>
+                </div>
+            </nav>
+            <!--</div>-->
+            <ul id='dropdown1' class='dropdown-content'>
+                <li><a href="#!">one</a></li>
+                <li><a href="#!">two</a></li>
+                <li class="divider"></li>
+                <li><a href="#!">three</a></li>
+                <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
+                <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col l12" style="padding: 0px">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="application/javascript">
+    $(document).ready(function () {
+        $('.collapsible').collapsible();
+        $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrainWidth: false, // Does not change width of dropdown to that of the activator
+                hover: false, // Activate on hover
+                gutter: 0, // Spacing from edge
+                belowOrigin: false, // Displays dropdown below the button
+                alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                stopPropagation: false // Stops event propagation
+            }
+        );
+
+        $('.header').click(function () {
+            var arrow = $($(this).children('.right'));
+            if (arrow.hasClass('rotateUp')) {
+                arrow.removeClass('rotateUp');
+                arrow.addClass('rotateDown');
+            } else {
+                arrow.removeClass('rotateDown');
+                arrow.addClass('rotateUp');
+            }
+        })
+    });
+</script>
+</html>
