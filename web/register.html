@@ -1,0 +1,117 @@
+<!--<%@ page contentType="text/html;charset=UTF-8" language="java" %>-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>ssmTest</title>
+    <link href="res/css/bootstrap.min.css" rel="stylesheet">
+    <link href="res/css/login/login.css" rel="stylesheet">
+    <link href="res/css/font-awesome.min.css" rel="stylesheet">
+    <script src="res/js/jquery-3.0.0.min.js"></script>
+    <script src="res/js/bootstrap.min.js"></script>
+    <script src="res/js/angular.min.js"></script>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('validateCtrl', function($scope) {
+            $scope.myVar=false;
+            $scope.emreq=false;
+            $scope.emerror=false;
+            $scope.validuser=function (){
+                $scope.myVar=$scope.myForm.user.$invalid||$scope.myForm.user.$pristine;
+
+            };
+            $scope.validemail=function () {
+                $scope.emreq = ($scope.myForm.email.$error.required) ? true : false;
+                $scope.emerror = ($scope.myForm.email.$invalid) ? true : false;
+            };
+            })
+    </script>
+
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10 login-title" >
+            <h1 class="text-primary text-center"><strong>车辆调度管理系统</strong></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <form class="form-horizontal">
+                <span class="heading">用户登录</span>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="inputUsername" placeholder="用户名或电子邮件">
+                    <i class="fa icon-user"></i>
+                </div>
+                <div class="form-group help">
+                    <input type="password" class="form-control" id="inputPassword3" placeholder="密　码">
+                    <i class="fa icon-lock"></i>
+                    <a href="#" class="fa icon-question-sign"></a>
+                </div>
+                <div class="form-group">
+                    <div class="main-checkbox">
+                        <input type="checkbox" value="None" id="checkbox1" name="check"/>
+                        <label for="checkbox1"></label>
+                    </div>
+                    <span class="text">Remember me</span>
+                    <button type="submit" class="btn btn-default">登录</button>
+                    <a  class="btn btn-success" data-toggle="modal" href="#myModal">注册</a>
+                </div>
+            </form>
+        </div>
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+             data-backdrop="static" data-keyboard="false" style="padding-top: 90px">
+            <div class="col-md-offset-3 col-md-6">
+              <form class="form-horizontal" ng-app="myApp" ng-controller="validateCtrl" name="myForm" novalidate>
+                <span class="heading">用户注册</span>
+                <div class="form-group">
+                    <label for="firstname" class="col-sm-2 control-label">姓名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="firstname" ng-blur="validuser()"
+                               name="user" ng-model="user" required placeholder="请输入姓名">
+                        <span style="color:red" ng-show="myVar">
+                              <span ng-show="myVar">用户名是必须的.。</span>
+                        </span>
+
+                    </div>
+                </div>
+                  <div class="form-group">
+                      <label for="firstemail" class="col-sm-2 control-label">邮箱</label>
+                      <div class="col-sm-10">
+                          <input type="email" class="form-control" id="firstemail" ng-blur="validemail()"
+                                 name="email" ng-model="email" required placeholder="请输入邮箱">
+                          <span style="color:red" ng-show="emerror||emreq">
+                              <span ng-show="emreq">邮箱是必须的。</span>
+                              <span ng-show="emerror&&(!emreq)">非法的邮箱地址。</span>
+                          </span>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="firstpassword" class="col-sm-2 control-label">密码</label>
+                      <div class="col-sm-10">
+                          <input type="text" class="form-control" id="firstpassword" placeholder="请输入密码">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="repeatpassword" class="col-sm-2 control-label">确认密码</label>
+                      <div class="col-sm-10">
+                          <input type="text" class="form-control" id="repeatpassword" placeholder="请再次输入密码">
+                      </div>
+                  </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default"
+                            ng-disabled="myForm.user.$error.required || myForm.user.$invalid || myForm.email.$error.required ||
+                            myForm.email.$invalid">提交</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
