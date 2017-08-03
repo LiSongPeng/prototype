@@ -16,15 +16,16 @@ html, body, #container {
     height: 100%;
 }
 
-#left {
+#left{
     background-color: #353E58;
     padding: 0px;
     border: hidden;
+    overflow-y:auto;
+    overflow-x: hidden;
     height: 100%;
 }
-
 body {
-    overflow-y:auto;
+    overflow: hidden;
 }
 
 #left .item:hover {
