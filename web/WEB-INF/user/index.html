@@ -16,7 +16,7 @@
     <div class="col l2" id="left">
         <ul class="collapsible white-text" data-collapsible="expandable" id="menu">
             <li>
-                <a href="#!/main" id="index" class="waves-effect waves-light" ng-click="navItems=['首页']">首页</a>
+                <a id="index" class="waves-effect waves-light" ng-click="itemClicked('首页','main',$event.target)">首页</a>
             </li>
             <!--循环生成左侧菜单-->
             <li ng-repeat="firstMenu in menus">
@@ -26,8 +26,7 @@
                 <div class="collapsible-body white-text body">
                     <ul>
                         <li class="item waves-effect waves-light" ng-repeat="secondMenu in firstMenu.secondMenus">
-                            <a href="#!/{{secondMenu.link}}"
-                               ng-click="itemClicked(firstMenu.title,secondMenu.title)">{{secondMenu.title}}</a>
+                            <a ng-click="itemClicked(firstMenu.title,secondMenu.link,$event.target,secondMenu.title)">{{secondMenu.title}}</a>
                         </li>
                     </ul>
                 </div>
@@ -55,18 +54,13 @@
             <!-- </div>-->
             <!--右上角菜单内容-->
             <ul id='userMenu' class='dropdown-content'>
-                <!--                <li><a>one</a></li>
-                                <li><a>two</a></li>
-                                <li class="divider"></li>
-                                <li><a>three</a></li>
-                                <li><a><i class="material-icons">view_module</i>four</a></li>
-                                <li><a><i class="material-icons">cloud</i>five</a></li>-->
                 <li><a>退出</a></li>
             </ul>
         </div>
         <div class="row" style="width: 100%;height:100%;margin: 0px;padding: 0px;">
             <div class="col l12" style="padding: 0px;width: 100%;height: 100%;margin: 0px">
-                <div ng-view style="width: 100%;height: 100%;overflow-y: auto;overflow-x:hidden;"></div>
+                <iframe ng-src="{{link | trustAsResourceUrl}}" height="100%" width="100%"
+                        style="border: hidden;overflow-x: hidden;overflow-y: hidden"></iframe>
             </div>
         </div>
     </div>
