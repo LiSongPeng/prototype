@@ -10,7 +10,7 @@ angular.module('manager', ['ngRoute'])
             $scope.link = "embed/" + link + ".html";
             if (lastClickedItem != target)
                 target.style.color = 'green';
-            if (lastClickedItem)
+            if (lastClickedItem && lastClickedItem != target)
                 lastClickedItem.style.color = 'white';
             lastClickedItem = target;
         }
