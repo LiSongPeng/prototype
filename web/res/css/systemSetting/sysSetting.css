@@ -1,0 +1,28 @@
+body{
+    background-color: #effff2;
+}
+
+
+.container{
+    background: #5193ff;
+    margin-top: 15px;
+    border-radius: 15px;
+    text-align: center;
+    width: 1000px;
+    box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.heading{
+    padding: 10px 0;
+}
+
+@media only screen and (max-width: 479px){
+    .form-horizontal .form-group{
+        padding: 0 25px;
+    }
+    .form-horizontal .form-group i{
+        left: 45px;
+    }
+    .form-horizontal .btn{
+        padding: 10px 20px;
+    }
+}
