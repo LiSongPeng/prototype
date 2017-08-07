@@ -22,7 +22,7 @@
             <nav style="height: 40px;line-height: 40px">
                 <div class="nav-wrapper">
                     <div class="input-field">
-                        <input id="search" type="search" required>
+                        <input id="search" type="search" required ng-model="searchKey">
                         <label class="label-icon" for="search"><i class="material-icons tiny"
                                                                   style="height: 40px;line-height: 40px">search</i></label>
                         <i class="material-icons tiny" style="height: 40px;line-height: 40px">close</i>
@@ -31,7 +31,7 @@
             </nav>
         </div>
         <div class="col l2">
-            <a class="btn waves-effect waves-purple" ng-click="" style="height: 40px;line-height: 40px">搜索</a>
+            <a class="btn waves-effect waves-purple" ng-click="search()" style="height: 40px;line-height: 40px">搜索</a>
         </div>
     </div>
     <div class="row">
@@ -196,6 +196,20 @@
                     Materialize.toast("车型信息删除失败", 1000);
             }, function errorCallback(response) {
                 Materialize.toast("车型信息删除失败", 1000);
+            });
+        };
+        $scope.search = function () {
+            $http.post({
+                url: "",
+                data: $scope.searchKey,
+            }).then(function successCallback(response) {
+                if (response.data) {
+                    $scope.models = response.data;
+                } else {
+                    Materialize.toast("未查找到!", 1000);
+                }
+            }, function errorCallback(response) {
+                Materialize.toast("网络异常,稍后再试!", 1000);
             });
         };
         $('.modal').modal();
