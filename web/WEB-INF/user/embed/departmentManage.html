@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="../../../res/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../../../res/js/jquery-3.0.0.min.js"></script>
+    <script src="../../../res/js/angular.min.js"></script>
+    <script src="../../../res/js/bootstrap.min.js"></script>
+    <script src="../../../res/js/bootstrap-treeview.js"></script>
+    <title>单位管理</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            background-color: #eeeeee;
+        }
+    </style>
+</head>
+<body>
+<div class="container" style="padding: 0px;margin: 0px;height: 100%;width: 100%">
+    <div class="row" style="padding: 0px;margin: 0px;height: 100%;width: 100%">
+        <div class="col-md-3" style="padding: 0px;height: 100%;">
+            <div id="treePanel"></div>
+        </div>
+        <div class="col-md-9" style="height: 100%;padding-right: 0px">
+            <div class="panel panel-default" style="height: 100%;margin:0px;padding-top: 38px;">
+                <div class="panel-heading" style="height:38px;margin-top:-38px;">
+                    <h3 class="panel-title">单位管理</h3>
+                </div>
+                <div class="panel-body" style="padding: 0px;height: 100%">
+                    <table class="table" ng-app="departmentManage" style="text-align: center">
+                        <tbody ng-controller="editController">
+                        <tr>
+                            <td>名称</td>
+                            <td>
+                                <input type="text" name="department.text"
+                                       ng-disabled="!editing"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>地点</td>
+                            <td>
+                                <input type="text" name="department.address"
+                                       ng-disabled="!editing"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>详细信息</td>
+                            <td>
+                                <input type="text" name="department.detail"
+                                       ng-disabled="!editing"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button class="btn btn-success">
+                                    <div ng-hide="editing" ng-click="clicked()">编辑</div>
+                                    <div ng-show="editing" ng-click="clicked()">确认</div>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+<script type="application/javascript">
+    var departmentMange = angular.module('departmentManage', []);
+    departmentMange.controller('editController', ['$scope', function ($scope) {
+        $scope.editing = false;
+        $scope.clicked = function () {
+            $scope.editing = !$scope.editing;
+        }
+    }]);
+
+    function getTreeData() {
+        var tree = [
+            {
+                text: '天津理工大学',
+                address: '天津市宾水西道',
+                detail: '无',
+                nodes: [
+                    {
+                        text: "华信软件学院",
+                        address: '天津市',
+                        detail: '华信软件学院',
+                        nodes: [
+                            {
+                                text: '办公室',
+                                address: 'nononono',
+                                detail: '沙发是的发送到发送到',
+                            },
+                            {
+                                text: "教学楼",
+                                address: 'dsafdfadfa',
+                                detail: 'avsdvdsfdsfdsfds',
+                            },
+                        ]
+                    },
+                ]
+            },
+        ];
+        return tree;
+    }
+
+    $(function () {
+        $('#treePanel').treeview({
+            data: getTreeData(), onNodeSelected: function (event, department) {
+                $("input[name='department.text']").val(department.text);
+                $("input[name='department.address']").val(department.address);
+                $("input[name='department.detail']").val(department.detail);
+            }
+        })
+    })
+</script>
+</html>

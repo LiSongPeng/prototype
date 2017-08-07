@@ -3,32 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <title>车辆调度平台首页</title>
-    <link rel="stylesheet" href="../../res/css/bootstrap.min.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../../res/css/materialize.min.css">
+    <link rel="stylesheet" href="../../res/css/index.css">
     <script type="application/javascript" src="../../res/js/jquery-3.0.0.min.js"></script>
-    <script type="application/javascript" src="../../res/js/bootstrap.min.js"></script>
+    <script type="application/javascript" src="../../res/js/materialize.min.js"></script>
     <script type="application/javascript" src="../../res/js/angular.min.js"></script>
+    <script type="application/javascript" src="../../res/js/angular-route.js"></script>
 </head>
-<body>
-<div class="container">
-    <div class="row">
-        <div class="col-md-3"
-             style="background-color: #dedef8;
-            box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+<body ng-app="manager">
+<div class="row" id="container" ng-controller="menuController" style="padding: 0px;margin: 0px;height: 100%">
+    <div class="col l2" id="left">
+        <ul class="collapsible white-text" data-collapsible="expandable" id="menu">
+            <li>
+                <a id="index" class="waves-effect waves-light" ng-click="itemClicked('首页','main',$event.target)">首页</a>
+            </li>
+            <!--循环生成左侧菜单-->
+            <li ng-repeat="firstMenu in menus">
+                <div class="collapsible-header waves-effect waves-light white-text header">
+                    <i class="material-icons">{{firstMenu.picture}}</i>{{firstMenu.title}}<i
+                        class="material-icons right">expand_more</i></div>
+                <div class="collapsible-body white-text body">
+                    <ul>
+                        <li class="item waves-effect waves-light" ng-repeat="secondMenu in firstMenu.secondMenus">
+                            <a ng-click="itemClicked(firstMenu.title,secondMenu.link,$event.target,secondMenu.title)">{{secondMenu.title}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="col l10" id="right" style="height: 100%; padding:57px 0 0 0; box-sizing: border-box;">
+        <div class="row" style="height:57px;margin:-57px 0 0 0;">
+            <!--<div class="navbar-fixed"> 固定导航条-->
+            <nav>
+                <div class="nav-wrapper">
+                    <div class="col s12">
+                        <a href="javascript:void(0);" class="brand-logo right dropdown-button"
+                           data-activates="userMenu"><i
+                                class="material-icons"
+                        >menu</i></a>
+                        <div id="navBarContainer">
+                            <a class="breadcrumb" ng-repeat="item in navItems">
+                                {{item}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- </div>-->
+            <!--右上角菜单内容-->
+            <ul id='userMenu' class='dropdown-content'>
+                <li><a>退出</a></li>
+            </ul>
         </div>
-        <div class="col-md-9"
-             style="background-color: #dedef8;box-shadow:
-        inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                eiusmod tempor incididunt ut.
-            </p>
+        <div class="row" style="width: 100%;height:100%;margin: 0px;padding: 0px;">
+            <div class="col l12" style="padding: 0px;width: 100%;height: 100%;margin: 0px">
+                <iframe ng-src="{{link | trustAsResourceUrl}}" height="100%" width="100%"
+                        style="border: hidden;overflow-x: hidden;overflow-y:auto"></iframe>
+            </div>
         </div>
     </div>
 </div>
+<script type="application/javascript" src="../../res/js/index.js"></script>
 </body>
 </html>

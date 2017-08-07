@@ -1,0 +1,119 @@
+#left .item {
+    display: block;
+    min-height: 3rem;
+    line-height: 3rem;
+    padding: 0 1rem;
+    text-align: center;
+    background-color: #232E40;
+    color: white;
+}
+
+#left .item a {
+    color: white;
+}
+
+html, body, #container {
+    height: 100%;
+}
+
+#left{
+    background-color: #353E58;
+    padding: 0px;
+    border: hidden;
+    overflow-y:auto;
+    overflow-x: hidden;
+    height: 100%;
+}
+body {
+    overflow: hidden;
+}
+
+#left .item:hover {
+    background-color: #48556A;
+}
+
+.collapsible-header:hover {
+    background-color: #48556A;
+}
+
+#index {
+    background-color: #353E58;
+    display: block;
+    min-height: 3rem;
+    line-height: 3rem;
+    padding: 0 1rem;
+    text-align: center;
+    color:white;
+}
+
+#index:hover {
+    background-color: #48556A;
+}
+
+#menu {
+    margin: 0px;
+    border: hidden;
+    width: 100%
+}
+
+.header {
+    background-color: #353E58;
+    border: hidden;
+}
+
+.body {
+    border: hidden;
+}
+.body a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.rotateUp {
+
+    transform-origin: center center;
+    transform: rotate(180deg);
+
+    -webkit-transform: rotate(180deg);
+
+    -moz-transform: rotate(180deg);
+
+    -ms-transform: rotate(180deg);
+
+    -o-transform: rotate(180deg);
+
+    transition: transform 0.2s;
+    -moz-transition: -moz-transform 0.2s;
+
+    -moz-transition: -moz-transform 0.2s;
+
+    -o-transition: -o-transform 0.2s;
+
+    -ms-transition: -ms-transform 0.2s;
+
+}
+
+.rotateDown {
+
+    transform-origin: center center;
+
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+
+    -moz-transform: rotate(0deg);
+
+    -ms-transform: rotate(0deg);
+
+    -o-transform: rotate(0deg);
+
+    transition: transform 0.2s;
+
+    -moz-transition: -moz-transform 0.2s;
+
+    -moz-transition: -moz-transform 0.2s;
+
+    -o-transition: -o-transform 0.2s;
+
+    -ms-transition: -ms-transform 0.2s;
+
+}
