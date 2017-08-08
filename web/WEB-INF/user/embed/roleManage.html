@@ -5,119 +5,13 @@
     <link href="../../../res/css/bootstrap.min.css" rel="stylesheet">
     <link href="../../../res/css/font-awesome.min.css" rel="stylesheet">
     <link href="../../../res/css/embed/publicCss.css" rel="stylesheet">
+    <link href="../../../res/css/embed/publicCss.css" rel="stylesheet">
+    <link href="../../../res/css/card-btn.css" rel="stylesheet">
     <script src="../../../res/js/jquery-3.0.0.min.js"></script>
     <script src="../../../res/js/angular.min.js"></script>
     <script src="../../../res/js/bootstrap.min.js"></script>
+    <script src="../../../res/js/embed/roleManage.js"></script>
     <title>角色管理</title>
-    <style>
-        .outContainer{
-            margin-top: 20px;
-            padding: 15px;
-        }
-        .btn{
-            color: #fff;
-            border-radius: 0;
-        }
-        .btn:hover{
-            color: #fff;
-        }
-        .cardEffect-btn-red{
-            background-color: rgba(222, 30, 37, 0.92);
-        }
-        .cardEffect-btn-red:hover{
-            background-color: rgba(191, 27, 33, 0.96);
-        }
-        .cardEffect-btn-white{
-            background-color: #eee;
-            color: #000000;
-            border: 1px darkgray;
-        }
-        .cardEffect-btn-white:hover{
-            background-color: #ccc;
-            color: #000000;
-            border: 1px darkgray;
-        }
-        .cardEffect-btn-green{
-            background-color: rgba(37, 185, 67, 0.9);
-        }
-        .cardEffect-btn-green:hover{
-            background-color: rgb(37, 159, 61);
-        }
-        .cardEffect-btn-blue{
-            background-color: lightskyblue;
-        }
-        .cardEffect-btn-blue:hover{
-            background-color: rgba(91, 151, 181, 0.89);
-        }
-        .table>thead>tr>th,
-        .table>tbody>tr>td{
-            text-align: center;
-            vertical-align: middle;
-        }
-        .input-pswd-shower{
-            width: 130px;
-            cursor: default;
-            border: none;
-            background: none;
-        }
-        .pswd-shower-ckbx{
-            display: inline-block;
-        }
-        .pswd-shower-ckbx>input[type='checkbox']{
-            display: none;
-        }
-        .pswd-shower-ckbx>input+label{
-            cursor: pointer;
-            display: inline-block;
-            line-height: 1;
-            margin: 0;
-        }
-        .pswd-shower-ckbx>input+label:after{
-            content: "\f070";
-            font-family: FontAwesome;
-            font-size: 18px;
-            font-style: normal;
-            font-weight: normal;
-            text-decoration: inherit;
-            position: relative;
-            color: #cccccc;
-        }
-        .pswd-shower-ckbx>input:checked+label:after{
-            color: lightskyblue;
-            content: "\f06e";
-            font-family: FontAwesome;
-        }
-        .myCheckBox{
-            width: 25px;
-            height: 25px;
-            display: inline-block;
-        }
-        .myCheckBox>input{
-            display: none;
-        }
-        .myCheckBox>input+label{
-            cursor: pointer;
-            display: inline-block;
-            line-height: 1;
-            margin: 0;
-        }
-        .myCheckBox>input+label:after{
-            content: "\f096";
-            font-family: FontAwesome;
-            font-size: 22px;
-            font-style: normal;
-            font-weight: normal;
-            text-decoration: inherit;
-            position: relative;
-            color: #cccccc;
-
-        }
-        .myCheckBox>input:checked+label:after{
-             color: lightskyblue;
-             content: "\f00c";
-             font-family: FontAwesome;
-         }
-    </style>
 </head>
 <body ng-app="roleMng" ng-controller="roleMngCtrl">
 <div class="container cardContainer outContainer" ng-controller="userListCtrl">
@@ -150,7 +44,7 @@
                             </div>
                         </td>
                         <td>{{user.role}}</td><td>{{user.remark}}</td>
-                        <td><a class="btn cardEffect-btn cardEffect-btn-blue" data-toggle="modal" data-target="#editUser" ng-click="slctUser($index)">编辑</a></td>
+                        <td><a class="btn cardEffect-btn cardEffect-btn-blue" data-toggle="modal" data-target="#editUser" ng-click="editUser($index)">编辑</a></td>
                         <td>
                             <div class="myCheckBox">
                                 <input id="{{user.userId}}" ng-checked="allCheck" type="checkbox">
@@ -161,18 +55,18 @@
                 </tbody>
             </table>
             <div class="col-sm-3 pull-right">
-                <a class="btn cardEffect-btn cardEffect-btn-red" >删除所选用户</a>&nbsp;
-                <a class="btn cardEffect-btn cardEffect-btn-green" data-toggle="modal" data-target="#editUser">添加用户</a>
+                <a class="btn cardEffect-btn cardEffect-btn-red" ng-click="dltUser()">删除所选用户</a>&nbsp;
+                <a class="btn cardEffect-btn cardEffect-btn-green" ng-click="$root.slctUserIndex='new'" data-toggle="modal" data-target="#editUser">添加用户</a>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="editUserLabel" aria-hidden="true">
+<div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="editUserLabel" aria-hidden="true" ng-controller="modalCtrl">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="false">&times;</button>
-                <h4 class="modal-title" id="editUserLabel">用户信息</h4>
+                <h4 class="modal-title" id="editUserLabel"><span>{{($root.slctUserIndex=='new')?"新":"编辑"}}</span>用户<span style="color: rgba(189,0,0,0.82);">{{($root.slctUserIndex=='new')?"":$root.slctUser.userId}}</span>信息</h4>
             </div>
             <div class="modal-body">
                 <form role="form">
@@ -183,8 +77,8 @@
                             <input class="form-control" id="username" ng-model="$root.slctUser.userName" placeholder="请输入用户名">
                         </div>
                         <div class="form-group">
-                            <label for="password">密码 </label>
-                            <input class="form-control" id="password" ng-model="$root.slctUser.userName" placeholder="请输入密码">
+                            <label for="password">密码</label>
+                            <input class="form-control" id="password" ng-model="$root.slctUser.password" placeholder="请输入密码">
                         </div>
 
                     </div>
@@ -209,37 +103,12 @@
             </div>
             <div class="modal-footer">
                 <a type="button" class="btn cardEffect-btn cardEffect-btn-white" data-dismiss="modal">关闭</a>
-                <a type="button" class="btn cardEffect-btn cardEffect-btn-green">提交更改</a>
+                <a type="button" class="btn cardEffect-btn cardEffect-btn-green" ng-click="submitUser()">
+                    {{($root.slctUserIndex=='new')?"提交新用户":"提交修改"}}
+                </a>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
-    <script>
-        var roleApp=angular.module("roleMng",[]);
-        roleApp.controller("roleMngCtrl",function ($scope,$rootScope) {
-            $rootScope.slctUserIndex=null;
-            $rootScope.slctUser={};
-            $scope.getUserList=function (http) {
-                $rootScope.userList=[
-                    {'userId':'1','userName':'liyuxuan','password':'liyuxuan','role':'员工','remark':'无'},
-                    {'userId':'2','userName':'wangfengyan','password':'123456','role':'员工','remark':'无'},
-                    {'userId':'4','userName':'lihuibo','password':'123456','role':'管理员','remark':'无'},
-                    {'userId':'5','userName':'jeff123','password':'123456','role':'员工','remark':'无'}
-                ];
-            }
-            $scope.getUserList(null);
-
-        })
-        roleApp.controller("userListCtrl",['$scope','$rootScope',userListCtrl])
-        function userListCtrl($scope,$rootScope) {
-            $scope.editUser=function (index) {
-                $rootScope.slctUserIndex=index;
-                $rootScope.slctUser=angular.copy($rootScope.userList[index]);
-            }
-            $scope.addUser=function () {
-                $rootScope.slctUser=null;
-            }
-        }
-    </script>
 </body>
 </html>
