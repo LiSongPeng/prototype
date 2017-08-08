@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--车辆信息表-->
+
+<mapper namespace="dao.i.carMessageDao">
+<resultMap type="entity.carMessage" id="carMessageMap">
+    <id column="carId" property="carId"/>
+    <result column="carImg" property="carImg"/>
+    <result column="licenseId" property="licenseId"/>
+    <result column="typeId" property="typeId"/>
+    <result column="engineNumber" property="engineNumber"/>
+    <result column="chassisNumber" property="chassisNumber"/>
+    <result column="totalKilometers" property="totalKilometers"/>
+    <result column="companyUnits" property="companyUnits"/>
+    <result column="scrapVehicle" property="scrapVehicle"/>
+    <result column="vehicleStatus" property="vehicleStatus"/>
+</resultMap>
+
+    <!--对车辆信息表的一系列的操作-->
+    <!--查询汽车信息-->
+<select id="queryCarMessage" parameterType="int" resultType="entity.carMessage">
+    select * from carMessage where carId=#{carId}
+</select>
+
+<!--事故记录表-->
+
+<resultMap type="entity.accidentRecord" id="accidentRecordMap">
+    <id column="accidentId" property="accidentId"/>
+    <result column="licenseId" property="licenseId"/>
+    <result column="accidentTime" property="accidentTime"/>
+    <result column="acccidentText" property="acccidentText"/>
+    <result column="processingState" property="processingState"/>
+    <result column="claimStatus" property="claimStatus"/>
+</resultMap>
+    <!--对事故记录表的一系列的操作-->
+    <!--查询事故信息-->
+    <select id="queryAccident" parameterType="int" resultType="entity.accidentRecord">
+        select * from accidentRecord where accidentId=#{accidentId}
+    </select>
+
+ <!--年审记录表-->
+
+<resultMap type="entity.annualRecord" id="annualRecordMap">
+    <id column="annualId" property="annualId"/>
+    <result column="licenseId" property="licenseId"/>
+    <result column="annualTime" property="annualTime"/>
+    <result column="annualText" property="annualText"/>
+</resultMap>
+    <!--对年审记录表的一系列的操作-->
+    <!--查询年审信息-->
+    <select id="queryAnnual" parameterType="int" resultType="entity.annualRecord">
+        select * from annualRecord where annualId=#{annualId}
+    </select>
+
+<!--保险记录表-->
+
+    <resultMap type="entity.insuranceRecords" id="insuranceRecordsMap">
+
+        <id column="insuranceId" property="insuranceId"/>
+        <result column="insuranceName" property="insuranceName"/>
+        <result column="licenseId" property="licenseId"/>
+        <result column="insuranceTime" property="insuranceTime"/>
+        <result column="insuranceText" property="insuranceText"/>
+    </resultMap>
+
+    <!--对保险记录表的一系列的操作-->
+    <!--查询保险信息-->
+    <select id="queryInsurance" parameterType="int" resultType="entity.insuranceRecords">
+        select * from insuranceRecords where insuranceId=#{insuranceId}
+    </select>
+
+    <!--车型记录表-->
+
+    <resultMap type="entity.carType" id="carTypeMap">
+
+        <id column="typeId" property="typeId"/>
+        <result column="carName" property="carName"/>
+        <result column="brand" property="brand"/>
+        <result column="carLevel" property="carLevel"/>
+        <result column="displacement" property="displacement"/>
+        <result column="productionMode" property="productionMode"/>
+        <result column="power" property="power"/>
+        <result column="drive" property="drive"/>
+        <result column="transmissionCase" property="transmissionCase"/>
+    </resultMap>
+
+    <!--对车型记录表的一系列的操作-->
+    <!--查询车型信息-->
+    <select id="queryCarType" parameterType="int" resultType="entity.carType">
+        select * from carType where typeId=#{typeId}
+    </select>
+
+
+    <!--保养记录表-->
+
+    <resultMap type="entity.maintenanceRecord" id="maintenanceRecordMap">
+
+        <id column="maintenanceId" property="maintenanceId"/>
+        <result column="licenseId" property="licenseId"/>
+        <result column="maintenanceTime" property="maintenanceTime"/>
+        <result column="maintenanceText" property="maintenanceText"/>
+        <result column="maintenanceAmount" property="maintenanceAmount"/>
+        <result column="beforeKilometers" property="beforeKilometers"/>
+    </resultMap>
+    <!--对保养记录表的一系列的操作-->
+    <!--查询保养信息-->
+    <select id="queryMaintenance" parameterType="int" resultType="entity.maintenanceRecord">
+        select * from maintenanceRecord where maintenanceId=#{maintenanceId}
+    </select>
+
+</mapper>
+
+
