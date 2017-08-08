@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
     <!-- 开启框架对注解控制器的自动检测 -->
     <aop:aspectj-autoproxy/>
@@ -34,6 +34,29 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:dao/i/*.xml"></property>
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+
+    <!--<property name="typeAliasesPackage" value="entity"/>-->
+        <!--<property name="plugins">-->
+            <!--<array>-->
+                <!--<bean class="com.github.pagehelper.PageHelper">-->
+                    <!--<property name="properties">-->
+                        <!--<value>-->
+                            <!--dialect=mysql-->
+                        <!--</value>-->
+                    <!--</property>-->
+                <!--</bean>-->
+            <!--</array>-->
+        <!--</property>-->
+
+
+
+
+
+
+
+
+
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

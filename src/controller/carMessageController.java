@@ -3,15 +3,22 @@ package controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import dao.i.carMessageDao;
 import entity.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 
@@ -112,19 +119,22 @@ public class carMessageController {
 
     @RequestMapping("/queryCarType.do")
     @ResponseBody
-    public String queryCarType(Model model) throws  IOException {
+    public carTypePageBean queryCarType(@RequestParam("searchKey")String searchKey,@RequestParam("pageNumber") int pageNumber) throws  IOException {
         System.out.println("hello!!");
-        model.addAttribute("message", "Hello World!");
 
-        carType ct = carmessageDao.queryCarType(1);
+        carTypePageBean aa=new carTypePageBean() ;
 
-        model.addAttribute("arr", ct);
+        PageHelper.startPage(pageNumber,5);
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(ct);
+        List<carType> list =carmessageDao.queryAll();
+        PageInfo<carType> p=new PageInfo<carType>(list);
+        aa.setTotalPages(p.getPages());
+        aa.setPageSize(p.getPageSize());
+        aa.setCurrentPage(p.getPageNum());
+        aa.setModels(list);
 
-        System.out.println("车型记录："+json);
-        return "index";
+
+        return aa;
 
 
 

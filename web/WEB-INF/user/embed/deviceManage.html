@@ -121,7 +121,7 @@
             $scope.device = {};
         };
         $scope.updateDevice = function (device) {
-            $scope.device = device;
+            angular.copy(device,$scope.device);//深复制
         };
         $scope.saveOrUpdateDevice = function () {
             if ($scope.device.id) {//更改设备信息
