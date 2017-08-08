@@ -48,7 +48,9 @@ table th{
     margin: auto auto;
 }
 .list-row-button{
-    border-radius: 20px;
+    font-size: 10px;
+    padding: 5px 8px;
+    border-radius: 15px;
 }
 .table-bot-btn{
     padding-right: 15px;
@@ -60,7 +62,7 @@ table th{
 }
 .stuffHead{
     max-width: 155px;
-    border: 3px dotted #66c566;
+    border: 3px dotted #5bc0de;
     border-radius: 5px ;
     margin: auto;
 }
