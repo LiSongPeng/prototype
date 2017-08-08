@@ -9,7 +9,7 @@
     <script type="application/javascript" src="../../../res/js/materialize.min.js"></script>
     <script type="application/javascript" src="../../../res/js/angular.min.js"></script>
 </head>
-<body ng-app="deviceManage" style="background-color: #eee">
+<body ng-app="deviceManage">
 <div id="container" ng-controller="deviceController">
     <div class="row">
         <div class="col s10 l10 offset-l1 offset-s1">
@@ -121,7 +121,7 @@
             $scope.device = {};
         };
         $scope.updateDevice = function (device) {
-            $scope.device = device;
+            angular.copy(device,$scope.device);//深复制
         };
         $scope.saveOrUpdateDevice = function () {
             if ($scope.device.id) {//更改设备信息

@@ -3,7 +3,7 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>车型库</title>
+    <title>事故管理</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="../../../res/css/materialize.min.css">
     <script type="application/javascript" src="../../../res/js/jquery-3.0.0.min.js"></script>
@@ -15,8 +15,8 @@
         }
     </style>
 </head>
-<body ng-app="vehicleModel">
-<div id="container" ng-controller="vehicleController">
+<body ng-app="accidentManage">
+<div id="container" ng-controller="accidentController">
     <div class="row" id="searchBar">
         <div class="col l4 offset-l6">
             <nav style="height: 40px;line-height: 40px">
@@ -36,19 +36,15 @@
     </div>
     <div class="row">
         <div class="col s10 l10 offset-l1 offset-s1">
-            <table id="modelTable" class="bordered highlight centered">
+            <table id="accidentTable" class="bordered highlight centered">
                 <thead>
                 <tr>
-                    <th>车型编号</th>
-                    <th>车型名称</th>
-                    <th>车型照片</th>
-                    <th>车型品牌</th>
-                    <th>车型级别</th>
-                    <th>车型排量</th>
-                    <th>生产方式</th>
-                    <th>动力方式</th>
-                    <th>驱动方式</th>
-                    <th>变速箱</th>
+                    <th>事故编号</th>
+                    <th>车牌号码</th>
+                    <th>事故时间</th>
+                    <th>事故内容</th>
+                    <th>处理状态</th>
+                    <th>理赔状态</th>
                     <th>操作</th>
                     <th>
                         <input type="checkbox" id="checkAll" ng-model="checkAll"/>
@@ -57,31 +53,27 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="model in pageBean.models">
-                    <td>{{model.typeId}}</td>
-                    <td>{{model.carName}}</td>
-                    <td><img width="50px" height="50px" src="{{model.carImg}}" title="无内容"/></td>
-                    <td>{{model.brand}}</td>
-                    <td>{{model.carLevel}}</td>
-                    <td>{{model.displacement}}</td>
-                    <td>{{model.productionMode}}</td>
-                    <td>{{model.power}}</td>
-                    <td>{{model.drive}}</td>
-                    <td>{{model.transmissionCase}}</td>
-                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addModel"
-                           ng-click="updateModel(model)">编辑</a></td>
+                <tr ng-repeat="accident in pageBean.accidents">
+                    <td>{{accident.accidentId}}</td>
+                    <td>{{accident.licenseId}}</td>
+                    <td>{{accident.accidentTime}}</td>
+                    <td>{{accident.accidentText}}</td>
+                    <td>{{accident.processingState}}</td>
+                    <td>{{accident.claimStatus}}</td>
+                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addAccident"
+                           ng-click="updateAccident(accident)">编辑</a></td>
                     <td>
-                        <input type="checkbox" id="{{model.typeId}}" ng-checked="checkAll"/>
-                        <label for="{{model.typeId}}"></label>
+                        <input type="checkbox" id="{{accident.accidentId}}" ng-checked="checkAll"/>
+                        <label for="{{accident.accidentId}}"></label>
                     </td>
                 </tr>
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="10"></td>
-                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addModel"
-                           ng-click="addModel()">添加</a></td>
-                    <td><a class="btn-flat waves-effect waves-purple" ng-click="deleteModel()">删除</a></td>
+                    <td colspan="6"></td>
+                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addAccident"
+                           ng-click="addAccident()">添加</a></td>
+                    <td><a class="btn-flat waves-effect waves-purple" ng-click="deleteAccident()">删除</a></td>
                 </tr>
                 </tfoot>
             </table>
@@ -110,50 +102,30 @@
             </ul>
         </div>
     </div>
-    <div id="addModel" class="modal modal-fixed-footer">
-        <form action="" enctype="multipart/form-data">
+    <div id="addAccident" class="modal modal-fixed-footer">
+        <form action="">
             <div class="modal-content">
                 <div class="row">
+                    <input type="hidden" name="accidentId" ng-model="accident.accidentId">
                     <div class="input-field col s6">
-                        <input id="carName" placeholder=" " type="text" ng-model="model.carName">
-                        <label for="carName">车型名称</label>
-                    </div>
-                    <div class="file-field input-field col s6">
-                        <div class="btn waves-effect waves-purple">
-                            <span>文件</span>
-                            <input type="file"/>
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" placeholder="选择车型照片">
-                        </div>
+                        <input id="licenseId" placeholder=" " type="text" ng-model="accident.licenseId">
+                        <label for="licenseId">车牌号码</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="brand" placeholder=" " type="text" ng-model="model.brand">
-                        <label for="brand">车型品牌</label>
+                        <input id="accidentTime" placeholder=" " type="text" class="datepicker" ng-model="accident.accidentTime">
+                        <label for="accidentTime">事故时间</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="carLevel" placeholder=" " type="text" ng-model="model.carLevel">
-                        <label for="carLevel">车型级别</label>
+                        <input id="accidentText" placeholder=" " type="text" ng-model="accident.accidentText">
+                        <label for="accidentText">事故内容</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="displacement" placeholder=" " type="text" ng-model="model.displacement">
-                        <label for="displacement">车型排量</label>
+                        <input id="processingState" placeholder=" " type="text" ng-model="accident.processingState">
+                        <label for="processingState">处理状态</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="productionMode" placeholder=" " type="text" ng-model="model.productionMode">
-                        <label for="productionMode">生产方式</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input id="power" placeholder=" " type="text" ng-model="model.power">
-                        <label for="power">动力方式</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input id="drive" placeholder=" " type="text" ng-model="model.drive">
-                        <label for="drive">驱动方式</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input id="transmissionCase" placeholder=" " type="text" ng-model="model.transmissionCase">
-                        <label for="transmissionCase">变速箱</label>
+                        <input id="claimStatus" placeholder=" " type="text" ng-model="accident.claimStatus">
+                        <label for="claimStatus">理赔状态</label>
                     </div>
                 </div>
             </div>
@@ -166,35 +138,42 @@
     </div>
 </div>
 
-<script model="application/javascript">
-    var deviceManage = angular.module('vehicleModel', []);
-    deviceManage.controller('vehicleController', ['$scope', '$http', function ($scope, $http) {
+<script accident="application/javascript">
+    var accidentManage= angular.module('accidentManage', []);
+    accidentManage.controller('accidentController', ['$scope', '$http', function ($scope, $http) {
         $scope.pageBean = {
             totalPages: 10,
             currentPage: 10,
             pageSize: 8,
-            models:
-                [{
-                    "typeId": 1,
-                    "carName": "比亚迪F6",
-                    "carImg": null,
-                    "brand": "比亚迪",
-                    "carLevel": "中型车",
-                    "displacement": "1.5",
-                    "productionMode": "国产",
-                    "power": "汽油",
-                    "drive": "前驱",
-                    "transmissionCase": "手动"
-                }],
+            accidents:
+                [
+                    {
+                        "accidentId": 1,
+                        "licenseId": "津A8888",
+                        "accidentTime": "2017-08-01",
+                        "accidentText": "追尾",
+                        "processingState": "已受理",
+                        "claimStatus": "已理赔"
+                    },
+                    {
+                        "accidentId": 2,
+                        "licenseId": "津B2222",
+                        "accidentTime": "2017-08-02",
+                        "accidentText": "剐蹭",
+                        "processingState": "未受理",
+                        "claimStatus": "未理赔"
+                    }
+                ]
+
         };
-        $scope.model = {};
-        $scope.addModel = function () {
-            $scope.model = {};
+        $scope.accident = {};
+        $scope.addAccident = function () {
+            $scope.accident = {};
         };
-        $scope.updateModel = function (model) {
-            $scope.model = model;
+        $scope.updateAccident = function (accident) {
+            angular.copy(accident,$scope.accident);//在此执行深复制
         };
-        $scope.deleteModel = function () {
+        $scope.deleteAccident = function () {
             var ids = '';
             $('tbody>input[type=checkbox]').each(function () {
                 ids += this.id + ',';
@@ -203,13 +182,13 @@
                 url: 'https://www.runoob.com/try/angularjs/data/sites.php?ids=' + ids.substr(0, ids.length - 1),
             }).then(function successCallback(response) {
                 if (response.data.success) {
-                    Materialize.toast("车型信息删除成功", 1000);
+                    Materialize.toast("事故信息删除成功", 1000);
                     window.location.reload();
                 }
                 else
-                    Materialize.toast("车型信息删除失败", 1000);
+                    Materialize.toast("事故信息删除失败", 1000);
             }, function errorCallback(response) {
-                Materialize.toast("车型信息删除失败", 1000);
+                Materialize.toast("事故信息删除失败", 1000);
             });
         };
         $scope.isAvaliable = function (side) {
@@ -253,6 +232,15 @@
             });
         };
         $('.modal').modal();
+        $('.datepicker').pickadate(
+            {
+                selectMonths: true,
+                selectYears: 15,
+                today: 'Today',
+                clear: 'Clear',
+                close: 'Ok',
+                closeOnSelect: false,
+            });
     }]);
 </script>
 </body>

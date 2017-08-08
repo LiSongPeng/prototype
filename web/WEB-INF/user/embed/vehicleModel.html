@@ -114,45 +114,46 @@
         <form action="" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="row">
+                    <input type="hidden" type="text" ng-model="model.typeId" name="typeId"/>
                     <div class="input-field col s6">
-                        <input id="carName" placeholder=" " type="text" ng-model="model.carName">
+                        <input id="carName" placeholder=" " type="text" name="carName" ng-model="model.carName">
                         <label for="carName">车型名称</label>
                     </div>
                     <div class="file-field input-field col s6">
                         <div class="btn waves-effect waves-purple">
                             <span>文件</span>
-                            <input type="file"/>
+                            <input type="file" name="carImg"/>
                         </div>
                         <div class="file-path-wrapper">
                             <input class="file-path validate" type="text" placeholder="选择车型照片">
                         </div>
                     </div>
                     <div class="input-field col s6">
-                        <input id="brand" placeholder=" " type="text" ng-model="model.brand">
+                        <input id="brand" placeholder=" " name="brand" type="text" ng-model="model.brand">
                         <label for="brand">车型品牌</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="carLevel" placeholder=" " type="text" ng-model="model.carLevel">
+                        <input id="carLevel" placeholder=" " name="carLevel" type="text" ng-model="model.carLevel">
                         <label for="carLevel">车型级别</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="displacement" placeholder=" " type="text" ng-model="model.displacement">
+                        <input id="displacement" placeholder=" " name="displacement" type="text" ng-model="model.displacement">
                         <label for="displacement">车型排量</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="productionMode" placeholder=" " type="text" ng-model="model.productionMode">
+                        <input id="productionMode" placeholder=" " type="text" name="productionMode" ng-model="model.productionMode">
                         <label for="productionMode">生产方式</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="power" placeholder=" " type="text" ng-model="model.power">
+                        <input id="power" placeholder=" " type="text" name="power" ng-model="model.power">
                         <label for="power">动力方式</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="drive" placeholder=" " type="text" ng-model="model.drive">
+                        <input id="drive" placeholder=" " type="text" name="drive" ng-model="model.drive">
                         <label for="drive">驱动方式</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="transmissionCase" placeholder=" " type="text" ng-model="model.transmissionCase">
+                        <input id="transmissionCase" placeholder=" " type="text" name="transmissionCase" ng-model="model.transmissionCase">
                         <label for="transmissionCase">变速箱</label>
                     </div>
                 </div>
@@ -192,7 +193,7 @@
             $scope.model = {};
         };
         $scope.updateModel = function (model) {
-            $scope.model = model;
+            angular.copy(model,$scope.model);//深复制
         };
         $scope.deleteModel = function () {
             var ids = '';
