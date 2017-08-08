@@ -1,19 +1,8 @@
-body{
-    background: #404040;
-}
 hr{
     margin: 10px 0;
 }
-.cardContainer{
-    background: #FFFFFF;
-    border-radius: 15px;
-    box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
 .container{
     margin-top: 20px;
-}
-.title-container{
-    margin: 15px auto;
 }
 .listtable-container{
     margin: 0 auto;
