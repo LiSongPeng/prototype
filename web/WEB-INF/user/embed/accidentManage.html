@@ -1,10 +1,247 @@
+<!--author LiHuibo-->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>事故管理</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../../../res/css/materialize.min.css">
+    <script type="application/javascript" src="../../../res/js/jquery-3.0.0.min.js"></script>
+    <script type="application/javascript" src="../../../res/js/materialize.min.js"></script>
+    <script type="application/javascript" src="../../../res/js/angular.min.js"></script>
+    <style>
+        #container {
+            margin-top: 40px;
+        }
+    </style>
 </head>
-<body>
+<body ng-app="accidentManage">
+<div id="container" ng-controller="accidentController">
+    <div class="row" id="searchBar">
+        <div class="col l4 offset-l6">
+            <nav style="height: 40px;line-height: 40px">
+                <div class="nav-wrapper">
+                    <div class="input-field">
+                        <input id="search" type="search" required ng-model="searchKey">
+                        <label class="label-icon" for="search"><i class="material-icons tiny"
+                                                                  style="height: 40px;line-height: 40px">search</i></label>
+                        <i class="material-icons tiny" style="height: 40px;line-height: 40px">close</i>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="col l2">
+            <a class="btn waves-effect waves-purple" ng-click="search()" style="height: 40px;line-height: 40px">搜索</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s10 l10 offset-l1 offset-s1">
+            <table id="accidentTable" class="bordered highlight centered">
+                <thead>
+                <tr>
+                    <th>事故编号</th>
+                    <th>车牌号码</th>
+                    <th>事故时间</th>
+                    <th>事故内容</th>
+                    <th>处理状态</th>
+                    <th>理赔状态</th>
+                    <th>操作</th>
+                    <th>
+                        <input type="checkbox" id="checkAll" ng-model="checkAll"/>
+                        <label for="checkAll"></label>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="accident in pageBean.accidents">
+                    <td>{{accident.accidentId}}</td>
+                    <td>{{accident.licenseId}}</td>
+                    <td>{{accident.accidentTime}}</td>
+                    <td>{{accident.accidentText}}</td>
+                    <td>{{accident.processingState}}</td>
+                    <td>{{accident.claimStatus}}</td>
+                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addAccident"
+                           ng-click="updateAccident(accident)">编辑</a></td>
+                    <td>
+                        <input type="checkbox" id="{{accident.accidentId}}" ng-checked="checkAll"/>
+                        <label for="{{accident.accidentId}}"></label>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="6"></td>
+                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addAccident"
+                           ng-click="addAccident()">添加</a></td>
+                    <td><a class="btn-flat waves-effect waves-purple" ng-click="deleteAccident()">删除</a></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col l10 offset-l1 center">
+            <ul class="pagination">
+                <li ng-class="isAvaliable('left')"><a
+                        ng-click="jumpTo(pageBean.currentPage-1)"><i class="material-icons">chevron_left</i></a>
+                </li>
+                <li class="active"><a>{{pageBean.currentPage}}</a></li>
+                <li ng-class="isAvaliable('right')"><a
+                        ng-click="jumpTo(pageBean.currentPage+1)"><i
+                        class="material-icons">chevron_right</i></a>
+                </li>
+                <li>
+                    <div class="input-field" style="height: inherit;margin: 0px">
+                        <input id="jumpPageNumber" type="number" style="width: 50px;height: inherit;margin: 0px"
+                               ng-model="jumpPageNumber">
+                        <label for="jumpPageNumber">共{{pageBean.totalPages}}页</label>
+                        <a class="btn-flat waves-effect waves-purple" style="height: inherit;"
+                           ng-click="jumpTo(jumpPageNumber)">跳转</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="addAccident" class="modal modal-fixed-footer">
+        <form action="">
+            <div class="modal-content">
+                <div class="row">
+                    <input type="hidden" name="accidentId" ng-model="accident.accidentId">
+                    <div class="input-field col s6">
+                        <input id="licenseId" placeholder=" " type="text" ng-model="accident.licenseId">
+                        <label for="licenseId">车牌号码</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="accidentTime" placeholder=" " type="text" class="datepicker" ng-model="accident.accidentTime">
+                        <label for="accidentTime">事故时间</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="accidentText" placeholder=" " type="text" ng-model="accident.accidentText">
+                        <label for="accidentText">事故内容</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="processingState" placeholder=" " type="text" ng-model="accident.processingState">
+                        <label for="processingState">处理状态</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="claimStatus" placeholder=" " type="text" ng-model="accident.claimStatus">
+                        <label for="claimStatus">理赔状态</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="modal-action modal-close waves-effect waves-purple btn-flat">取消</a>
+                <button class="modal-action modal-close waves-effect waves-purple btn-flat" type="submit">确认
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 
+<script accident="application/javascript">
+    var accidentManage= angular.module('accidentManage', []);
+    accidentManage.controller('accidentController', ['$scope', '$http', function ($scope, $http) {
+        $scope.pageBean = {
+            totalPages: 10,
+            currentPage: 10,
+            pageSize: 8,
+            accidents:
+                [
+                    {
+                        "accidentId": 1,
+                        "licenseId": "津A8888",
+                        "accidentTime": "2017-08-01",
+                        "accidentText": "追尾",
+                        "processingState": "已受理",
+                        "claimStatus": "已理赔"
+                    },
+                    {
+                        "accidentId": 2,
+                        "licenseId": "津B2222",
+                        "accidentTime": "2017-08-02",
+                        "accidentText": "剐蹭",
+                        "processingState": "未受理",
+                        "claimStatus": "未理赔"
+                    }
+                ]
+
+        };
+        $scope.accident = {};
+        $scope.addAccident = function () {
+            $scope.accident = {};
+        };
+        $scope.updateAccident = function (accident) {
+            angular.copy(accident,$scope.accident);//在此执行深复制
+        };
+        $scope.deleteAccident = function () {
+            var ids = '';
+            $('tbody>input[type=checkbox]').each(function () {
+                ids += this.id + ',';
+            });
+            $http.post({
+                url: 'https://www.runoob.com/try/angularjs/data/sites.php?ids=' + ids.substr(0, ids.length - 1),
+            }).then(function successCallback(response) {
+                if (response.data.success) {
+                    Materialize.toast("事故信息删除成功", 1000);
+                    window.location.reload();
+                }
+                else
+                    Materialize.toast("事故信息删除失败", 1000);
+            }, function errorCallback(response) {
+                Materialize.toast("事故信息删除失败", 1000);
+            });
+        };
+        $scope.isAvaliable = function (side) {
+            if (side == 'left'){
+                return $scope.pageBean.currentPage == 1?{'disabled':true}:{'waves-effect':true};
+            } else if (side == 'right'){
+                return $scope.pageBean.currentPage == $scope.pageBean.totalPages?{'disabled':true}:{'waves-effect':true};
+            }
+            return;
+        };
+        $scope.jumpTo = function (pageNumber) {
+            if (pageNumber < 1 || pageNumber > $scope.pageBean.totalPages) {
+                Materialize.toast('页码错误', 1000);
+                return;
+            }
+            var data = $scope.searchKey != '' ? ('searchKey=' + $scope.searchKey + '&&pageNumber=' + pageNumber) : ('pageNumber=' + pageNumber);
+            $http.get({
+                url: "?" + data,
+            }).then(function successCallback(response) {
+                if (response.data) {
+                    $scope.pageBean = response.data;
+                } else {
+                    Materialize.toast("未查找到!", 1000);
+                }
+            }, function errorCallback(response) {
+                Materialize.toast("网络异常,稍后再试!", 1000);
+            });
+        }
+        $scope.search = function () {
+            var data = 'searchKey=' + $scope.searchKey;
+            $http.post({
+                url: "?" + data,
+            }).then(function successCallback(response) {
+                if (response.data) {
+                    $scope.pageBean = response.data;
+                } else {
+                    Materialize.toast("未查找到!", 1000);
+                }
+            }, function errorCallback(response) {
+                Materialize.toast("网络异常,稍后再试!", 1000);
+            });
+        };
+        $('.modal').modal();
+        $('.datepicker').pickadate(
+            {
+                selectMonths: true,
+                selectYears: 15,
+                today: 'Today',
+                clear: 'Clear',
+                close: 'Ok',
+                closeOnSelect: false,
+            });
+    }]);
+</script>
 </body>
 </html>

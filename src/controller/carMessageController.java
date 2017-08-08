@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
@@ -118,37 +119,22 @@ public class carMessageController {
 
     @RequestMapping("/queryCarType.do")
     @ResponseBody
-    public ModelAndView queryCarType() throws  IOException {
+    public carTypePageBean queryCarType(@RequestParam("searchKey")String searchKey,@RequestParam("pageNumber") int pageNumber) throws  IOException {
         System.out.println("hello!!");
 
-        ModelAndView mv=new ModelAndView();
-        mv.setView(new MappingJackson2JsonView());
-        PageHelper.startPage(1,5);
-        carType ct = carmessageDao.queryCarType(1);
+        carTypePageBean aa=new carTypePageBean() ;
+
+        PageHelper.startPage(pageNumber,5);
+
         List<carType> list =carmessageDao.queryAll();
-
         PageInfo<carType> p=new PageInfo<carType>(list);
-
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(ct);
-
-        //mv.addObject("vehicleModel",list);
-
+        aa.setTotalPages(p.getPages());
+        aa.setPageSize(p.getPageSize());
+        aa.setCurrentPage(p.getPageNum());
+        aa.setModels(list);
 
 
-        mv.addObject("carType", list);
-        mv.addObject("page", p);
-        mv.setViewName("vehicleModel");
-
-
-        System.out.println(p);
-        System.out.println(ct);
-        System.out.println(list);
-        System.out.println("车型记录："+json);
-
-
-
-        return mv;
+        return aa;
 
 
 
