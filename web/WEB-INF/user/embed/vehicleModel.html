@@ -170,7 +170,7 @@
 <script model="application/javascript">
     var deviceManage = angular.module('vehicleModel', []);
     deviceManage.controller('vehicleController', ['$scope', '$http', function ($scope, $http) {
-        $scope.pageBean = {
+      /*  $scope.pageBean = {
             totalPages: 10,
             currentPage: 10,
             pageSize: 8,
@@ -187,7 +187,9 @@
                     "drive": "前驱",
                     "transmissionCase": "手动"
                 }],
-        };
+        };*/
+        $scope.searchKey="";
+        $scope.pageBean={};
         $scope.model = {};
         $scope.addModel = function () {
             $scope.model = {};
@@ -222,15 +224,22 @@
             return;
         };
         $scope.jumpTo = function (pageNumber) {
+            alert(pageNumber)
+            if($scope.pageBean)
             if (pageNumber < 1 || pageNumber > $scope.pageBean.totalPages) {
                 Materialize.toast('页码错误', 1000);
                 return;
             }
-            var data = $scope.searchKey != '' ? ('searchKey=' + $scope.searchKey + '&&pageNumber=' + pageNumber) : ('pageNumber=' + pageNumber);
-            $http.get({
-                url: "?" + data,
+            $http({
+                method:'GET',
+                url: "http://localhost:8080/prototype/queryCarType.do?searchKey=&&pageNumber=1",
+/*                data:{
+                    'searchKey':$scope.searchKey,
+                    'pageNumber':pageNumber,
+                },*/
             }).then(function successCallback(response) {
                 if (response.data) {
+                    alert(response.data);
                     $scope.pageBean = response.data;
                 } else {
                     Materialize.toast("未查找到!", 1000);
@@ -241,7 +250,8 @@
         }
         $scope.search = function () {
             var data = 'searchKey=' + $scope.searchKey;
-            $http.post({
+            $http({
+                method:'GET',
                 url: "?" + data,
             }).then(function successCallback(response) {
                 if (response.data) {
@@ -254,6 +264,7 @@
             });
         };
         $('.modal').modal();
+        $scope.jumpTo(1);
     }]);
 </script>
 </body>
