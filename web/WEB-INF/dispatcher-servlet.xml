@@ -13,9 +13,9 @@
     <bean
             class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- 配置jsp路径的前缀 -->
-        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="prefix" value="/WEB-INF/user/embed/"/>
         <!-- 配置jsp路径的后缀 -->
-        <property name="suffix" value=".jsp"/>
+        <property name="suffix" value=".html"/>
     </bean>
     <!-- JSON视图解析器-->
     <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">

@@ -3,15 +3,21 @@ package controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import dao.i.carMessageDao;
 import entity.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 
@@ -112,19 +118,37 @@ public class carMessageController {
 
     @RequestMapping("/queryCarType.do")
     @ResponseBody
-    public String queryCarType(Model model) throws  IOException {
+    public ModelAndView queryCarType() throws  IOException {
         System.out.println("hello!!");
-        model.addAttribute("message", "Hello World!");
 
+        ModelAndView mv=new ModelAndView();
+        mv.setView(new MappingJackson2JsonView());
+        PageHelper.startPage(1,5);
         carType ct = carmessageDao.queryCarType(1);
+        List<carType> list =carmessageDao.queryAll();
 
-        model.addAttribute("arr", ct);
+        PageInfo<carType> p=new PageInfo<carType>(list);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(ct);
 
+        //mv.addObject("vehicleModel",list);
+
+
+
+        mv.addObject("carType", list);
+        mv.addObject("page", p);
+        mv.setViewName("vehicleModel");
+
+
+        System.out.println(p);
+        System.out.println(ct);
+        System.out.println(list);
         System.out.println("车型记录："+json);
-        return "index";
+
+
+
+        return mv;
 
 
 
