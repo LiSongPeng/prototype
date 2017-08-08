@@ -4,6 +4,7 @@ package entity;
  * Created by luozhong on 2017/8/6.
  */
 public class Dictionary {
+
     Integer id;
     String dic_name;
     String dic_type;

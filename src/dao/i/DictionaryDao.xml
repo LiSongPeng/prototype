@@ -13,6 +13,9 @@
     <select id="listDictionary" resultMap="dictionaryMap">
         select * from dic_form
     </select>
+    <select id="selectDictionaryById" parameterType="int" resultMap="dictionaryMap">
+        select * from dic_form where id=#{id}
+    </select>
     <resultMap type="entity.Dictionary" id="dictionaryMap">
         <id column="id" property="id"/>
         <result column="dic_name" property="dic_name"/>

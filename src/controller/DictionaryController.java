@@ -47,4 +47,10 @@ public class DictionaryController {
         dictionaryService.updateDictionary(dictionary);
         return "success";
     }
+    @RequestMapping(value="selectById")
+    @ResponseBody
+    public Dictionary selectById(@RequestParam Integer id){
+        Dictionary dictionary=dictionaryService.selectDictionaryById(id);
+        return dictionary;
+    }
 }

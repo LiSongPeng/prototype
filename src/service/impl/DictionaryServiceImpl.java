@@ -27,5 +27,7 @@ public class DictionaryServiceImpl implements DictionaryService {
     public void updateDictionary(Dictionary dictionary){
         dictionaryDao.updateDictionary(dictionary);
     }
-
+    public Dictionary selectDictionaryById(Integer id) {
+        return dictionaryDao.selectDictionaryById(id);
+    }
 }

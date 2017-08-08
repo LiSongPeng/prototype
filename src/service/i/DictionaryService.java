@@ -12,4 +12,6 @@ public interface DictionaryService {
     void deleteDictionary(Integer id);
     List<Dictionary> showDictionary();
     void updateDictionary(Dictionary dictionary);
+    Dictionary selectDictionaryById(Integer id);
+
 }

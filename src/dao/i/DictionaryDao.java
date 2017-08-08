@@ -12,4 +12,5 @@ public interface DictionaryDao {
     int deleteDictionaryById(Integer id);
     List<Dictionary> listDictionary();
     void updateDictionary(Dictionary dictionary);
+    Dictionary selectDictionaryById(Integer id);
 }
