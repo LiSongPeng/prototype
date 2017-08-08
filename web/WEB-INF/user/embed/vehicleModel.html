@@ -1,10 +1,219 @@
+<!--author LiHuibo-->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>车型库</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../../../res/css/materialize.min.css">
+    <script type="application/javascript" src="../../../res/js/jquery-3.0.0.min.js"></script>
+    <script type="application/javascript" src="../../../res/js/materialize.min.js"></script>
+    <script type="application/javascript" src="../../../res/js/angular.min.js"></script>
+    <style>
+        #container {
+            margin-top: 40px;
+        }
+    </style>
 </head>
-<body>
+<body ng-app="vehicleModel">
+<div id="container" ng-controller="vehicleController">
+    <div class="row" id="searchBar">
+        <div class="col l4 offset-l6">
+            <nav style="height: 40px;line-height: 40px">
+                <div class="nav-wrapper">
+                    <div class="input-field">
+                        <input id="search" type="search" required ng-model="searchKey">
+                        <label class="label-icon" for="search"><i class="material-icons tiny"
+                                                                  style="height: 40px;line-height: 40px">search</i></label>
+                        <i class="material-icons tiny" style="height: 40px;line-height: 40px">close</i>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="col l2">
+            <a class="btn waves-effect waves-purple" ng-click="search()" style="height: 40px;line-height: 40px">搜索</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s10 l10 offset-l1 offset-s1">
+            <table id="modelTable" class="bordered highlight centered">
+                <thead>
+                <tr>
+                    <th>车型编号</th>
+                    <th>车型名称</th>
+                    <th>车型照片</th>
+                    <th>车型品牌</th>
+                    <th>车型级别</th>
+                    <th>车型排量</th>
+                    <th>生产方式</th>
+                    <th>动力方式</th>
+                    <th>驱动方式</th>
+                    <th>变速箱</th>
+                    <th>操作</th>
+                    <th>
+                        <input type="checkbox" id="checkAll" ng-model="checkAll"/>
+                        <label for="checkAll"></label>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="model in models">
+                    <td>{{model.typeId}}</td>
+                    <td>{{model.carName}}</td>
+                    <td><img width="50px" height="50px" src="{{model.carImg}}" title="无内容"/></td>
+                    <td>{{model.brand}}</td>
+                    <td>{{model.carLevel}}</td>
+                    <td>{{model.displacement}}</td>
+                    <td>{{model.productionMode}}</td>
+                    <td>{{model.power}}</td>
+                    <td>{{model.drive}}</td>
+                    <td>{{model.transmissionCase}}</td>
+                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addModel"
+                           ng-click="updateModel(model)">编辑</a></td>
+                    <td>
+                        <input type="checkbox" id="{{model.typeId}}" ng-checked="checkAll"/>
+                        <label for="{{model.typeId}}"></label>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="10"></td>
+                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addModel"
+                           ng-click="addModel()">添加</a></td>
+                    <td><a class="btn-flat waves-effect waves-purple" ng-click="deleteModel()">删除</a></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col l10 offset-l1 center">
+            <ul class="pagination">
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                <li class="active"><a href="#!">1</a></li>
+                <li class="waves-effect"><a href="#!">2</a></li>
+                <li class="waves-effect"><a href="#!">3</a></li>
+                <li class="waves-effect"><a href="#!">4</a></li>
+                <li class="waves-effect"><a href="#!">5</a></li>
+                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="addModel" class="modal modal-fixed-footer">
+        <form action="" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="carName" placeholder=" " type="text" ng-model="model.carName">
+                        <label for="carName">车型名称</label>
+                    </div>
+                    <div class="file-field input-field col s6">
+                        <div class="btn waves-effect waves-purple">
+                            <span>文件</span>
+                            <input type="file"/>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="选择车型照片">
+                        </div>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="brand" placeholder=" " type="text" ng-model="model.brand">
+                        <label for="brand">车型品牌</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="carLevel" placeholder=" " type="text" ng-model="model.carLevel">
+                        <label for="carLevel">车型级别</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="displacement" placeholder=" " type="text" ng-model="model.displacement">
+                        <label for="displacement">车型排量</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="productionMode" placeholder=" " type="text" ng-model="model.productionMode">
+                        <label for="productionMode">生产方式</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="power" placeholder=" " type="text" ng-model="model.power">
+                        <label for="power">动力方式</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="drive" placeholder=" " type="text" ng-model="model.drive">
+                        <label for="drive">驱动方式</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="transmissionCase" placeholder=" " type="text" ng-model="model.transmissionCase">
+                        <label for="transmissionCase">变速箱</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="modal-action modal-close waves-effect waves-purple btn-flat">取消</a>
+                <button class="modal-action modal-close waves-effect waves-purple btn-flat" type="submit">确认
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 
+<script model="application/javascript">
+    var deviceManage = angular.module('vehicleModel', []);
+    deviceManage.controller('vehicleController', ['$scope', '$http', function ($scope, $http) {
+        $scope.models = [
+            {
+                "typeId": 1,
+                "carName": "比亚迪F6",
+                "carImg": null,
+                "brand": "比亚迪",
+                "carLevel": "中型车",
+                "displacement": "1.5",
+                "productionMode": "国产",
+                "power": "汽油",
+                "drive": "前驱",
+                "transmissionCase": "手动"
+            }
+        ];
+        $scope.model = {};
+        $scope.addModel = function () {
+            $scope.model = {};
+        };
+        $scope.updateModel = function (model) {
+            $scope.model = model;
+        };
+        $scope.deleteModel = function () {
+            var ids = '';
+            $('tbody>input[type=checkbox]').each(function () {
+                ids += this.id + ',';
+            });
+            $http.post({
+                url: 'https://www.runoob.com/try/angularjs/data/sites.php?ids=' + ids.substr(0, ids.length - 1),
+            }).then(function successCallback(response) {
+                if (response.data.success) {
+                    Materialize.toast("车型信息删除成功", 1000);
+                    window.location.reload();
+                }
+                else
+                    Materialize.toast("车型信息删除失败", 1000);
+            }, function errorCallback(response) {
+                Materialize.toast("车型信息删除失败", 1000);
+            });
+        };
+        $scope.search = function () {
+            $http.post({
+                url: "",
+                data: $scope.searchKey,
+            }).then(function successCallback(response) {
+                if (response.data) {
+                    $scope.models = response.data;
+                } else {
+                    Materialize.toast("未查找到!", 1000);
+                }
+            }, function errorCallback(response) {
+                Materialize.toast("网络异常,稍后再试!", 1000);
+            });
+        };
+        $('.modal').modal();
+    }]);
+</script>
 </body>
 </html>

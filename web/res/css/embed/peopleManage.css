@@ -1,0 +1,102 @@
+body{
+    background: #404040;
+}
+hr{
+    margin: 10px 0;
+}
+.cardContainer{
+    background: #FFFFFF;
+    border-radius: 15px;
+    box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.container{
+    margin-top: 20px;
+}
+.title-container{
+    margin: 15px auto;
+}
+.listtable-container{
+    margin: 0 auto;
+    padding: 7px;
+}
+.listtable-container>.row{
+    margin-bottom: 10px;
+}
+.search-input{
+    padding-left: 30px;
+    border-radius: 10px;
+    box-shadow: none;
+    border: none;
+    background: #f0f0f0;
+    transition : all 0.5s ease 0s;
+}
+.search-input+i{
+    position: absolute;
+    bottom: 9px;
+    left: 23px;
+    font-size: 17px;
+    color: #c8c8c8;
+    transition : all 0.5s ease 0s;
+}
+.search-input:focus {
+    background: #e0e0e0;
+    box-shadow: none;
+    outline: 0 none;
+}
+.search-input:focus+i{
+    color: #00b4ef;
+}
+table th{
+    text-align: center;
+}
+.table tbody tr td{
+    vertical-align: middle;
+}
+.pager-div{
+    text-align:center;
+}
+.pagination{
+    margin: auto auto;
+}
+.list-row-button{
+    border-radius: 20px;
+}
+.table-bot-btn{
+    padding-right: 15px;
+    padding-left: 0;
+}
+.table-bot-btn>button{
+    margin: auto 5px;
+    float: right;
+}
+.stuffHead{
+    max-width: 155px;
+    border: 3px dotted #66c566;
+    border-radius: 5px ;
+    margin: auto;
+}
+.stuffHead img{
+    min-height: 200px;
+    display: block;
+    max-height: 200px;
+    margin: 0 0;
+}
+
+.head-right-form label{
+    padding: 0;
+}
+.head-bottom-form label{
+    padding: 0;
+}
+.head-bottom-form{
+    margin-top: 20px;
+}
+.head-bottom-form label span{
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.stuffInfoBtnGroup div{
+    float: right;
+}
