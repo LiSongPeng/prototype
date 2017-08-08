@@ -12,11 +12,11 @@
     <script type="application/javascript" src="../../res/js/angular-route.js"></script>
 </head>
 <body ng-app="manager">
-<div class="row" id="container" ng-controller="menuController" style="padding: 0px;margin: 0px">
+<div class="row" id="container" ng-controller="menuController" style="padding: 0px;margin: 0px;height: 100%">
     <div class="col l2" id="left">
         <ul class="collapsible white-text" data-collapsible="expandable" id="menu">
             <li>
-                <a href="#!/main" id="index" class="waves-effect waves-light" ng-click="navItems=['首页']">首页</a>
+                <a id="index" class="waves-effect waves-light" ng-click="itemClicked('首页','main',$event.target)">首页</a>
             </li>
             <!--循环生成左侧菜单-->
             <li ng-repeat="firstMenu in menus">
@@ -26,16 +26,15 @@
                 <div class="collapsible-body white-text body">
                     <ul>
                         <li class="item waves-effect waves-light" ng-repeat="secondMenu in firstMenu.secondMenus">
-                            <a href="#!/{{secondMenu.link}}"
-                               ng-click="itemClicked(firstMenu.title,secondMenu.title)">{{secondMenu.title}}</a>
+                            <a ng-click="itemClicked(firstMenu.title,secondMenu.link,$event.target,secondMenu.title)">{{secondMenu.title}}</a>
                         </li>
                     </ul>
                 </div>
             </li>
         </ul>
     </div>
-    <div class="col l10" style="padding: 0px">
-        <div class="row" style="margin: 0px">
+    <div class="col l10" id="right" style="height: 100%; padding:57px 0 0 0; box-sizing: border-box;">
+        <div class="row" style="height:57px;margin:-57px 0 0 0;">
             <!--<div class="navbar-fixed"> 固定导航条-->
             <nav>
                 <div class="nav-wrapper">
@@ -55,18 +54,13 @@
             <!-- </div>-->
             <!--右上角菜单内容-->
             <ul id='userMenu' class='dropdown-content'>
-                <!--                <li><a>one</a></li>
-                                <li><a>two</a></li>
-                                <li class="divider"></li>
-                                <li><a>three</a></li>
-                                <li><a><i class="material-icons">view_module</i>four</a></li>
-                                <li><a><i class="material-icons">cloud</i>five</a></li>-->
                 <li><a>退出</a></li>
             </ul>
         </div>
-        <div class="row">
-            <div class="col l12" style="padding: 0px">
-                <div ng-view></div>
+        <div class="row" style="width: 100%;height:100%;margin: 0px;padding: 0px;">
+            <div class="col l12" style="padding: 0px;width: 100%;height: 100%;margin: 0px">
+                <iframe ng-src="{{link | trustAsResourceUrl}}" height="100%" width="100%"
+                        style="border: hidden;overflow-x: hidden;overflow-y:auto"></iframe>
             </div>
         </div>
     </div>

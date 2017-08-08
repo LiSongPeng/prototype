@@ -2,9 +2,176 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link href="../../../res/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../res/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../../res/css/embed/peopleManage.css" rel="stylesheet">
+    <script src="../../../res/js/jquery-3.0.0.min.js"></script>
+    <script src="../../../res/js/angular.min.js"></script>
+    <script src="../../../res/js/bootstrap.min.js"></script>
+    <script src="../../../res/js/embed/peopleManage.js"></script>
+    <title>人员管理</title>
+
 </head>
 <body>
+    <div class="container cardContainer" ng-app="stuffListApp" ng-controller="stuffListCtrl" style="padding: 20px;">
+
+        <div class="row">
+            <div class=" col-sm-12 ">
+            <div class="title-container" >
+                <h1 class="text-primary text-center"> 人员信息列表</h1>
+                <hr>
+            </div>
+            <div class="row">
+                <div class="col-sm-8  listtable-container">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <input class="form-control search-input" type="text" placeholder="请输入搜索内容" ><i class="fa fa-search"></i>
+                        </div>
+                        <div class="col-sm-2" >
+                            <button class="btn btn-info" style="float: left;border-radius: 10px;margin-left: -25px">搜索</button>
+                        </div>
+                        <div class="col-sm-2" style="float: right">
+                            <button class="btn btn-primary" style="float: right;border-radius: 10px">显示全部</button>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th>编号</th><th>姓名</th><th>性别</th><th>年龄</th><th>单位</th><th>部门</th><th>操作</th><th>选择
+                                <input type="checkbox" ng-model="selectAll">
+                            </th>
+                            </tr>
+
+                        </thead>
+                        <tr ng-repeat="stuff in stuffList" ng-mouseover="stuffHover($index)">
+                            <td>{{stuff.id}}</td><td>{{stuff.name}}</td><td>{{stuff.sex}}</td><td>{{stuff.age}}</td><td>{{stuff.company}}</td><td>{{stuff.depart}}</td>
+                            <td style="text-align: center"><button class="btn btn-info list-row-button" ng-click="editStuffInfo($index)" >修改</button>
+                            <button class="btn btn-danger list-row-button" ng-click="delStuffRow($index)">删除</button>
+                            </td>
+                            <td style="text-align: center"><input class="stuffChkbox" type="checkbox" ng-checked="selectAll" ></td>
+                        </tr>
+                    </table>
+                    <div class="row ">
+                        <div class="col-sm-3">
+                            <div style="float: right">
+                                到第<input style="width: 30px" type="text" >页
+                                <button class="btn btn-default">跳转</button>
+                            </div>
+                        </div>
+                        <div class="col-sm-offset-1 col-sm-4">
+                            <div class="pager-div">
+                                <ul class="pagination">
+                                    <li><a href="#">&laquo;</a></li>
+                                    <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">&raquo;</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="table-bot-btn col-sm-4">
+                            <button class="btn btn-danger "  ng-click="delStuffChk()">删除所选</button>
+                            <button class="btn btn-success " ng-click="newStuff()" ng-disable="editFlag">新增员工</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 cardContainer" style="background: #ffffe0;">
+                    <div >
+                        <h4 class="text-center text-success">员工详情</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="stuffHead">
+                                <img class="img-responsive img-rounded" src="{{sltStuff.head||'defaulthead.jpg'}}"
+                                     style="background-image: url('errorhead.jpg');" >
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <fieldset ng-disabled="!editFlag">
+                            <form class="form-horizontal head-right-form disabled" role="form" name="stuffInfoRight" >
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" >编号</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" ng-model="sltStuff.id" >
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="col-sm-2 control-label">姓名</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" ng-model="sltStuff.name" >
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="col-sm-2 control-label">性别</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" ng-model="sltStuff.sex" >
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="col-sm-2 control-label">年龄</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" ng-model="sltStuff.age" ng-disabled="!editFlag">
+                                    </div>
+                                </div>
+                            </form>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form class="form-horizontal head-bottom-form" role="form" name="stuffInfoBottom" >
+                                <fieldset ng-disabled="!editFlag">
+                                <div class="form-group ">
+                                    <label class="col-sm-3 control-label"><span>相片</span></label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" ng-model="sltStuff.head" ng-disabled="!editFlag">
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="col-sm-3 control-label"><span>联系电话</span></label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" ng-model="sltStuff.name" ng-disabled="!editFlag">
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="col-sm-3 control-label"><span>住址</span></label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" ng-model="sltStuff.sex" ng-disabled="!editFlag">
+                                    </div>
+                                </div>
+                            </fieldset>
+                                <div class="form-group stuffInfoBtnGroup">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-2">
+                                        <button class=" btn btn-danger" ng-hide="editFlag" ng-click="delStuffSlct()">删除</button>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class=" btn btn-success" ng-show="editFlag" ng-click="submitEdit()">提交</button>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class=" btn btn-default" ng-show="editFlag" ng-click="cancelEdit()">取消</button>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class=" btn btn-primary" ng-show="editFlag" ng-click="resetEdit()">重置</button>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class=" btn btn-info" ng-hide="editFlag" ng-click="editFlag=!editFlag">修改</button>
+                                    </div>
+
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div></div>
+    </div>
 
 </body>
 </html>

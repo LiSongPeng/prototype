@@ -1,0 +1,16 @@
+
+<mapper namespace="dao.i.StudentDao">
+<resultMap type="entity.Student" id="studentMap">
+    <id column="id" property="id"/>
+    <result column="name" property="name"/>
+    <result column="sex" property="sex"/>
+    <result column="class" property="clazz"/>
+    <result column="img_url" property="imgUrl"/>
+</resultMap>
+
+    <select id="queryStudent" parameterType="int" resultType="entity.Student">
+        select * from Student s where s.id=#{id}
+    </select>
+
+
+</mapper>

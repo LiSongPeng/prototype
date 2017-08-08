@@ -1,10 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>设备管理</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../../../res/css/materialize.min.css">
+    <script type="application/javascript" src="../../../res/js/jquery-3.0.0.min.js"></script>
+    <script type="application/javascript" src="../../../res/js/materialize.min.js"></script>
+    <script type="application/javascript" src="../../../res/js/angular.min.js"></script>
 </head>
-<body>
+<body ng-app="deviceManage">
+<div id="container" ng-controller="deviceController">
+    <div class="row">
+        <div class="col s10 l10 offset-l1 offset-s1">
+            <table id="deviceTable" class="bordered highlight centered">
+                <thead>
+                <tr>
+                    <th>型号</th>
+                    <th>名称</th>
+                    <th>生产商</th>
+                    <th>生产日期</th>
+                    <th>使用年限</th>
+                    <th>操作</th>
+                    <th>
+                        <input type="checkbox" id="checkAll" ng-model="checkAll"/>
+                        <label for="checkAll"></label>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="device in devices">
+                    <td>{{device.type}}</td>
+                    <td>{{device.name}}</td>
+                    <td>{{device.producer}}</td>
+                    <td>{{device.produceDate}}</td>
+                    <td>{{device.limitDate}}</td>
+                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addDevice"
+                           ng-click="updateDevice(device)">编辑</a></td>
+                    <td>
+                        <input type="checkbox" id="{{device.id}}" ng-checked="checkAll"/>
+                        <label for="{{device.id}}"></label>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="5"></td>
+                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addDevice"
+                           ng-click="addDevice()">添加</a></td>
+                    <td><a class="btn-flat waves-effect waves-purple" ng-click="deleteDevice()">删除</a></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div id="addDevice" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="type" placeholder=" " type="text" ng-model="device.type">
+                    <label for="type">型号</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="name" placeholder=" " type="text" ng-model="device.name">
+                    <label for="name">名称</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="producer" placeholder=" " type="text" ng-model="device.producer">
+                    <label for="producer">生产商</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="produceDate" placeholder=" " type="text" ng-model="device.produceDate">
+                    <label for="produceDate">生产日期</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="limitDate" placeholder=" " type="text" ng-model="device.limitDate">
+                    <label for="limitDate">使用年限</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-action modal-close waves-effect waves-purple btn-flat">取消</a>
+            <a class="modal-action modal-close waves-effect waves-purple btn-flat"
+               ng-click="saveOrUpdateDevice()">确认</a>
+        </div>
+    </div>
+</div>
 
+<script type="application/javascript">
+    var deviceManage = angular.module('deviceManage', []);
+    deviceManage.controller('deviceController', ['$scope', '$http', function ($scope, $http) {
+        $scope.devices = [
+            {
+                id: '1',
+                type: 'HT-100',
+                name: '押车及',
+                producer: '田建设大幅',
+                produceDate: '2014-11-1',
+                limitDate: '2019-11-1',
+            },
+            {
+                id: '2',
+                type: 'HT-101',
+                name: '押车及',
+                producer: '田建设大幅',
+                produceDate: '2014-11-1',
+                limitDate: '2019-11-1',
+            },
+            {
+                id: '3',
+                type: 'HT-102',
+                name: '押车及',
+                producer: '田建设大幅',
+                produceDate: '2014-11-1',
+                limitDate: '2019-11-1',
+            },
+        ];
+        $scope.device = {};
+        $scope.addDevice = function () {
+            $scope.device = {};
+        };
+        $scope.updateDevice = function (device) {
+            $scope.device = device;
+        };
+        $scope.saveOrUpdateDevice = function () {
+            if ($scope.device.id) {//更改设备信息
+                console.log('更改设备信息');
+                /*                $http.post({
+                                    url: 'https://www.runoob.com/try/angularjs/data/sites.php',
+                                    data: angular.toJSON($scope.device),
+                                }).then(function successCallback(response) {
+                                    if (response.data.success)
+                                        Materialize.toast("设备信息修改成功", 1000);
+                                    else
+                                        Materialize.toast("设备信息修改失败", 1000);
+                                }, function errorCallback(response) {
+                                    // 请求失败执行代码
+                                    Materialize.toast("设备信息修改失败", 1000);
+                                });*/
+            } else {//添加设备信息
+                console.log('添加设备信息');
+                /*                $http.post({
+                                    url: 'https://www.runoob.com/try/angularjs/data/sites.php',
+                                    data: angular.toJSON($scope.device),
+                                }).then(function successCallback(response) {
+                                    if (response.data.success)
+                                        Materialize.toast("设备信息添加成功", 1000);
+                                    else
+                                        Materialize.toast("设备信息添加失败", 1000);
+                                }, function errorCallback(response) {
+                                    Materialize.toast("设备信息添加失败", 1000);
+                                });*/
+            }
+        };
+        $scope.deleteDevice = function () {
+            var ids = '';
+            $('tbody>input[type=checkbox]').each(function () {
+                ids += this.id + ',';
+            });
+            $http.post({
+                url: 'https://www.runoob.com/try/angularjs/data/sites.php?ids=' + ids.substr(0, ids.length - 1),
+            }).then(function successCallback(response) {
+                if (response.data.success) {
+                    Materialize.toast("设备信息删除成功", 1000);
+                    window.location.reload();
+                }
+                else
+                    Materialize.toast("设备信息删除失败", 1000);
+            }, function errorCallback(response) {
+                Materialize.toast("设备信息删除失败", 1000);
+            });
+        };
+        $('.modal').modal();
+    }]);
+</script>
 </body>
 </html>
