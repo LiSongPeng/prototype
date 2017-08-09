@@ -3,6 +3,7 @@ package entity;
 public class carType {
     private int typeId;   //车型Id
     private String carName;   //车型名称
+    private String carImg;
     private String brand;   //汽车品牌
     private String carLevel;   //汽车级别
     private String displacement;  //排量
@@ -10,6 +11,14 @@ public class carType {
     private String power;   //动力
     private String drive;   //驱动
     private String transmissionCase;   //变速箱
+
+    public String getCarImg() {
+        return carImg;
+    }
+
+    public void setCarImg(String carImg) {
+        this.carImg = carImg;
+    }
 
     public int getTypeId() {
         return typeId;

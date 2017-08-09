@@ -88,11 +88,14 @@
     </resultMap>
 
     <!--对车型记录表的一系列的操作-->
-    <!--查询车型信息-->
+    <!--依照id查询车型信息-->
     <select id="queryCarType" parameterType="int" resultType="entity.carType">
         select * from carType where typeId=#{typeId}
     </select>
-
+    <!--查询所有车型信息-->
+    <select id="queryAll" parameterType="int" resultType="entity.carType">
+        select * from carType
+    </select>
 
     <!--保养记录表-->
 

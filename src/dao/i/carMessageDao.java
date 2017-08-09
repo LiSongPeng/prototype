@@ -5,6 +5,8 @@ import entity.*;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface carMessageDao {
     //车辆基本信息
@@ -30,6 +32,7 @@ public interface carMessageDao {
     //车辆车型
 
     public carType queryCarType(int typeId);
+    public List<carType> queryAll();
 
     //车辆保养
 
