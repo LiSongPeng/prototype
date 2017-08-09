@@ -31,7 +31,7 @@
             </nav>
         </div>
         <div class="col l2">
-            <a class="btn waves-effect waves-purple" ng-click="search()" style="height: 40px;line-height: 40px">搜索</a>
+            <a class="btn waves-effect waves-purple" ng-click="jumpTo(1)" style="height: 40px;line-height: 40px">搜索</a>
         </div>
     </div>
     <div class="row">
@@ -53,7 +53,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="accident in pageBean.accidents">
+                <tr ng-repeat="accident in pageBean.content">
                     <td>{{accident.accidentId}}</td>
                     <td>{{accident.licenseId}}</td>
                     <td>{{accident.accidentTime}}</td>
@@ -112,7 +112,8 @@
                         <label for="licenseId">车牌号码</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="accidentTime" placeholder=" " type="text" class="datepicker" ng-model="accident.accidentTime">
+                        <input id="accidentTime" placeholder=" " type="text" class="datepicker"
+                               ng-model="accident.accidentTime">
                         <label for="accidentTime">事故时间</label>
                     </div>
                     <div class="input-field col s6">
@@ -139,39 +140,41 @@
 </div>
 
 <script accident="application/javascript">
-    var accidentManage= angular.module('accidentManage', []);
+    var accidentManage = angular.module('accidentManage', []);
     accidentManage.controller('accidentController', ['$scope', '$http', function ($scope, $http) {
-        $scope.pageBean = {
-            totalPages: 10,
-            currentPage: 10,
-            pageSize: 8,
-            accidents:
-                [
-                    {
-                        "accidentId": 1,
-                        "licenseId": "津A8888",
-                        "accidentTime": "2017-08-01",
-                        "accidentText": "追尾",
-                        "processingState": "已受理",
-                        "claimStatus": "已理赔"
-                    },
-                    {
-                        "accidentId": 2,
-                        "licenseId": "津B2222",
-                        "accidentTime": "2017-08-02",
-                        "accidentText": "剐蹭",
-                        "processingState": "未受理",
-                        "claimStatus": "未理赔"
-                    }
-                ]
+        /*        $scope.pageBean = {
+                    totalPages: 10,
+                    currentPage: 10,
+                    pageSize: 8,
+                    accidents:
+                        [
+                            {
+                                "accidentId": 1,
+                                "licenseId": "津A8888",
+                                "accidentTime": "2017-08-01",
+                                "accidentText": "追尾",
+                                "processingState": "已受理",
+                                "claimStatus": "已理赔"
+                            },
+                            {
+                                "accidentId": 2,
+                                "licenseId": "津B2222",
+                                "accidentTime": "2017-08-02",
+                                "accidentText": "剐蹭",
+                                "processingState": "未受理",
+                                "claimStatus": "未理赔"
+                            }
+                        ]
 
-        };
+                };*/
+        $scope.pageBean = {};
         $scope.accident = {};
+        $scope.searchKey = ""
         $scope.addAccident = function () {
             $scope.accident = {};
         };
         $scope.updateAccident = function (accident) {
-            angular.copy(accident,$scope.accident);//在此执行深复制
+            angular.copy(accident, $scope.accident);//在此执行深复制
         };
         $scope.deleteAccident = function () {
             var ids = '';
@@ -192,10 +195,10 @@
             });
         };
         $scope.isAvaliable = function (side) {
-            if (side == 'left'){
-                return $scope.pageBean.currentPage == 1?{'disabled':true}:{'waves-effect':true};
-            } else if (side == 'right'){
-                return $scope.pageBean.currentPage == $scope.pageBean.totalPages?{'disabled':true}:{'waves-effect':true};
+            if (side == 'left') {
+                return $scope.pageBean.currentPage == 1 ? {'disabled': true} : {'waves-effect': true};
+            } else if (side == 'right') {
+                return $scope.pageBean.currentPage == $scope.pageBean.totalPages ? {'disabled': true} : {'waves-effect': true};
             }
             return;
         };
@@ -204,11 +207,11 @@
                 Materialize.toast('页码错误', 1000);
                 return;
             }
-            var data = $scope.searchKey != '' ? ('searchKey=' + $scope.searchKey + '&&pageNumber=' + pageNumber) : ('pageNumber=' + pageNumber);
-            $http.get({
-                url: "?" + data,
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8080/prototype/queryAccident.do?searchKey=' + $scope.searchKey + '&&pageNumber=' + pageNumber,
             }).then(function successCallback(response) {
-                if (response.data) {
+                if (response.data.totalPages>0) {
                     $scope.pageBean = response.data;
                 } else {
                     Materialize.toast("未查找到!", 1000);
@@ -217,30 +220,17 @@
                 Materialize.toast("网络异常,稍后再试!", 1000);
             });
         }
-        $scope.search = function () {
-            var data = 'searchKey=' + $scope.searchKey;
-            $http.post({
-                url: "?" + data,
-            }).then(function successCallback(response) {
-                if (response.data) {
-                    $scope.pageBean = response.data;
-                } else {
-                    Materialize.toast("未查找到!", 1000);
-                }
-            }, function errorCallback(response) {
-                Materialize.toast("网络异常,稍后再试!", 1000);
-            });
-        };
         $('.modal').modal();
         $('.datepicker').pickadate(
             {
                 selectMonths: true,
                 selectYears: 15,
-                today: 'Today',
-                clear: 'Clear',
-                close: 'Ok',
+                today: '今天',
+                clear: '清楚',
+                close: '确认',
                 closeOnSelect: false,
             });
+        $scope.jumpTo(1);
     }]);
 </script>
 </body>

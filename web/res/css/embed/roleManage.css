@@ -1,0 +1,72 @@
+.outContainer{
+    margin-top: 20px;
+    padding: 15px;
+}
+.table>thead>tr>th,
+.table>tbody>tr>td{
+    text-align: center;
+    vertical-align: middle;
+}
+.input-pswd-shower{
+    width: 130px;
+    cursor: default;
+    border: none;
+    background: none;
+}
+.pswd-shower-ckbx{
+    display: inline-block;
+}
+.pswd-shower-ckbx>input[type='checkbox']{
+    display: none;
+}
+.pswd-shower-ckbx>input+label{
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1;
+    margin: 0;
+}
+.pswd-shower-ckbx>input+label:after{
+    content: "\f070";
+    font-family: FontAwesome;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    position: relative;
+    color: #cccccc;
+}
+.pswd-shower-ckbx>input:checked+label:after{
+    color: lightskyblue;
+    content: "\f06e";
+    font-family: FontAwesome;
+}
+.myCheckBox{
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+}
+.myCheckBox>input{
+    display: none;
+}
+.myCheckBox>input+label{
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1;
+    margin: 0;
+}
+.myCheckBox>input+label:after{
+    content: "\f096";
+    font-family: FontAwesome;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    position: relative;
+    color: #cccccc;
+
+}
+.myCheckBox>input:checked+label:after{
+    color: lightskyblue;
+    content: "\f00c";
+    font-family: FontAwesome;
+}

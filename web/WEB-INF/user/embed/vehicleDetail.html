@@ -1,10 +1,262 @@
+<!--author LiHuibo-->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>车辆明细</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../../../res/css/materialize.min.css">
+    <script type="application/javascript" src="../../../res/js/jquery-3.0.0.min.js"></script>
+    <script type="application/javascript" src="../../../res/js/materialize.min.js"></script>
+    <script type="application/javascript" src="../../../res/js/angular.min.js"></script>
+    <style>
+        #container {
+            margin-top: 40px;
+        }
+    </style>
 </head>
-<body>
+<body ng-app="vehicleDetail">
+<div id="container" ng-controller="vehicleController">
+    <div class="row" id="searchBar">
+        <div class="col l4 offset-l6">
+            <nav style="height: 40px;line-height: 40px">
+                <div class="nav-wrapper">
+                    <div class="input-field">
+                        <input id="search" type="search" required ng-model="searchKey">
+                        <label class="label-icon" for="search"><i class="material-icons tiny"
+                                                                  style="height: 40px;line-height: 40px">search</i></label>
+                        <i class="material-icons tiny" style="height: 40px;line-height: 40px">close</i>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="col l2">
+            <a class="btn waves-effect waves-purple" ng-click="jumpTo(1)" style="height: 40px;line-height: 40px">搜索</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s10 l10 offset-l1 offset-s1">
+            <table id="detailTable" class="bordered highlight centered">
+                <thead>
+                <tr>
+                    <th>车辆编号</th>
+                    <th>车辆照片</th>
+                    <th>车牌号码</th>
+                    <th>车型编号</th>
+                    <th>终端编号</th>
+                    <th>引擎编号</th>
+                    <th>车架编号</th>
+                    <th>行驶里程</th>
+                    <th>所属单位</th>
+                    <th>报废状态</th>
+                    <th>车辆状态</th>
+                    <th>操作</th>
+                    <th>
+                        <input type="checkbox" id="checkAll" ng-model="checkAll"/>
+                        <label for="checkAll"></label>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="detail in pageBean.content">
+                    <td>{{detail.carId}}</td>
+                    <td><img width="50px" height="50px" src="{{detail.carImg}}" title="无内容"/></td>
+                    <td>{{detail.licenseId}}</td>
+                    <td>{{detail.typeId}}</td>
+                    <td>{{detail.TerminalNumber}}</td>
+                    <td>{{detail.engineNumber}}</td>
+                    <td>{{detail.chassisNumber}}</td>
+                    <td>{{detail.totalKilometers}}</td>
+                    <td>{{detail.companyUnits}}</td>
+                    <td>{{detail.scrapVehicle}}</td>
+                    <td>{{detail.vehicleStatus}}</td>
+                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addDetail"
+                           ng-click="updateDetail(detail)">编辑</a></td>
+                    <td>
+                        <input type="checkbox" id="{{detail.carId}}" ng-checked="checkAll"/>
+                        <label for="{{detail.carId}}"></label>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="11"></td>
+                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addDetail"
+                           ng-click="addDetail()">添加</a></td>
+                    <td><a class="btn-flat waves-effect waves-purple" ng-click="deleteDetail()">删除</a></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col l10 offset-l1 center">
+            <ul class="pagination">
+                <li ng-class="isAvaliable('left')"><a
+                        ng-click="jumpTo(pageBean.currentPage-1)"><i class="material-icons">chevron_left</i></a>
+                </li>
+                <li class="active"><a>{{pageBean.currentPage}}</a></li>
+                <li ng-class="isAvaliable('right')"><a
+                        ng-click="jumpTo(pageBean.currentPage+1)"><i
+                        class="material-icons">chevron_right</i></a>
+                </li>
+                <li>
+                    <div class="input-field" style="height: inherit;margin: 0px">
+                        <input id="jumpPageNumber" type="number" style="width: 50px;height: inherit;margin: 0px"
+                               ng-model="jumpPageNumber">
+                        <label for="jumpPageNumber">共{{pageBean.totalPages}}页</label>
+                        <a class="btn-flat waves-effect waves-purple" style="height: inherit;"
+                           ng-click="jumpTo(jumpPageNumber)">跳转</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="addDetail" class="modal modal-fixed-footer">
+        <form action="" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="row">
+                    <input type="hidden" type="text" ng-model="detail.carId" name="carId"/>
+                    <div class="file-field input-field col s6">
+                        <div class="btn waves-effect waves-purple">
+                            <span>文件</span>
+                            <input type="file" name="carImg"/>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="选择车型照片">
+                        </div>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="licenseId" placeholder=" " type="text" name="licenseId" ng-model="detail.licenseId">
+                        <label for="licenseId">车牌号码</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="typeId" placeholder=" " name="typeId" type="text" ng-model="detail.typeId">
+                        <label for="typeId">车型编号</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="TerminalNumber" placeholder=" " name="TerminalNumber" type="text"
+                               ng-model="detail.TerminalNumber">
+                        <label for="TerminalNumber">终端编号</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="engineNumber" placeholder=" " name="engineNumber" type="text"
+                               ng-model="detail.engineNumber">
+                        <label for="engineNumber">引擎编号</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="chassisNumber" placeholder=" " type="text" name="chassisNumber"
+                               ng-model="detail.chassisNumber">
+                        <label for="chassisNumber">车架编号</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="totalKilometers" placeholder=" " type="text" name="totalKilometers"
+                               ng-model="detail.totalKilometers">
+                        <label for="totalKilometers">行驶里程</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="companyUnits" placeholder=" " type="text" name="companyUnits"
+                               ng-model="detail.companyUnits">
+                        <label for="companyUnits">所属单位</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="scrapVehicle" placeholder=" " type="text" name="scrapVehicle"
+                               ng-model="detail.scrapVehicle">
+                        <label for="scrapVehicle">报废状态</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="vehicleStatus" placeholder=" " type="text" name="vehicleStatus"
+                               ng-model="detail.vehicleStatus">
+                        <label for="vehicleStatus">车辆状态</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="modal-action modal-close waves-effect waves-purple btn-flat">取消</a>
+                <button class="modal-action modal-close waves-effect waves-purple btn-flat" type="submit">确认
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 
+<script model="application/javascript">
+    var deviceManage = angular.module('vehicleDetail', []);
+    deviceManage.controller('vehicleController', ['$scope', '$http', function ($scope, $http) {
+        /*  $scope.pageBean = {
+              totalPages: 10,
+              currentPage: 10,
+              pageSize: 8,
+              models:
+                  [{
+                      "typeId": 1,
+                      "carName": "比亚迪F6",
+                      "carImg": null,
+                      "brand": "比亚迪",
+                      "carLevel": "中型车",
+                      "displacement": "1.5",
+                      "productionMode": "国产",
+                      "power": "汽油",
+                      "drive": "前驱",
+                      "transmissionCase": "手动"
+                  }],
+          };*/
+        $scope.searchKey = "";
+        $scope.pageBean = {};
+        $scope.detail = {};
+        $scope.addDetail = function () {
+            $scope.detail = {};
+        };
+        $scope.updateDetail = function (detail) {
+            angular.copy(detail, $scope.detail);//深复制
+        };
+        $scope.deleteDetail = function () {
+            var ids = '';
+            $('tbody>input[type=checkbox]').each(function () {
+                ids += this.id + ',';
+            });
+            $http.post({
+                url: 'https://www.runoob.com/try/angularjs/data/sites.php?ids=' + ids.substr(0, ids.length - 1),
+            }).then(function successCallback(response) {
+                if (response.data.success) {
+                    Materialize.toast("车辆详细删除成功", 1000);
+                    window.location.reload();
+                }
+                else
+                    Materialize.toast("车辆详细删除失败", 1000);
+            }, function errorCallback(response) {
+                Materialize.toast("车辆详细删除失败", 1000);
+            });
+        };
+        $scope.isAvaliable = function (side) {
+            if (side == 'left') {
+                return $scope.pageBean.currentPage == 1 ? {'disabled': true} : {'waves-effect': true};
+            } else if (side == 'right') {
+                return $scope.pageBean.currentPage == $scope.pageBean.totalPages ? {'disabled': true} : {'waves-effect': true};
+            }
+            return;
+        };
+        $scope.jumpTo = function (pageNumber) {
+            if (pageNumber < 1 || pageNumber > $scope.pageBean.totalPages) {
+                Materialize.toast('页码错误', 1000);
+                return;
+            }
+            $http({
+                method: 'GET',
+                url: "http://localhost:8080/prototype/queryCarMessage.do?searchKey=" + $scope.searchKey + "&&pageNumber=" + pageNumber,
+            }).then(function successCallback(response) {
+                if (response.data.totalPages > 0) {
+                    $scope.pageBean = response.data;
+                } else {
+                    Materialize.toast("未查找到!", 1000);
+                }
+            }, function errorCallback(response) {
+                Materialize.toast("网络异常,稍后再试!", 1000);
+            });
+        }
+        $('.modal').modal();
+        $scope.jumpTo(1);
+    }]);
+</script>
 </body>
 </html>
