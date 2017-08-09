@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <title>事故管理</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="../../../res/css/materialize.min.css">
-    <script type="application/javascript" src="../../../res/js/jquery-3.0.0.min.js"></script>
-    <script type="application/javascript" src="../../../res/js/materialize.min.js"></script>
-    <script type="application/javascript" src="../../../res/js/angular.min.js"></script>
+    <link rel="stylesheet" href="res/css/materialize.min.css">
+    <script type="application/javascript" src="res/js/jquery-3.0.0.min.js"></script>
+    <script type="application/javascript" src="res/js/materialize.min.js"></script>
+    <script type="application/javascript" src="res/js/angular.min.js"></script>
     <style>
         #container {
             margin-top: 40px;
@@ -169,6 +169,7 @@
                 };*/
         $scope.pageBean = {};
         $scope.accident = {};
+        $scope.searchKey=""
         $scope.addAccident = function () {
             $scope.accident = {};
         };
@@ -209,7 +210,7 @@
                 }
             $http({
                 method: 'GET',
-                url: 'http:localhost:8080/prototype/   ?searchKey=' + $scope.searchKey + '&&pageNumber=' + pageNumber,
+                url: 'http://localhost:8080/prototype/queryAccident.do?searchKey=' + $scope.searchKey + '&&pageNumber=' + pageNumber,
             }).then(function successCallback(response) {
                 if (response.data) {
                     $scope.pageBean = response.data;
@@ -230,6 +231,7 @@
                 close: '确认',
                 closeOnSelect: false,
             });
+        $scope.jumpTo(1);
     }]);
 </script>
 </body>
