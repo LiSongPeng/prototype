@@ -22,7 +22,10 @@
     <!--对车辆信息表的一系列的操作-->
     <!--查询汽车信息-->
 <select id="queryCarMessage" parameterType="int" resultType="entity.carMessage">
-    select * from carMessage where carId=#{carId}
+    SELECT * FROM carMessage
+    <if test="_parameter!=null and _parameter!=''">
+        WHERE licenseId =#{_parameter}
+    </if>
 </select>
 
 <!--事故记录表-->
@@ -43,7 +46,11 @@
 
     <select id="queryAllByText" parameterType="String" resultType="entity.accidentRecord">
 
-        SELECT * FROM accidentRecord WHERE accidentText LIKE "%"#{accidentText}"%"
+        SELECT * FROM accidentRecord
+        <if test="_parameter!=null and _parameter!=''">
+        WHERE licenseId =#{_parameter}
+         </if>
+
     </select>
 
 

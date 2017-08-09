@@ -11,7 +11,7 @@ import java.util.List;
 public interface carMessageDao {
     //车辆基本信息
 
-    public carMessage queryCarMessage(int carId);
+    public List<carMessage> queryCarMessage(String licenseId);
 
 
     //车辆事故
