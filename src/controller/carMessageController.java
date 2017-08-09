@@ -125,8 +125,10 @@ public class carMessageController {
         carTypePageBean aa=new carTypePageBean() ;
 
         PageHelper.startPage(pageNumber,5);
-
-        List<carType> list =carmessageDao.queryAll();
+        System.out.println(searchKey);
+        List<carType> list =carmessageDao.queryAllByBrand(searchKey);
+        //List<carType> list =carmessageDao.queryAllByBrand("比亚迪");
+        //List<carType> list =carmessageDao.queryCarType();
         PageInfo<carType> p=new PageInfo<carType>(list);
         aa.setTotalPages(p.getPages());
         aa.setPageSize(p.getPageSize());

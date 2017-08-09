@@ -97,6 +97,12 @@
         select * from carType
     </select>
 
+
+    <!--按照品牌车型信息-->
+    <select id="queryAllByBrand" parameterType="String" resultType="entity.carType">
+        select * from carType where carType.brand like "%"#{brand}"%"
+    </select>
+
     <!--保养记录表-->
 
     <resultMap type="entity.maintenanceRecord" id="maintenanceRecordMap">

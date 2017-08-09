@@ -6,7 +6,6 @@ public class PageUtil {
     private String order;//排序
     private String ordername;//排序列名称
     private String search;//搜索内容
-
     //这里是模糊查询,所以需要对search字段改造下
     public void setSearch(String search) {
         this.search = "%"+search+"%";

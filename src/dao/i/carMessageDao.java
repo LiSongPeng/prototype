@@ -34,6 +34,8 @@ public interface carMessageDao {
     public carType queryCarType(int typeId);
     public List<carType> queryAll();
 
+    public List<carType>  queryAllByBrand(String brand);
+
     //车辆保养
 
     public maintenanceRecord queryMaintenance(int maintenanceId);
