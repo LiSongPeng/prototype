@@ -3,8 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-</head>
-<body>
+    <link href="../../../res/css/embed/publicCss.css" rel="stylesheet">
+    <link href="../../../res/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../res/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../../res/css/bootstrap-select.css" rel="stylesheet">
+    <link href="../../../res/css/dataDictionary/dataDictionary.css" rel="stylesheet">
+    <script src="../../../res/js/jquery-3.0.0.min.js"></script>
+    <script src="../../../res/js/angular.min.js"></script>
+    <script src="../../../res/js/bootstrap.min.js"></script>
+    <script src="../../../res/js/bootstrap-select.js"></script>
 
+</head>
+
+<body>
+    <div class="container cardContainer" ng-app="myApp" ng-controller="myCtrl">
+           <div class="row">
+               <div class="col-sm-2 colleft">
+                   <div class="dleft">
+                       <div class="row">
+                           <div class="leftTop">
+                               <label >
+                                   <span><i class="glyphicon glyphicon-calendar" style=" font-size:20px;top:5px; padding: 0 2px"></i>
+                                       基础类别列表</span>
+                               </label>
+                           </div>
+                       </div>
+                       <div class="row">
+                            <div class="leftNavigation">
+                                <a href="#" id="{{dict.dicTypeId}}" class="list-group-item " ng-click="slctDicType($event)" ng-repeat="dict in dicType">{{dict.dicTypeName}}</a>
+                       </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-sm-10 colright">
+                   <div class="dright">
+                       <div class="row">
+                           <div class="rightTop">
+                               <lable>
+                                   <span><i class="glyphicon glyphicon-list-alt" style="font-size:20px;top:5px; padding: 0 2px"></i>
+                                       类别信息
+                                   </span>
+                               </lable>
+                           </div>
+                       </div>
+                       <div class="row">
+                           <div class="rightTool">
+                               <div class="btn-group">
+                                   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myaddModal">
+                                       <i class="glyphicon glyphicon-plus"></i> 添加信息</button>
+                                   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mydeleteModal" ng-click="delChecked()">
+                                       <i class="glyphicon glyphicon-trash"></i> 删除信息</button>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="row">
+                           <div class="rightInformation">
+                               <table class="table table-bordered table-hover">
+                                   <thead>
+                                   <tr>
+                                       <th style="width: 10px">
+                                           <input type="checkbox" ng-model="all">
+                                       </th>
+                                       <th>类别名称</th>
+                                       <th>类别内容</th>
+                                   </tr>
+                                   </thead>
+                                   <tbody>
+                                   <tr ng-repeat="slcdic in slctDicContent">
+                                       <td>
+                                           <input class="dicCkbx" type="checkbox" ng-checked="all" id="{{slcdic.dicCttId}}">
+                                       </td>
+                                       <td>{{slctDicName}}</td>
+                                       <td>{{slcdic.dicCttName}}</td>
+                                   </tr>
+                                   </tbody>
+                               </table>
+                               <div class="modal fade" id="myaddModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                   <div class="modal-dialog"  >
+                                       <div class="modal-content">
+                                           <div class="modal-header">
+                                               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                               <h4 class="modal-title" id="myModalLabel">添加信息</h4>
+                                           </div>
+                                           <div class="modal-body">
+                                               <form class="form-horizontal" role="form">
+                                                   <div class="form-group">
+                                                       <label class="col-sm-2 control-label">类别名称</label>
+                                                       <div class="col-sm-10">
+                                                           <p class="form-control-static">{{slctDicName}}</p>
+                                                       </div>
+                                                   </div>
+                                                   <div class="form-group">
+                                                       <label for="content" class="col-sm-2 control-label">类别内容</label>
+                                                       <div class="col-sm-10">
+                                                           <input type="text" class="form-control" id="content" placeholder="输入内容">
+                                                       </div>
+                                                   </div>
+                                               </form>
+                                           </div>
+                                           <div class="modal-footer">
+                                               <button type="submit" class="btn btn-default" data-dismiss="modal">提交</button>
+                                           </div>
+                                       </div><!-- /.modal-content -->
+                                   </div><!-- /.modal -->
+                               </div>
+                               <div class="modal fade" id="mydeleteModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                   <div class="modal-dialog"  >
+                                       <div class="modal-content">
+                                           <div class="modal-header">
+                                               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                               <h4 class="modal-title" id="myModalLabe2">删除信息</h4>
+                                           </div>
+                                           <div class="modal-body">
+                                               <form class="form-horizontal" role="form">
+                                                   <div class="form-group">
+                                                       <label class="col-sm-2 control-label">类别名称</label>
+                                                       <div class="col-sm-10">
+                                                           <p class="form-control-static" >{{slctDicName}}</p>
+                                                       </div>
+                                                   </div>
+                                                   <div class="form-group">
+                                                       <label class="col-sm-2 control-label">要删除第</label>
+                                                       <div class="col-sm-3">
+                                                           <p class="form-control-static" >{{delId.toString()}}条信息？</p>
+                                                       </div>
+
+                                                   </div>
+                                               </form>
+                                           </div>
+                                           <div class="modal-footer">
+                                               <button type="submit" class="btn btn-default" data-dismiss="modal">确认</button>
+                                           </div>
+                                       </div><!-- /.modal-content -->
+                                   </div><!-- /.modal -->
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+    </div>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope) {
+
+            $scope.slctDicId=null;
+            $scope.slctDicName=null;
+            $scope.getDicList=function () {
+                $scope.dicType=[
+                    {'dicTypeId':'1','dicTypeName':'车辆种类'},
+                    {'dicTypeId':'2','dicTypeName':'用车理由'},
+                    {'dicTypeId':'3','dicTypeName':'保密状态'}
+                ]
+
+            }
+            $scope.slctDicType=function (event) {
+                $(".list-group-item").removeClass('active');
+                $(event.target).addClass('active');
+                $scope.slctDicId=$(event.target).attr('id');
+                $scope.slctDicName=$(event.target).html();
+                if ($scope.slctDicId==1){
+                    $scope.slctDicContent=[
+                        {'dicCttId':'1','dicCttName':'bentian'},
+                        {'dicCttId':'2','dicCttName':'dazhong'},
+                        {'dicCttId':'3','dicCttName':'BYD'}
+                    ]
+                }else {
+                    $scope.slctDicContent=[
+                        {'dicCttId':'1','dicCttName':'nb'},
+                        {'dicCttId':'2','dicCttName':'lihai'},
+                        {'dicCttId':'3','dicCttName':'abcd'}
+                    ]
+                }
+            }
+            $scope.getDicList();
+            $scope.delChecked=function(){
+                $scope.delId=[];
+                $('.dicCkbx').each(function(){
+                    if($(this).is(':checked')){
+                        $scope.delId.push($(this).attr('id'));
+                    }
+                })
+            }
+
+        });
+
+    </script>
 </body>
 </html>
