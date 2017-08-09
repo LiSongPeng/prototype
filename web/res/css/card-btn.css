@@ -1,0 +1,36 @@
+
+.btn{
+    color: #fff;
+    border-radius: 0;
+}
+.btn:hover{
+    color: #fff;
+}
+.cardEffect-btn-red{
+    background-color: rgba(222, 30, 37, 0.92);
+}
+.cardEffect-btn-red:hover{
+    background-color: rgba(191, 27, 33, 0.96);
+}
+.cardEffect-btn-white{
+    background-color: #eee;
+    color: #000000;
+    border: 1px darkgray;
+}
+.cardEffect-btn-white:hover{
+    background-color: #ccc;
+    color: #000000;
+    border: 1px darkgray;
+}
+.cardEffect-btn-green{
+    background-color: rgba(37, 185, 67, 0.9);
+}
+.cardEffect-btn-green:hover{
+    background-color: rgb(37, 159, 61);
+}
+.cardEffect-btn-blue{
+    background-color: lightskyblue;
+}
+.cardEffect-btn-blue:hover{
+    background-color: rgba(91, 151, 181, 0.89);
+}
