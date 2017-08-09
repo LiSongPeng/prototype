@@ -43,7 +43,8 @@
 
     <select id="queryAllByText" parameterType="String" resultType="entity.accidentRecord">
 
-        SELECT * FROM accidentRecord WHERE accidentText LIKE "%"#{accidentText}"%"
+        SELECT * FROM accidentRecord WHERE licenseId =#{accidentText}
+
     </select>
 
 
