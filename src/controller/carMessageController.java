@@ -47,22 +47,22 @@ public class carMessageController {
 
 
     //事故记录表控制方法
-
+    //按照事故内容关键词进行检索
     @RequestMapping("/queryAccident.do")
-
-    public String queryAccident(Model model) throws  IOException {
+    @ResponseBody
+    public PageBean queryAccident(@RequestParam("searchKey")String searchKey,@RequestParam("pageNumber")int pageNumber) throws  IOException {
         System.out.println("hello!!");
-        model.addAttribute("message", "Hello World!");
 
-        accidentRecord ar = carmessageDao.queryAccident(1);
+        PageBean<accidentRecord> aa=new PageBean<>() ;
+        PageHelper.startPage(pageNumber,5);
+        List<accidentRecord> list =carmessageDao.queryAllByText(searchKey);
+        PageInfo<accidentRecord> p=new PageInfo(list);
+        aa.setTotalPages(p.getPages());
+        aa.setPageSize(p.getPageSize());
+        aa.setCurrentPage(p.getPageNum());
+        aa.setContent(list);
 
-        model.addAttribute("ar", ar);
-
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(ar);
-
-        System.out.println("事故记录："+json);
-        return "forward:/index.jsp";
+        return aa;
 
 
 
@@ -112,7 +112,14 @@ public class carMessageController {
 
     }
 
-    //车型记录表控制方法
+
+    /**
+     * 车型记录表控制方法
+     * 1、按照汽车品牌检索汽车
+     * 2、添加汽车品牌信息
+     * 3、删除汽车品牌信息
+     */
+
     //按照汽车品牌检索汽车
     @RequestMapping("/queryCarType.do")
     @ResponseBody
@@ -122,11 +129,42 @@ public class carMessageController {
         PageBean<carType> aa=new PageBean<>() ;
         PageHelper.startPage(pageNumber,5);
         List<carType> list =carmessageDao.queryAllByBrand(searchKey);
-        PageInfo<carType> p=new PageInfo<carType>(list);
+        PageInfo<carType> p=new PageInfo(list);
         aa.setTotalPages(p.getPages());
         aa.setPageSize(p.getPageSize());
         aa.setCurrentPage(p.getPageNum());
-        aa.setModels(list);
+        aa.setContent(list);
+
+        return aa;
+
+
+
+    }
+//添加汽车品牌信息
+@RequestMapping("/addCarType.do")
+@ResponseBody
+public PageBean addCarType(@RequestParam("searchKey")String searchKey, @RequestParam("pageNumber") int pageNumber) throws  IOException {
+
+   PageBean<carType> aa=new PageBean<>();
+
+
+
+    return aa;
+
+
+
+}
+
+
+
+    //删除汽车品牌信息
+    @RequestMapping("/deleteCarType.do")
+    @ResponseBody
+    public PageBean deleteCarType(@RequestParam("searchKey")String searchKey, @RequestParam("pageNumber") int pageNumber) throws  IOException {
+
+        PageBean<carType> aa=new PageBean<>();
+
+
 
         return aa;
 
@@ -134,7 +172,17 @@ public class carMessageController {
 
     }
 
-    //保养记录表控制方法
+
+
+    /**
+     * 保养记录表控制方法
+     * 1、按照汽车品牌检索汽车
+     * 2、添加汽车品牌信息
+     * 3、删除汽车品牌信息
+     */
+
+
+
 
     @RequestMapping("/queryMaintenance.do")
     @ResponseBody

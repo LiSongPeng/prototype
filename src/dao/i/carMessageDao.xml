@@ -41,6 +41,12 @@
         select * from accidentRecord where accidentId=#{accidentId}
     </select>
 
+    <select id="queryAllByText" parameterType="String" resultType="entity.accidentRecord">
+
+        SELECT * FROM accidentRecord WHERE accidentText LIKE "%"#{accidentText}"%"
+    </select>
+
+
  <!--年审记录表-->
 
 <resultMap type="entity.annualRecord" id="annualRecordMap">
