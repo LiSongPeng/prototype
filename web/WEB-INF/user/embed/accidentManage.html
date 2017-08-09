@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <title>事故管理</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="res/css/materialize.min.css">
-    <script type="application/javascript" src="res/js/jquery-3.0.0.min.js"></script>
-    <script type="application/javascript" src="res/js/materialize.min.js"></script>
-    <script type="application/javascript" src="res/js/angular.min.js"></script>
+    <link rel="stylesheet" href="../../../res/css/materialize.min.css">
+    <script type="application/javascript" src="../../../res/js/jquery-3.0.0.min.js"></script>
+    <script type="application/javascript" src="../../../res/js/materialize.min.js"></script>
+    <script type="application/javascript" src="../../../res/js/angular.min.js"></script>
     <style>
         #container {
             margin-top: 40px;
@@ -53,7 +53,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="accident in pageBean.accidents">
+                <tr ng-repeat="accident in pageBean.content">
                     <td>{{accident.accidentId}}</td>
                     <td>{{accident.licenseId}}</td>
                     <td>{{accident.accidentTime}}</td>
