@@ -169,7 +169,7 @@
                 };*/
         $scope.pageBean = {};
         $scope.accident = {};
-        $scope.searchKey=""
+        $scope.searchKey = ""
         $scope.addAccident = function () {
             $scope.accident = {};
         };
@@ -203,16 +203,15 @@
             return;
         };
         $scope.jumpTo = function (pageNumber) {
-            if ($scope.pageBean)
-                if (pageNumber < 1 || pageNumber > $scope.pageBean.totalPages) {
-                    Materialize.toast('页码错误', 1000);
-                    return;
-                }
+            if (pageNumber < 1 || pageNumber > $scope.pageBean.totalPages) {
+                Materialize.toast('页码错误', 1000);
+                return;
+            }
             $http({
                 method: 'GET',
                 url: 'http://localhost:8080/prototype/queryAccident.do?searchKey=' + $scope.searchKey + '&&pageNumber=' + pageNumber,
             }).then(function successCallback(response) {
-                if (response.data) {
+                if (response.data.totalPages>0) {
                     $scope.pageBean = response.data;
                 } else {
                     Materialize.toast("未查找到!", 1000);
