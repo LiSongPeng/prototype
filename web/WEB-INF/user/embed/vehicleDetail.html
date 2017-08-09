@@ -50,6 +50,7 @@
                     <th>所属单位</th>
                     <th>报废状态</th>
                     <th>车辆状态</th>
+                    <th>操作</th>
                     <th>
                         <input type="checkbox" id="checkAll" ng-model="checkAll"/>
                         <label for="checkAll"></label>
@@ -69,7 +70,7 @@
                     <td>{{detail.companyUnits}}</td>
                     <td>{{detail.scrapVehicle}}</td>
                     <td>{{detail.vehicleStatus}}</td>
-                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addDetial"
+                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addDetail"
                            ng-click="updateDetail(detail)">编辑</a></td>
                     <td>
                         <input type="checkbox" id="{{detail.carId}}" ng-checked="checkAll"/>
@@ -79,7 +80,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="10"></td>
+                    <td colspan="11"></td>
                     <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addDetail"
                            ng-click="addDetail()">添加</a></td>
                     <td><a class="btn-flat waves-effect waves-purple" ng-click="deleteDetail()">删除</a></td>
@@ -242,7 +243,7 @@
             }
             $http({
                 method: 'GET',
-                url: "http://localhost:8080/prototype/queryCarType.do?searchKey=" + $scope.searchKey + "&&pageNumber=" + pageNumber,
+                url: "http://localhost:8080/prototype/queryCarMessage.do?searchKey=" + $scope.searchKey + "&&pageNumber=" + pageNumber,
             }).then(function successCallback(response) {
                 if (response.data.totalPages > 0) {
                     $scope.pageBean = response.data;
