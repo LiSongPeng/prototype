@@ -6,7 +6,7 @@ public class PageBean<T> {
     private int  totalPages;
     private int currentPage;
     private int  pageSize;
-    private List<T> models;
+    private List<T> content;
 
     public int getTotalPages() {
         return totalPages;
@@ -32,11 +32,11 @@ public class PageBean<T> {
         this.pageSize = pageSize;
     }
 
-    public List<T> getModels() {
-        return models;
+    public List<T> getContent() {
+        return content;
     }
 
-    public void setModels(List<T> models) {
-        this.models = models;
+    public void setContent(List<T> content) {
+        this.content = content;
     }
 }
