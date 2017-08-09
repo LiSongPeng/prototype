@@ -9,12 +9,9 @@ import dao.i.carMessageDao;
 import entity.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -116,25 +113,20 @@ public class carMessageController {
     }
 
     //车型记录表控制方法
-
+    //按照汽车品牌检索汽车
     @RequestMapping("/queryCarType.do")
     @ResponseBody
-    public carTypePageBean queryCarType(@RequestParam("searchKey")String searchKey,@RequestParam("pageNumber") int pageNumber) throws  IOException {
-        System.out.println("hello!!");
+    public PageBean queryCarType(@RequestParam("searchKey")String searchKey, @RequestParam("pageNumber") int pageNumber) throws  IOException {
 
-        carTypePageBean aa=new carTypePageBean() ;
-
+        System.out.println("汽车品牌模糊检索!!");
+        PageBean<carType> aa=new PageBean<>() ;
         PageHelper.startPage(pageNumber,5);
-        System.out.println(searchKey);
         List<carType> list =carmessageDao.queryAllByBrand(searchKey);
-        //List<carType> list =carmessageDao.queryAllByBrand("比亚迪");
-        //List<carType> list =carmessageDao.queryCarType();
         PageInfo<carType> p=new PageInfo<carType>(list);
         aa.setTotalPages(p.getPages());
         aa.setPageSize(p.getPageSize());
         aa.setCurrentPage(p.getPageNum());
         aa.setModels(list);
-
 
         return aa;
 

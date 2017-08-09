@@ -2,11 +2,11 @@ package entity;
 
 import java.util.List;
 
-public class carTypePageBean {
+public class PageBean<T> {
     private int  totalPages;
     private int currentPage;
     private int  pageSize;
-    private List<carType> models;
+    private List<T> models;
 
     public int getTotalPages() {
         return totalPages;
@@ -32,11 +32,11 @@ public class carTypePageBean {
         this.pageSize = pageSize;
     }
 
-    public List<carType> getModels() {
+    public List<T> getModels() {
         return models;
     }
 
-    public void setModels(List<carType> models) {
+    public void setModels(List<T> models) {
         this.models = models;
     }
 }
