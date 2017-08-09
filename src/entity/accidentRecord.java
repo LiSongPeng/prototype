@@ -34,12 +34,12 @@ public class accidentRecord {
         this.accidentTime = accidentTime;
     }
 
-    public String getAcccidentText() {
+    public String getAccidentText() {
         return accidentText;
     }
 
-    public void setAcccidentText(String acccidentText) {
-        this.accidentText = acccidentText;
+    public void setAccidentText(String accidentText) {
+        this.accidentText = accidentText;
     }
 
     public String getProcessingState() {
