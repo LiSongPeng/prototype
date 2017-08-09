@@ -49,20 +49,22 @@ public class carMessageController {
     //事故记录表控制方法
 
     @RequestMapping("/queryAccident.do")
-
-    public String queryAccident(Model model) throws  IOException {
+    @ResponseBody
+    public PageBean queryAccident(@RequestParam("searchKey")String searchKey,@RequestParam("pageNumber")int pageNumber) throws  IOException {
         System.out.println("hello!!");
-        model.addAttribute("message", "Hello World!");
 
-        accidentRecord ar = carmessageDao.queryAccident(1);
+        PageBean<accidentRecord> aa=new PageBean<>() ;
+        PageHelper.startPage(pageNumber,5);
+        List<accidentRecord> list =carmessageDao.queryAllByText(searchKey);
+        PageInfo<accidentRecord> p=new PageInfo(list);
+        aa.setTotalPages(p.getPages());
+        aa.setPageSize(p.getPageSize());
+        aa.setCurrentPage(p.getPageNum());
+        aa.setModels(list);
 
-        model.addAttribute("ar", ar);
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(ar);
 
-        System.out.println("事故记录："+json);
-        return "forward:/index.jsp";
+        return aa;
 
 
 

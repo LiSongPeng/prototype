@@ -17,7 +17,7 @@ public interface carMessageDao {
     //车辆事故
 
     public accidentRecord queryAccident(int accidentId);
-
+    public List<accidentRecord>  queryAllByText(String accidentText);
 
     //车辆年审
 
