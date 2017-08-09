@@ -28,21 +28,27 @@ public class carMessageController {
     public void setCarmessageDao(carMessageDao carmessageDao) {
         this.carmessageDao = carmessageDao;
     }
+
+    /**
+     * 车辆信息表控制方法
+     * 1、按照车牌号码检索汽车
+     * 2、
+     * 3、
+     */
+
+    //1、按照车牌号码检索汽车
     @RequestMapping("/queryCarMessage.do")
     @ResponseBody
-    public String helloWorld(Model model) throws  IOException {
-        System.out.println("hello!!");
-        model.addAttribute("message", "Hello World!");
-
-        carMessage cm = carmessageDao.queryCarMessage(1);
-
-        model.addAttribute("cm", cm);
-
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(cm);
-
-        System.out.println("车辆基本信息："+json);
-        return "index";
+    public PageBean queryCarMessage(@RequestParam("searchKey") String searchKey,@RequestParam("pageNumber") int pageNumber) throws  IOException {
+        PageBean aa=new PageBean();
+        PageHelper.startPage(pageNumber,5);
+        List<carMessage> list =carmessageDao.queryCarMessage(searchKey);
+        PageInfo<carMessage> p=new PageInfo<>(list);
+        aa.setTotalPages(p.getPages());
+        aa.setPageSize(p.getPageSize());
+        aa.setCurrentPage(p.getPageNum());
+        aa.setContent(list);
+        return aa;
     }
 
 
