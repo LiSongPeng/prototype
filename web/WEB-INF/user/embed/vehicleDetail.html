@@ -43,12 +43,13 @@
                     <th>车辆照片</th>
                     <th>车牌号码</th>
                     <th>车型编号</th>
-                    <th>车型排量</th>
-                    <th>生产方式</th>
-                    <th>动力方式</th>
-                    <th>驱动方式</th>
-                    <th>变速箱</th>
-                    <th>操作</th>
+                    <th>终端编号</th>
+                    <th>引擎编号</th>
+                    <th>车架编号</th>
+                    <th>行驶里程</th>
+                    <th>所属单位</th>
+                    <th>报废状态</th>
+                    <th>车辆状态</th>
                     <th>
                         <input type="checkbox" id="checkAll" ng-model="checkAll"/>
                         <label for="checkAll"></label>
@@ -56,31 +57,32 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="model in pageBean.models">
-                    <td>{{model.typeId}}</td>
-                    <td>{{model.carName}}</td>
-                    <td><img width="50px" height="50px" src="{{model.carImg}}" title="无内容"/></td>
-                    <td>{{model.brand}}</td>
-                    <td>{{model.carLevel}}</td>
-                    <td>{{model.displacement}}</td>
-                    <td>{{model.productionMode}}</td>
-                    <td>{{model.power}}</td>
-                    <td>{{model.drive}}</td>
-                    <td>{{model.transmissionCase}}</td>
-                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addModel"
-                           ng-click="updateModel(model)">编辑</a></td>
+                <tr ng-repeat="detail in pageBean.content">
+                    <td>{{detail.carId}}</td>
+                    <td><img width="50px" height="50px" src="{{detail.carImg}}" title="无内容"/></td>
+                    <td>{{detail.licenseId}}</td>
+                    <td>{{detail.typeId}}</td>
+                    <td>{{detail.TerminalNumber}}</td>
+                    <td>{{detail.engineNumber}}</td>
+                    <td>{{detail.chassisNumber}}</td>
+                    <td>{{detail.totalKilometers}}</td>
+                    <td>{{detail.companyUnits}}</td>
+                    <td>{{detail.scrapVehicle}}</td>
+                    <td>{{detail.vehicleStatus}}</td>
+                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addDetial"
+                           ng-click="updateDetail(detail)">编辑</a></td>
                     <td>
-                        <input type="checkbox" id="{{model.typeId}}" ng-checked="checkAll"/>
-                        <label for="{{model.typeId}}"></label>
+                        <input type="checkbox" id="{{detail.carId}}" ng-checked="checkAll"/>
+                        <label for="{{detail.carId}}"></label>
                     </td>
                 </tr>
                 </tbody>
                 <tfoot>
                 <tr>
                     <td colspan="10"></td>
-                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addModel"
-                           ng-click="addModel()">添加</a></td>
-                    <td><a class="btn-flat waves-effect waves-purple" ng-click="deleteModel()">删除</a></td>
+                    <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addDetail"
+                           ng-click="addDetail()">添加</a></td>
+                    <td><a class="btn-flat waves-effect waves-purple" ng-click="deleteDetail()">删除</a></td>
                 </tr>
                 </tfoot>
             </table>
@@ -109,15 +111,11 @@
             </ul>
         </div>
     </div>
-    <div id="addModel" class="modal modal-fixed-footer">
+    <div id="addDetail" class="modal modal-fixed-footer">
         <form action="" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="row">
-                    <input type="hidden" type="text" ng-model="model.typeId" name="typeId"/>
-                    <div class="input-field col s6">
-                        <input id="carName" placeholder=" " type="text" name="carName" ng-model="model.carName">
-                        <label for="carName">车型名称</label>
-                    </div>
+                    <input type="hidden" type="text" ng-model="detail.carId" name="carId"/>
                     <div class="file-field input-field col s6">
                         <div class="btn waves-effect waves-purple">
                             <span>文件</span>
@@ -128,35 +126,47 @@
                         </div>
                     </div>
                     <div class="input-field col s6">
-                        <input id="brand" placeholder=" " name="brand" type="text" ng-model="model.brand">
-                        <label for="brand">车型品牌</label>
+                        <input id="licenseId" placeholder=" " type="text" name="licenseId" ng-model="detail.licenseId">
+                        <label for="licenseId">车牌号码</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="carLevel" placeholder=" " name="carLevel" type="text" ng-model="model.carLevel">
-                        <label for="carLevel">车型级别</label>
+                        <input id="typeId" placeholder=" " name="typeId" type="text" ng-model="detail.typeId">
+                        <label for="typeId">车型编号</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="displacement" placeholder=" " name="displacement" type="text"
-                               ng-model="model.displacement">
-                        <label for="displacement">车型排量</label>
+                        <input id="TerminalNumber" placeholder=" " name="TerminalNumber" type="text"
+                               ng-model="detail.TerminalNumber">
+                        <label for="TerminalNumber">终端编号</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="productionMode" placeholder=" " type="text" name="productionMode"
-                               ng-model="model.productionMode">
-                        <label for="productionMode">生产方式</label>
+                        <input id="engineNumber" placeholder=" " name="engineNumber" type="text"
+                               ng-model="detail.engineNumber">
+                        <label for="engineNumber">引擎编号</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="power" placeholder=" " type="text" name="power" ng-model="model.power">
-                        <label for="power">动力方式</label>
+                        <input id="chassisNumber" placeholder=" " type="text" name="chassisNumber"
+                               ng-model="detail.chassisNumber">
+                        <label for="chassisNumber">车架编号</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="drive" placeholder=" " type="text" name="drive" ng-model="model.drive">
-                        <label for="drive">驱动方式</label>
+                        <input id="totalKilometers" placeholder=" " type="text" name="totalKilometers"
+                               ng-model="detail.totalKilometers">
+                        <label for="totalKilometers">行驶里程</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="transmissionCase" placeholder=" " type="text" name="transmissionCase"
-                               ng-model="model.transmissionCase">
-                        <label for="transmissionCase">变速箱</label>
+                        <input id="companyUnits" placeholder=" " type="text" name="companyUnits"
+                               ng-model="detail.companyUnits">
+                        <label for="companyUnits">所属单位</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="scrapVehicle" placeholder=" " type="text" name="scrapVehicle"
+                               ng-model="detail.scrapVehicle">
+                        <label for="scrapVehicle">报废状态</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="vehicleStatus" placeholder=" " type="text" name="vehicleStatus"
+                               ng-model="detail.vehicleStatus">
+                        <label for="vehicleStatus">车辆状态</label>
                     </div>
                 </div>
             </div>
@@ -192,14 +202,14 @@
           };*/
         $scope.searchKey = "";
         $scope.pageBean = {};
-        $scope.model = {};
-        $scope.addModel = function () {
-            $scope.model = {};
+        $scope.detail = {};
+        $scope.addDetail = function () {
+            $scope.detail = {};
         };
-        $scope.updateModel = function (model) {
-            angular.copy(model, $scope.model);//深复制
+        $scope.updateDetail = function (detail) {
+            angular.copy(detail, $scope.detail);//深复制
         };
-        $scope.deleteModel = function () {
+        $scope.deleteDetail = function () {
             var ids = '';
             $('tbody>input[type=checkbox]').each(function () {
                 ids += this.id + ',';
@@ -208,13 +218,13 @@
                 url: 'https://www.runoob.com/try/angularjs/data/sites.php?ids=' + ids.substr(0, ids.length - 1),
             }).then(function successCallback(response) {
                 if (response.data.success) {
-                    Materialize.toast("车型信息删除成功", 1000);
+                    Materialize.toast("车辆详细删除成功", 1000);
                     window.location.reload();
                 }
                 else
-                    Materialize.toast("车型信息删除失败", 1000);
+                    Materialize.toast("车辆详细删除失败", 1000);
             }, function errorCallback(response) {
-                Materialize.toast("车型信息删除失败", 1000);
+                Materialize.toast("车辆详细删除失败", 1000);
             });
         };
         $scope.isAvaliable = function (side) {
