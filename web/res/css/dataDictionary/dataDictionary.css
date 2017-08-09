@@ -1,0 +1,60 @@
+.colleft{
+    height: 500px;
+}
+.colright{
+    height: 500px;
+}
+.leftTop{
+    background-color: #ccceee;
+    height: 72px;
+    font-size: 15px;
+    padding-right: 1px;
+    margin-bottom:1px
+}
+.leftTop label{
+    font-weight:normal;
+    line-height:30px
+}
+.leftNavigation{
+    height: 440px;
+    background-color: #a8a1ff;
+}
+.cardContainer{
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+}
+.rightTop{
+    background-color: #a8a1ff;
+    height:30px;
+    font-size: 15px;
+}
+.rightTop label{
+    font-weight:normal;
+    line-height:60px
+}
+.rightTool{
+    background-color: #dfe1ff;
+    height: 42px;
+}
+
+.rightInformation{
+    background-color: #f5ffec;
+    height:440px;
+}
+
+.btn-default{
+    width: 100px;
+    height: 42px;
+}
+th{
+    text-align: center;
+}
+.modal-title{
+    text-align: center;
+}
+.control-label{
+    text-align: left;
+}

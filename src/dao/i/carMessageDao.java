@@ -11,13 +11,13 @@ import java.util.List;
 public interface carMessageDao {
     //车辆基本信息
 
-    public carMessage queryCarMessage(int carId);
+    public List<carMessage> queryCarMessage(String licenseId);
 
 
     //车辆事故
 
     public accidentRecord queryAccident(int accidentId);
-
+    public List<accidentRecord>  queryAllByText(String accidentText);
 
     //车辆年审
 
@@ -33,6 +33,8 @@ public interface carMessageDao {
 
     public carType queryCarType(int typeId);
     public List<carType> queryAll();
+
+    public List<carType>  queryAllByBrand(String brand);
 
     //车辆保养
 

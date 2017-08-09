@@ -4,7 +4,7 @@ public class carMessage {
     public int carId;   //车辆Id
     public String carImg;   //车辆图片
     public String licenseId;    //车牌号码
-    public int typeId;    //车型
+    public int typeId;    //车型编号
     public int TerminalNumber; //终端绑定编号
     public String engineNumber;    //发动机编号
     public String chassisNumber;   //底盘车架编号

@@ -22,7 +22,10 @@
     <!--对车辆信息表的一系列的操作-->
     <!--查询汽车信息-->
 <select id="queryCarMessage" parameterType="int" resultType="entity.carMessage">
-    select * from carMessage where carId=#{carId}
+    SELECT * FROM carMessage
+    <if test="_parameter!=null and _parameter!=''">
+        WHERE licenseId =#{_parameter}
+    </if>
 </select>
 
 <!--事故记录表-->
@@ -40,6 +43,16 @@
     <select id="queryAccident" parameterType="int" resultType="entity.accidentRecord">
         select * from accidentRecord where accidentId=#{accidentId}
     </select>
+
+    <select id="queryAllByText" parameterType="String" resultType="entity.accidentRecord">
+
+        SELECT * FROM accidentRecord
+        <if test="_parameter!=null and _parameter!=''">
+        WHERE licenseId =#{_parameter}
+         </if>
+
+    </select>
+
 
  <!--年审记录表-->
 
@@ -95,6 +108,12 @@
     <!--查询所有车型信息-->
     <select id="queryAll" parameterType="int" resultType="entity.carType">
         select * from carType
+    </select>
+
+
+    <!--按照品牌车型信息-->
+    <select id="queryAllByBrand" parameterType="String" resultType="entity.carType">
+        select * from carType where carType.brand like "%"#{brand}"%"
     </select>
 
     <!--保养记录表-->

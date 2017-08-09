@@ -6,7 +6,7 @@ public class accidentRecord {
     private int accidentId; //事故记录Id
     private String licenseId; //车牌号码
     private Date accidentTime; //事故时间
-    private String acccidentText; //事故内容
+    private String accidentText; //事故内容
     private String processingState;   //处理状态
     private String claimStatus;  //理赔状态
 
@@ -34,12 +34,12 @@ public class accidentRecord {
         this.accidentTime = accidentTime;
     }
 
-    public String getAcccidentText() {
-        return acccidentText;
+    public String getAccidentText() {
+        return accidentText;
     }
 
-    public void setAcccidentText(String acccidentText) {
-        this.acccidentText = acccidentText;
+    public void setAccidentText(String accidentText) {
+        this.accidentText = accidentText;
     }
 
     public String getProcessingState() {
