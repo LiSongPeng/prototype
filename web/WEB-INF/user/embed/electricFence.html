@@ -1,10 +1,145 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../../../res/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../../../res/js/bootstrap.min.js"></script>
+    <script src="../../../res/js/jquery-3.0.0.min.js"></script>
+    <!--<script src="../../../res/js/angular.min.js"></script>-->
+    <!--<script src="../../../res/js/BMap.js"></script>-->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=EB5obNfdt8NXlRi4NyAsVsganppYga9v"></script>
+    <link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
+    <script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
+    <link rel="stylesheet" href="../../../res/css/embed/electricFence.css">
     <title>Title</title>
-</head>
-<body>
 
+</head>
+<body ng-app="eleFence" ng-controller="fenceCtrl">
+    <div class="left-container" >
+        <div class="">
+            <h3>创建围栏</h3>
+        </div>
+        <div class="btn-group">
+            <a draw-type="rectangle"  type="button" class="btn btn-default draw-toggle">矩形围栏</a>
+            <a draw-type="circle" type="button" class="btn btn-default draw-toggle">圆形围栏</a>
+            <a draw-type="polygon" type="button" class="btn btn-default draw-toggle">多边形围栏</a>
+        </div>
+        <br>
+        <div id="draw-status-btn-group" class="btn-group">
+            <a id="draw-cancel" type="button" class="btn btn-default">取消</a>
+            <a id="draw-edit" type="button" class="btn btn-default">编辑</a>
+            <a id="draw-submit" type="button" class="btn btn-default">提交</a>
+        </div>
+    </div>
+    <div class="right-container" id="map-container" >
+    </div>
+<script>
+    var map= new BMap.Map("map-container");
+    var point=new BMap.Point(117.041,39.108);
+    const YYAPIH="http://yingyan.baidu.com/api/v3/fence/";
+    map.centerAndZoom(point,11);
+    map.enableScrollWheelZoom();
+    map.addControl(new BMap.NavigationControl());
+    var overlays=[];
+    //    var marker=new BMap.Marker(point);
+//    map.addOverlay(marker);
+//    var label = new BMap.Label("未转换的GPS坐标（错误）",{offset:new BMap.Size(20,-10)});
+//    marker.setLabel(label);
+//
+//    translateCallback = function (data) {
+//        if(data.status===0){
+//            map.setCenter(data.points[0]);
+//            var bmarker=new BMap.Marker(data.points[0]);
+//            map.addOverlay(bmarker);
+//            var blabel = new BMap.Label("转换后的GPS坐标（true）",{offset:new BMap.Size(20,-10)});
+//            bmarker.setLabel(blabel);
+//        }
+//    }
+//    var convertor = new BMap.Convertor();
+//    var pointArr = [];
+//    pointArr.push(point);
+//    convertor.translate(pointArr, 1, 5, translateCallback);
+
+    var styleOptions = {
+        strokeColor:"red",    //边线颜色。
+        fillColor:"red",            //填充颜色。当参数为空时，圆形将没有填充效果。
+        strokeWeight: 2,       //边线的宽度，以像素为单位。
+        strokeOpacity: 0.8,	   //边线透明度，取值范围0 - 1。
+        fillOpacity: 0.6,      //填充的透明度，取值范围0 - 1。
+        strokeStyle: 'solid' //边线的样式，solid或dashed。
+    }
+    var drawingManager = new BMapLib.DrawingManager(map,{
+        isOpen: false, //是否开启绘制模式
+        drawingToolOptions: {
+            anchor: BMAP_ANCHOR_TOP_RIGHT, //位置
+            offset: new BMap.Size(5, 5), //偏离值
+        },//是否显示工具栏
+        enableCalculate: false,
+        circleOptions: styleOptions, //圆的样式
+        polylineOptions: styleOptions, //线的样式
+        polygonOptions: styleOptions, //多边形的样式
+        rectangleOptions: styleOptions //矩形的样式
+    });
+    drawingManager.addEventListener('overlaycomplete',function (e) {
+        overlays.push(e.overlay);
+       drawingManager.close();
+    });
+    $(".draw-toggle").on("click",function (e) {
+        if(overlays.length>0){
+            alert("请先完成当前围栏编辑！");
+            return;
+        }
+        switch ($(this).attr('draw-type')){
+            case "circle":
+                drawingManager.setDrawingMode(BMAP_DRAWING_CIRCLE);
+                break;
+            case "rectangle":
+                drawingManager.setDrawingMode(BMAP_DRAWING_RECTANGLE);
+                break;
+            case "polygon":
+                drawingManager.setDrawingMode(BMAP_DRAWING_POLYGON);
+                break;
+            default:
+                return;
+        }
+        $("#draw-status-btn-group").css({"display":"inline-block"});
+        drawingManager.open();
+    });
+    $("#draw-cancel").on('click',function () {
+        if($("#draw-edit").hasClass("active")){
+            overlays[0].disableEditing();
+            $("#draw-edit").removeClass("active");
+        }
+        for(var i = 0; i < overlays.length; i++){
+            map.removeOverlay(overlays[i]);
+        }
+        overlays.length = 0;
+        $("#draw-status-btn-group").css({"display":"none"});
+        drawingManager.close();
+    });
+    $("#draw-edit").on('click',function () {
+        if($(this).hasClass("active")){
+            overlays[0].disableEditing();
+            $(this).removeClass("active");
+        }else{
+            overlays[0].enableEditing();
+            $(this).addClass("active");
+        }
+    });
+    $("#draw-submit").on('click',function () {
+        if($("#draw-edit").hasClass("active")){
+            overlays[0].disableEditing();
+            $("#draw-edit").removeClass("active");
+        }
+    })
+
+    var app=angular.module('eleFence',[]);
+    app.controller('fenceCtrl',['$scope','$rootScope',eleFenceCtrl])
+    function eleFenceCtrl($scope,$rootScope) {
+    }
+
+</script>
 </body>
 </html>

@@ -57,7 +57,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="model in pageBean.models">
+                <tr ng-repeat="model in pageBean.content">
                     <td>{{model.typeId}}</td>
                     <td>{{model.carName}}</td>
                     <td><img width="50px" height="50px" src="{{model.carImg}}" title="无内容"/></td>
@@ -137,11 +137,13 @@
                         <label for="carLevel">车型级别</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="displacement" placeholder=" " name="displacement" type="text" ng-model="model.displacement">
+                        <input id="displacement" placeholder=" " name="displacement" type="text"
+                               ng-model="model.displacement">
                         <label for="displacement">车型排量</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="productionMode" placeholder=" " type="text" name="productionMode" ng-model="model.productionMode">
+                        <input id="productionMode" placeholder=" " type="text" name="productionMode"
+                               ng-model="model.productionMode">
                         <label for="productionMode">生产方式</label>
                     </div>
                     <div class="input-field col s6">
@@ -153,7 +155,8 @@
                         <label for="drive">驱动方式</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="transmissionCase" placeholder=" " type="text" name="transmissionCase" ng-model="model.transmissionCase">
+                        <input id="transmissionCase" placeholder=" " type="text" name="transmissionCase"
+                               ng-model="model.transmissionCase">
                         <label for="transmissionCase">变速箱</label>
                     </div>
                 </div>
@@ -188,14 +191,14 @@
                       "transmissionCase": "手动"
                   }],
           };*/
-        $scope.searchKey="";
-        $scope.pageBean={};
+        $scope.searchKey = "";
+        $scope.pageBean = {};
         $scope.model = {};
         $scope.addModel = function () {
             $scope.model = {};
         };
         $scope.updateModel = function (model) {
-            angular.copy(model,$scope.model);//深复制
+            angular.copy(model, $scope.model);//深复制
         };
         $scope.deleteModel = function () {
             var ids = '';
@@ -216,24 +219,23 @@
             });
         };
         $scope.isAvaliable = function (side) {
-            if (side == 'left'){
-                return $scope.pageBean.currentPage == 1?{'disabled':true}:{'waves-effect':true};
-            } else if (side == 'right'){
-                return $scope.pageBean.currentPage == $scope.pageBean.totalPages?{'disabled':true}:{'waves-effect':true};
+            if (side == 'left') {
+                return $scope.pageBean.currentPage == 1 ? {'disabled': true} : {'waves-effect': true};
+            } else if (side == 'right') {
+                return $scope.pageBean.currentPage == $scope.pageBean.totalPages ? {'disabled': true} : {'waves-effect': true};
             }
             return;
         };
         $scope.jumpTo = function (pageNumber) {
-            if($scope.pageBean)
-                if (pageNumber < 1 || pageNumber > $scope.pageBean.totalPages) {
-                    Materialize.toast('页码错误', 1000);
-                    return;
-                }
+            if (pageNumber < 1 || pageNumber > $scope.pageBean.totalPages) {
+                Materialize.toast('页码错误', 1000);
+                return;
+            }
             $http({
-                method:'GET',
-                url: "http://localhost:8080/prototype/queryCarType.do?searchKey="+$scope.searchKey+"&&pageNumber="+pageNumber,
+                method: 'GET',
+                url: "http://localhost:8080/prototype/queryCarType.do?searchKey=" + $scope.searchKey + "&&pageNumber=" + pageNumber,
             }).then(function successCallback(response) {
-                if (response.data) {
+                if (response.data.totalPages > 0) {
                     $scope.pageBean = response.data;
                 } else {
                     Materialize.toast("未查找到!", 1000);

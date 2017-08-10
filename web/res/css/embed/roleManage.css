@@ -40,6 +40,9 @@
     content: "\f06e";
     font-family: FontAwesome;
 }
+.table-bot-btn-group>a{
+    margin: 0 10px 0 5px;
+}
 .myCheckBox{
     width: 25px;
     height: 25px;
