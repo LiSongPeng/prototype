@@ -28,6 +28,16 @@
     </if>
 </select>
 
+    <!--添加汽车信息-->
+    <insert id="addCarMessage" parameterType="entity.carMessage">
+        INSERT INTO carMessage(carImg,licenseId,typeId,TerminalNumber,engineNumber,chassisNumber,totalKilometers,companyUnits,scrapVehicle,vehicleStatus)
+        VALUES (#{carImg},#{licenseId},#{typeId},#{TerminalNumber},#{engineNumber},#{chassisNumber},#{totalKilometers},#{companyUnits},#{scrapVehicle},#{vehicleStatus})
+    </insert>
+
+    <!--<insert id="addCarMessage" parameterType="entity.carMessage">-->
+        <!--insert into carMessage (licenseId,typeId) values (#{licenseId},#{typeId});-->
+
+    <!--</insert>-->
 <!--事故记录表-->
 
 <resultMap type="entity.accidentRecord" id="accidentRecordMap">

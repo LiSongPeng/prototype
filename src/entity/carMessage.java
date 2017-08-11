@@ -2,7 +2,7 @@ package entity;
 
 public class carMessage {
     public int carId;   //车辆Id
-    public String carImg;   //车辆图片
+    public String carImg;   //车辆图
     public String licenseId;    //车牌号码
     public int typeId;    //车型编号
     public int TerminalNumber; //终端绑定编号
@@ -58,9 +58,7 @@ public class carMessage {
         return engineNumber;
     }
 
-    public void setEngineNumber(String engineNumber) {
-        this.engineNumber = engineNumber;
-    }
+    public void setEngineNumber(String engineNumber) { this.engineNumber = engineNumber; }
 
     public String getChassisNumber() {
         return chassisNumber;

@@ -3,6 +3,7 @@ package dao.i;
 
 import entity.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,7 +13,8 @@ public interface carMessageDao {
     //车辆基本信息
 
     public List<carMessage> queryCarMessage(String licenseId);
-
+    @Autowired
+    public void addCarMessage(carMessage carmessage);
 
     //车辆事故
 
