@@ -13,8 +13,12 @@ public interface carMessageDao {
     //车辆基本信息
 
     public List<carMessage> queryCarMessage(String licenseId);
-    @Autowired
+
     public void addCarMessage(carMessage carmessage);
+
+    public void deleteCarMessage();
+
+    public void updateCarMapping();
 
     //车辆事故
 
