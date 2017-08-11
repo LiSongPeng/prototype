@@ -33,23 +33,11 @@ import java.util.UUID;
 @Controller
 
 public class carMessageController {
-
-
-
-
-
     private carMessageDao carmessageDao;
-
-
-
     @Resource(name="carMessageDao")
     public void setCarmessageDao(carMessageDao carmessageDao) {
         this.carmessageDao = carmessageDao;
     }
-
-
-
-
     public carMessageDao getCarmessageDao() {
         return carmessageDao;
     }
@@ -132,7 +120,16 @@ public class carMessageController {
 
     }
 
+    //3、删除一条车辆信息
+    @RequestMapping("deleteCarMessage.do")
+    public String deleteCarMessage(){
 
+
+
+
+
+        return "";
+    }
 
 
 
