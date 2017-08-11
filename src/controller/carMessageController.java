@@ -10,7 +10,11 @@ import entity.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 
 import javax.annotation.Resource;
@@ -79,15 +83,24 @@ public class carMessageController {
 
     public String addCarMessage(@RequestParam("carImg") CommonsMultipartFile file,
                                 HttpServletRequest request){
-//        System.out.println("licenseId:"+carmessage.getLicenseId());
-//        System.out.println("getCarImg:"+carmessage.getCarImg());
 
+        MultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+        MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request);
         // 获得原始文件名
         String fileName = file.getOriginalFilename();
         System.out.println("原始文件名:" + fileName);
 
-        // 新文件名
+        // 新文件名·UUID含义是通用唯一识别码
         String newFileName = UUID.randomUUID() + fileName;
+        carMessage carmessage=new carMessage();
+        carmessage.setCarImg(newFileName);
+        carmessage.setChassisNumber(multipartRequest.getParameter("chassisNumber"));
+        carmessage.setCompanyUnits(multipartRequest.getParameter("companyUnits"));
+        carmessage.setEngineNumber(multipartRequest.getParameter("engineNumber"));
+        carmessage.setLicenseId(multipartRequest.getParameter("licenseId"));
+        carmessage.setTerminalNumber(Integer.parseInt(multipartRequest.getParameter("TerminalNumber")));
+        carmessage.setTotalKilometers(Float.parseFloat(multipartRequest.getParameter("totalKilometers")));
+        carmessage.setTypeId(Integer.parseInt(multipartRequest.getParameter("typeId")));
 
         // 获得项目的路径
         ServletContext sc = request.getSession().getServletContext();
@@ -112,16 +125,15 @@ public class carMessageController {
                 e.printStackTrace();
             }
         }
-
         System.out.println("上传图片到:" + path + newFileName);
-//        carmessageDao.addCarMessage(carmessage);
+        carmessageDao.addCarMessage(carmessage);
 
-
-
-
-        return "forward:/index.jsp";  //上传成功则跳转至此success.jsp页面
+        return "forward:/index.jsp";
 
     }
+
+
+
 
 
     //事故记录表控制方法

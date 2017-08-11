@@ -26,9 +26,9 @@ public class carMessage {
         return carId;
     }
 
-//    public void setCarId(int carId) {
-//        this.carId = carId;
-//    }
+    public void setCarId(int carId) {
+        this.carId = carId;
+    }
 
     public String getCarImg() {
         return carImg;
