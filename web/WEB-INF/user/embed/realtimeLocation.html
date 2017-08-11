@@ -50,10 +50,8 @@
                         <td>{{terminal.vehicle}}</td>
                         <td>{{terminal.id}}</td>
                         <td>
-                            <p>
-                                <input class="with-gap" name="radioGroup" type="radio" id="radio{{terminal.id}}"/>
-                                <label for="radio{{terminal.id}}"></label>
-                            </p>
+                            <a class="modal-action modal-close btn-flat waves-effect waves-purple"
+                               ng-click="confirm(terminal.id)">选中</a>
                         </td>
                     </tr>
                     </tbody>
@@ -62,9 +60,8 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a class="modal-action modal-close waves-effect waves-purple btn-flat" ng-click="confirm()">确认</a>
         <a class="modal-action modal-close waves-effect waves-purple btn-flat">取消</a>
-        <a class="waves-effect waves-purple btn-flat" ng-click="nextPage(pageBean.currentPage+1)">下一页</a>
+        <a class="waves-effect waves-purple btn-flat" ng-click="jumpTo(pageBean.currentPage+1)">下一页</a>
         <a class="btn-flat waves-effect waves-light">{{pageBean.currentPage}}页</a>
         <a class="waves-effect waves-purple btn-flat" ng-click="jumpTo(pageBean.currentPage-1)">上一页</a>
     </div>
@@ -82,7 +79,7 @@
         // LARGE类型
         type: BMAP_NAVIGATION_CONTROL_LARGE,
         // 启用显示定位
-        enableGeolocation: true
+        enableGeolocation: true,
     });
     map.addControl(navigationControl);
     // 添加定位控件
@@ -150,6 +147,7 @@
                 }],
         };
         $scope.searchKey = "";
+        $scope.terminalId;
         $scope.jumpTo = function (pageNumber) {
             if (pageNumber < 1 || pageNumber > $scope.pageBean.totalPages) {
                 Materialize.toast('页码错误', 1000);
@@ -169,8 +167,6 @@
             });
         };
         var intervelId, preMarker;
-        var preMarker;
-
         var longitude = 116.404, latitude = 39.915;
 
         function locateAndMoveTo() {//向后台取得选定终端的当前位置
@@ -197,7 +193,8 @@
 
         var mapRefreshRate = 1000;//后期从数据库获取
 
-        $scope.confirm = function () {
+        $scope.confirm = function (terminalId) {
+            $scope.terminalId = terminalId;
             if (intervelId)
                 window.clearInterval(intervelId);
             locateAndMoveTo();
