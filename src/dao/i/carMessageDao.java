@@ -12,7 +12,7 @@ public interface carMessageDao {
     //车辆基本信息
 
     public List<carMessage> queryCarMessage(String licenseId);
-
+    public void addCarMessage(carMessage carmessage);
 
     //车辆事故
 

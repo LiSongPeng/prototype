@@ -46,6 +46,7 @@
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" />
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" />
           <element id="library" level="project" name="Maven: org.freemarker:freemarker:2.3.22" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.5" />
         </element>
       </element>
     </root>
