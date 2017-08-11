@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <title>事故管理</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="res/css/materialize.min.css">
-    <script type="application/javascript" src="res/js/jquery-3.0.0.min.js"></script>
-    <script type="application/javascript" src="res/js/materialize.min.js"></script>
-    <script type="application/javascript" src="res/js/angular.min.js"></script>
+    <link rel="stylesheet" href="../../../res/css/materialize.min.css">
+    <script type="application/javascript" src="../../../res/js/jquery-3.0.0.min.js"></script>
+    <script type="application/javascript" src="../../../res/js/materialize.min.js"></script>
+    <script type="application/javascript" src="../../../res/js/angular.min.js"></script>
     <style>
         #container {
             margin-top: 40px;
@@ -53,7 +53,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="accident in pageBean.accidents">
+                <tr ng-repeat="accident in pageBean.content">
                     <td>{{accident.accidentId}}</td>
                     <td>{{accident.licenseId}}</td>
                     <td>{{accident.accidentTime}}</td>
@@ -169,7 +169,7 @@
                 };*/
         $scope.pageBean = {};
         $scope.accident = {};
-        $scope.searchKey=""
+        $scope.searchKey = ""
         $scope.addAccident = function () {
             $scope.accident = {};
         };
@@ -203,16 +203,15 @@
             return;
         };
         $scope.jumpTo = function (pageNumber) {
-            if ($scope.pageBean)
-                if (pageNumber < 1 || pageNumber > $scope.pageBean.totalPages) {
-                    Materialize.toast('页码错误', 1000);
-                    return;
-                }
+            if (pageNumber < 1 || pageNumber > $scope.pageBean.totalPages) {
+                Materialize.toast('页码错误', 1000);
+                return;
+            }
             $http({
                 method: 'GET',
                 url: 'http://localhost:8080/prototype/queryAccident.do?searchKey=' + $scope.searchKey + '&&pageNumber=' + pageNumber,
             }).then(function successCallback(response) {
-                if (response.data) {
+                if (response.data.totalPages > 0) {
                     $scope.pageBean = response.data;
                 } else {
                     Materialize.toast("未查找到!", 1000);
@@ -227,9 +226,13 @@
                 selectMonths: true,
                 selectYears: 15,
                 today: '今天',
-                clear: '清楚',
+                clear: '清除',
                 close: '确认',
                 closeOnSelect: false,
+                monthsFull: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                monthsShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                weekdaysFull: ['周日','周一', '周二', '周三', '周四', '周五', '周六'],
+                formatSubmit: 'yyyy-MM-dd',
             });
         $scope.jumpTo(1);
     }]);
