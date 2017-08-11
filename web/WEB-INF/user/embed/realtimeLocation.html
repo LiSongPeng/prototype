@@ -1,3 +1,4 @@
+<!-- author LiHuibo-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +36,8 @@
                         <td colspan="2">
                             <input type="text" ng-model="searchKey"/>
                         </td>
-                        <td><a class="waves-effect waves-purple btn-flat" ng-click="search()"></a></td>
+                        <td style="text-align: right;"><a class="waves-effect waves-purple btn-flat"
+                                                          ng-click="jumpTo(1)">搜索</a></td>
                     </tr>
                     <tr>
                         <th>车辆编号</th>
@@ -44,25 +46,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="terminal in pageBean.terminals">
+                    <tr ng-repeat="terminal in pageBean.content">
                         <td>{{terminal.vehicle}}</td>
                         <td>{{terminal.id}}</td>
                         <td>
-                            <input type="radio" name="terminal" id="{{terminal.id}}" ng-model="checked"/>
+                            <p>
+                                <input class="with-gap" name="radioGroup" type="radio" id="radio{{terminal.id}}"/>
+                                <label for="radio{{terminal.id}}"></label>
+                            </p>
                         </td>
                     </tr>
                     </tbody>
-                    <tfoot>
-                    <tr>
-                        <td>
-                            <a class="waves-effect waves-purple btn-flat" ng-click="previousPage()">上一页</a>
-                        </td>
-                        <td><span>{{pageBean.currentPage}}</span></td>
-                        <td>
-                            <a class="waves-effect waves-purple btn-flat" ng-click="nextPage()">下一页</a>
-                        </td>
-                    </tr>
-                    </tfoot>
                 </table>
             </div>
         </div>
@@ -70,6 +64,9 @@
     <div class="modal-footer">
         <a class="modal-action modal-close waves-effect waves-purple btn-flat" ng-click="confirm()">确认</a>
         <a class="modal-action modal-close waves-effect waves-purple btn-flat">取消</a>
+        <a class="waves-effect waves-purple btn-flat" ng-click="nextPage(pageBean.currentPage+1)">下一页</a>
+        <a class="btn-flat waves-effect waves-light">{{pageBean.currentPage}}页</a>
+        <a class="waves-effect waves-purple btn-flat" ng-click="jumpTo(pageBean.currentPage-1)">上一页</a>
     </div>
 </div>
 </body>
@@ -89,33 +86,33 @@
     });
     map.addControl(navigationControl);
     // 添加定位控件
-    var geolocationControl = new BMap.GeolocationControl();
-    var preMarker;
-    geolocationControl.addEventListener("locationSuccess", function (e) {
-        // 定位成功事件
-        var address = '';
-        address += e.addressComponent.province;
-        address += e.addressComponent.city;
-        address += e.addressComponent.district;
-        address += e.addressComponent.street;
-        address += e.addressComponent.streetNumber;
-        alert("当前定位地址为：" + address);
-        if (!e.overlay) {
-            var myIcon = new BMap.Icon("http://api.map.baidu.com/img/markers.png", new BMap.Size(22, 24), {
-                offset: new BMap.Size(12, 20), // 指定定位位置
-                imageOffset: new BMap.Size(1, 0 - 10 * 25) // 设置图片偏移
-            });
-            var marker = new BMap.Marker(e.point, {icon: myIcon});
-            map.removeOverlay(preMarker);
-            map.addOverlay(marker);
-            preMarker = marker;
-        }
-    });
-    geolocationControl.addEventListener("locationError", function (e) {
-        // 定位失败事件
-        alert(e.message);
-    });
-    map.addControl(geolocationControl);
+    /*    var geolocationControl = new BMap.GeolocationControl();
+        var preMarker;
+        geolocationControl.addEventListener("locationSuccess", function (e) {
+            // 定位成功事件
+            var address = '';
+            address += e.addressComponent.province;
+            address += e.addressComponent.city;
+            address += e.addressComponent.district;
+            address += e.addressComponent.street;
+            address += e.addressComponent.streetNumber;
+            alert("当前定位地址为：" + address);
+            if (!e.overlay) {
+                var myIcon = new BMap.Icon("http://api.map.baidu.com/img/markers.png", new BMap.Size(22, 24), {
+                    offset: new BMap.Size(12, 20), // 指定定位位置
+                    imageOffset: new BMap.Size(1, 0 - 10 * 25) // 设置图片偏移
+                });
+                var marker = new BMap.Marker(e.point, {icon: myIcon});
+                map.removeOverlay(preMarker);
+                map.addOverlay(marker);
+                preMarker = marker;
+            }
+        });
+        geolocationControl.addEventListener("locationError", function (e) {
+            // 定位失败事件
+            alert(e.message);
+        });
+        map.addControl(geolocationControl);*/
     var menu = new BMap.ContextMenu();
     var txtMenuItem = [
         {
@@ -131,18 +128,80 @@
     map.addContextMenu(menu);
     map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
     map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
-    /*    var point = new BMap.Point(116.404, 39.915);
-        map.centerAndZoom(point,15);*/
     var realTime = angular.module('realTime', []);
     realTime.controller('realTimeController', ['$scope', '$http', function ($scope, $http) {
-        $scope.search = function () {
-
+        $scope.pageBean = {
+            totalPages: 10,
+            currentPage: 10,
+            pageSize: 8,
+            content:
+                [{
+                    "vehicle": 1,
+                    "id": 2,
+                }, {
+                    "vehicle": 2,
+                    "id": 2,
+                }, {
+                    "vehicle": 3,
+                    "id": 2,
+                }, {
+                    "vehicle": 4,
+                    "id": 2,
+                }],
         };
-        $scope.previousPage = function () {
-
+        $scope.searchKey = "";
+        $scope.jumpTo = function (pageNumber) {
+            if (pageNumber < 1 || pageNumber > $scope.pageBean.totalPages) {
+                Materialize.toast('页码错误', 1000);
+                return;
+            }
+            $http({
+                method: 'GET',
+                //url: "http://localhost:8080/prototype/queryCarMessage.do?searchKey=" + $scope.searchKey + "&&pageNumber=" + pageNumber,
+            }).then(function successCallback(response) {
+                if (response.data.totalPages > 0) {
+                    $scope.pageBean = response.data;
+                } else {
+                    Materialize.toast("未查找到!", 1000);
+                }
+            }, function errorCallback(response) {
+                Materialize.toast("网络异常,稍后再试!", 1000);
+            });
         };
-        $scope.nextPage = function () {
+        var intervelId, preMarker;
+        var preMarker;
 
+        var longitude = 116.404, latitude = 39.915;
+
+        function locateAndMoveTo() {//向后台取得选定终端的当前位置
+            longitude += 0.001, latitude;
+            /*$http({
+                method: 'GET',
+                url: '',
+            }).then(function successCallback(response) {
+                if (response.data) {
+                    longitude = response.data.longitude;
+                    latitude = response.data.latitude;
+                }
+            }, function errorCallback(response) {
+                Materialize.toast("网络异常,稍后再试!", 1000);
+            });*/
+            var point = new BMap.Point(longitude, latitude);
+            var marker = new BMap.Marker(point);
+            if (preMarker)
+                map.removeOverlay(preMarker);
+            map.addOverlay(marker);
+            preMarker = marker;
+            map.centerAndZoom(point, 15);
+        }
+
+        var mapRefreshRate = 1000;//后期从数据库获取
+
+        $scope.confirm = function () {
+            if (intervelId)
+                window.clearInterval(intervelId);
+            locateAndMoveTo();
+            intervelId = window.setInterval(locateAndMoveTo, mapRefreshRate);//
         };
         $('.modal').modal({
             dismissible: false,
