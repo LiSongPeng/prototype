@@ -1,12 +1,16 @@
-html{height:100%}
+html{height:100%;  }
 body{height:100%;margin:0px;padding: 0px}
 .left-container{
     float: left;
-    width: 300px;
+    width: 303px;
     height: 100%;
     text-align: center;
     display: flex;
     flex-direction: column;
+    background-color: #353E58;
+    color: white;
+    padding-left: 3px;
+    box-shadow: inset 2px 0 2px 0 rgba(0,0,0,0.14),inset 1px 0 5px 0 rgba(0,0,0,0.12), 3px 0 1px -2px rgba(0,0,0,0.2) inset;
 }
 .left-top-container{
     height: auto;
@@ -37,45 +41,56 @@ label{
     transform-style: preserve-3d;
 }
 .btn-flipper{
+    height: 100%;
     position: relative;
-    height: 60px;
     transition: 0.6s;
     transform-style: preserve-3d;
 }
-.btn-flipper a.btn{
+.draw-btn-container{
+    height: 60px;
+    padding-left: 1px;
+}
+.draw-btn-container a.btn{
     width: 100px;
     height: 50px;
     line-height: 36px;
     vertical-align: middle;
+    color: white;
+    background-color: #337ab7;
 }
 .btn-flipper.rotated{
     transform: rotateX(180deg) ;
 }
+
 #draw-type-btn-group,
 #draw-status-btn-group{
-    width: 100%;
     height: 50px;
+}
+.front,.back{
+    width: 100%;
     position: absolute;
     left: 0;
     top: 0;
     backface-visibility: hidden;  /*重要*/
 }
 
-#draw-type-btn-group{
+.front{
     transform: rotateX(0deg);
     z-index: 2;
 }
-#draw-status-btn-group{
+.back{
     transform: rotateX(-180deg);
 }
 #fenceListGroup{
     display: block;
- }
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+}
 #fenceListGroup .fence-item-heading{
     height: 50px;
     padding: 0;
 }
  #fenceListGroup .fence-item-heading>a {
+     font-size: 16px;
      height: 100%;
      text-align: center;
      vertical-align: middle;
@@ -84,13 +99,14 @@ label{
      padding: 0;
      border-radius: 0;
      border: 0;
-     background: linear-gradient(#dddddd 10%,#eeeeee 30%,#eeeeee 70%,#dddddd 90%);
+     background: rgb(53,62,88);
+     color: white;
  }
 #fenceListGroup .fence-item-heading>a:focus{
     background-color: #FFFFFF;
 }
 #fenceListGroup .fence-item-heading>a:hover{
-    background-color: #eeeeee;
+    background-color: #48556A;
 }
  #fenceListGroup .panel{
      margin-top:0;
@@ -100,6 +116,8 @@ label{
      border-bottom: 1px solid #ffffff;
  }
 #fenceListGroup .panel-body{
+    background-color: #232E40;
+    color: white;
     height: 80px;
     padding: 0;
 }
@@ -109,7 +127,6 @@ label{
      margin: 0;
      line-height: 40px;
      vertical-align: middle;
-     background-color: #eeeeee;
  }
  #fenceListGroup .panel-body>.fence-button{
      height: 30px;
