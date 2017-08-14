@@ -3,8 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="../../../res/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../res/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../../res/css/bootstrap-select.css" rel="stylesheet">
+    <link href="../../../res/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <script src="../../../res/js/jquery-3.0.0.min.js"></script>
+    <script src="../../../res/js/angular.min.js"></script>
+    <script src="../../../res/js/bootstrap.min.js"></script>
+    <script src="../../../res/js/bootstrap-select.js"></script>
+    <script src="../../../res/js/bootstrap-datetimepicker.js"></script>
+    <script src="../../../res/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <link href="../../../res/css/embed/publicCss.css" rel="stylesheet">
 </head>
+<style>
+    .row{
+        padding:10px 25px 10px 25px;
+    }
+    .heading{
+
+        background-color: #5cfd90;
+        text-align: center;
+
+    }
+    .table th, .table td {
+        text-align: center;
+        vertical-align: middle!important;
+    }
+    .table-bordered th,
+    .table-bordered td {
+        border: 1px solid #73a8ee !important;
+    }
+
+</style>
 <body>
 
+   <div class=" container cardContainer" >
+        <div class="contentTop row">
+                <div class="col-sm-12 heading">
+                    <h3>领导审批</h3>
+                    <hr>
+                </div>
+        </div>
+       <div class="contentCenter row">
+            <table class="table table-hover">
+                <thead>
+                    <tr onclick="clickRowByInline(this)">
+                        <th>编号</th>
+                        <th>申请人</th>
+                        <th>审批状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr >
+                        <td>1</td>
+                        <td>Bangalore</td>
+                        <td>未审批</td>
+                        <td><a style="cursor:pointer" data-toggle="modal" data-target="#myaddModal">点击查看</a></td>
+                    </tr>
+                    <tr >
+                        <td>2</td>
+                        <td>Bangalore</td>
+                        <td>已审批</td>
+                        <td><a style="cursor:pointer" data-toggle="modal" data-target="#myaddModal">点击查看</a></td>
+                    </tr>
+                </tbody>
+            </table>
+       </div>
+   </div>
+   <div class="modal fade text-center"  id="myaddModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="display: inline-block; width: auto;" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">申请单</h4>
+            </div>
+            <div class="modal-body" style="overflow: auto; width: 1000px;">
+                <table class="table table-bordered table-responsive">
+                    <tbody>
+                    <tr class=“tab_tr>
+                        <th>申请人</th>
+                        <td colspan="2">王峰焰</td>
+                        <th>单位</th>
+                        <td colspan="2">理工大学</td>
+                        <th>日期</th>
+                        <td colspan="2">2017.1.20</td>
+                    </tr>
+                    <tr>
+                        <th>用车理由</th>
+                        <td colspan="4">回家</td>
+                        <th rowspan="2">出车时间</th>
+                        <th>用车时间</th>
+                        <td colspan="2">2017.1.30</td>
+                    </tr>
+                    <tr>
+                        <th>行车路径</th>
+                        <td colspan="4">天津 甘肃</td>
+                        <th>还车时间</th>
+                        <td colspan="2">2017.2.20</td>
+                    </tr>
+                    <tr>
+                        <th>用车区域</th>
+                        <td colspan="2">国内</td>
+                        <th>乘车人数</th>
+                        <td colspan="2">2</td>
+                        <th>是否保密</th>
+                        <td colspan="2">是</td>
+                    </tr>
+                    <tr>
+                        <th>申请人电话</th>
+                        <td colspan="8">13920097183</td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default" data-dismiss="modal">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script>
+
+
+</script>
 </body>
 </html>
