@@ -7,10 +7,10 @@
     <script src="../../../res/js/jquery-3.0.0.min.js"></script>
     <link href="../../../res/css/bootstrap.min.css" rel="stylesheet">
     <script src="../../../res/js/bootstrap.min.js"></script>
+    <script src="../../../res/js/angular.min.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=EB5obNfdt8NXlRi4NyAsVsganppYga9v"></script>
     <link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
     <script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
-    <script src="../../../res/js/angular.min.js"></script>
     <link rel="stylesheet" href="../../../res/css/embed/electricFence.css">
     <title>Title</title>
 
@@ -18,36 +18,21 @@
 <body ng-app="eleFence" ng-controller="fenceCtrl">
     <div class="left-container" >
         <div class="left-top-container">
-            <div class="">
-                <h3>创建围栏</h3>
-            </div>
-            <div class="draw-btn-container btn-flip-container">
-                <div class="btn-flipper">
-                    <div id="draw-type-btn-group" class="btn-group front">
-                        <a draw-type="rectangle" ng-click="drawFence($event)" type="button" class="btn btn-default draw-toggle">矩形围栏</a>
-                        <a draw-type="circle" ng-click="drawFence($event)" type="button" class="btn btn-default draw-toggle">圆形围栏</a>
-                        <a draw-type="polygon" ng-click="drawFence($event)" type="button" class="btn btn-default draw-toggle">多边形围栏</a>
-                    </div>
-                    <div id="draw-status-btn-group" class="btn-group back">
-                        <a id="draw-cancel" ng-click="drawCancel($event)"  type="button" class="btn btn-default">取消</a>
-                        <a id="draw-edit" ng-click="drawEdit($event)" type="button" class="btn btn-default">编辑</a>
-                        <a id="draw-submit" ng-click="drawSubmit($event)" type="button" class="btn btn-default">提交</a>
-                    </div>
-                </div>
+            <div class="ctrlbar-heading">
+                <div>电子围栏管理</div>
+                <div class="toggle-icon" ng-click="ctrlbarClps()"><i class="glyphicon glyphicon-chevron-down"></i></div>
             </div>
         </div>
         <div class="left-bot-container">
-            <div>
-                <h3>
-                    围栏列表
-                </h3>
+            <div class="left-bot-title">
+                围栏列表
             </div>
             <div class="panel-group" id="fenceListGroup" >
                 <div class="panel" ng-repeat="fence in fenceList" >
                         <div class="panel-heading fence-item-heading">
                             <a id="{{fence.id}}" class="btn btn-default"
                                data-parent="#fenceListGroup" ng-click="slctFence($event)" >
-                                <span>{{fence.name}}</span>
+                                <span><span class="glyphicon glyphicon-move"></span> {{fence.name}}</span>
                             </a>
                         </div>
                         <div id="{{'collapse'+fence.id}}" class="collapse panel-body">
@@ -69,10 +54,26 @@
                         </div>
                 </div>
             </div>
+            <div class="new-fence-btn ">
+                <span>+</span>
+                <div class="draw-btn-container btn-flip-container">
+                    <div class="btn-flipper">
+                        <div id="draw-type-btn-group" class="btn-group front">
+                            <a draw-type="rectangle" ng-click="drawFence($event)" type="button" class="btn  draw-toggle">矩形</a>
+                            <a draw-type="polygon" ng-click="drawFence($event)" type="button" class="btn  draw-toggle">多边形</a>
+                            <a draw-type="circle" ng-click="drawFence($event)" type="button" class="btn  draw-toggle">圆形</a>
+                        </div>
+                        <div id="draw-status-btn-group" class="btn-group back">
+                            <a id="draw-cancel" ng-click="drawCancel($event)"  type="button" class="btn ">取消</a>
+                            <a id="draw-edit" ng-click="drawEdit($event)" type="button" class="btn ">编辑</a>
+                            <a id="draw-submit" ng-click="drawSubmit($event)" type="button" class="btn ">提交</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="right-container" id="map-container" >
-    </div>
-    <script src="../../../res/js/embed/electricFence.js"></script>
+    <div class="right-container" id="map-container" ></div>
 </body>
+    <script src="../../../res/js/embed/electricFence.js"></script>
 </html>

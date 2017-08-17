@@ -1,37 +1,75 @@
 html{height:100%;  }
-body{height:100%;margin:0px;padding: 0px}
-.left-container{
-    float: left;
-    width: 303px;
-    height: 100%;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    background-color: #353E58;
-    color: white;
-    padding-left: 3px;
-    box-shadow: inset 2px 0 2px 0 rgba(0,0,0,0.14),inset 1px 0 5px 0 rgba(0,0,0,0.12), 3px 0 1px -2px rgba(0,0,0,0.2) inset;
-}
-.left-top-container{
-    height: auto;
-}
-.left-bot-container{
-    flex: 1;
-    overflow-y: auto;
-}
-
-#map-container{
-    height: 100%;
-}
+body{height:100%;margin:0px;padding: 0px;}
 label{
     max-width: inherit;
     margin-bottom: 0;
 }
-.left-top-container .btn-group{
-    display: inline-block;
-    margin: 5px auto;
+.left-container{
+    position: absolute;
+    left: 100px;
+    top: 20px;
+    width: 320px;
+    height: 570px;
+    text-align: center;
+    color: white;
+    z-index: 1;
+}
+.left-top-container{
+    height: 50px;
+    padding: 5px 0;
+    background-color: #518eab;
+    box-shadow:  0 3px 7px 0 rgba(0, 0, 0, 0.2), 0 4px 12px 0 rgba(0, 0, 0, 0.19);
+    z-index: 1;
+}
+.left-top-container i{
+    transition: 0.3s ease;
+    -moz-transition: 0.3s ease;
+    -webkit-transition: 0.3s ease;
+}
+.left-top-container i.rotated{
+    transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    -webkit-transform: rotate(-180deg);
+}
+.ctrlbar-heading{
+    font-size: 18px;
+    margin: 10px 0;
+}
+.toggle-icon{
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    right: 4px;
+    top: 5px;
+    line-height: 45px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    transition: 0.2s;
+}
+.toggle-icon.rotated{
+    transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+}
+#map-container{
+    height: 100%;
+}
+.left-bot-container{
+    box-shadow:  0 3px 7px 0 rgba(0, 0, 0, 0.2), 0 4px 12px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+    height: 520px;
+    z-index: 1;
+}
+.left-bot-title{
+    padding: 5px 0;
+    font-size: 20px;
+    color: #FFFFFF;
+    background-color: #4b7996;
 }
 .btn-flip-container{
+    margin: 0 auto;
     perspective: 500;
     -ms-perspective: 500;
     -moz-perspective: 500;
@@ -46,26 +84,11 @@ label{
     transition: 0.6s;
     transform-style: preserve-3d;
 }
-.draw-btn-container{
-    height: 60px;
-    padding-left: 1px;
-}
-.draw-btn-container a.btn{
-    width: 100px;
-    height: 50px;
-    line-height: 36px;
-    vertical-align: middle;
-    color: white;
-    background-color: #337ab7;
-}
 .btn-flipper.rotated{
     transform: rotateX(180deg) ;
 }
 
-#draw-type-btn-group,
-#draw-status-btn-group{
-    height: 50px;
-}
+
 .front,.back{
     width: 100%;
     position: absolute;
@@ -83,7 +106,8 @@ label{
 }
 #fenceListGroup{
     display: block;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    height: 360px;
+    overflow-y: auto;
 }
 #fenceListGroup .fence-item-heading{
     height: 50px;
@@ -99,25 +123,26 @@ label{
      padding: 0;
      border-radius: 0;
      border: 0;
-     background: rgb(53,62,88);
-     color: white;
+     background: white;
+     color: #727272;
  }
 #fenceListGroup .fence-item-heading>a:focus{
     background-color: #FFFFFF;
 }
 #fenceListGroup .fence-item-heading>a:hover{
-    background-color: #48556A;
+    background-color: #5786a3;
+    color: white;
 }
  #fenceListGroup .panel{
      margin-top:0;
      border-top: none;
      border-left: none;
      border-right: none;
-     border-bottom: 1px solid #ffffff;
+     border-bottom: 1px solid #eeeeee;
  }
 #fenceListGroup .panel-body{
-    background-color: #232E40;
-    color: white;
+    background-color: #FFFFFF;
+    color: #727272;
     height: 80px;
     padding: 0;
 }
@@ -146,3 +171,104 @@ label{
      vertical-align: middle;
      margin: 0px;
  }
+ .new-fence-btn{
+     width: 43px;
+     height: 43px;
+     position: absolute;
+     display: flex;
+     right: 15px;
+     bottom: 12px;
+     line-height: 45px;
+     font-size: 45px;
+     font-weight: 100;
+     text-align: center;
+     vertical-align: middle;
+     background-color: #00C853;
+     border-radius: 21.5px;
+     box-shadow:  1px 2px 5px 0 rgba(0, 0, 0, 0.4);
+     transition: 0.3s;
+     -moz-transition: 0.3s;
+     -webkit-transition: 0.3s;
+ }
+.new-fence-btn.drawing,
+.new-fence-btn:hover{
+    width: 290px;
+    background-color: #5bc0de;
+}
+.new-fence-btn>span{
+    position: absolute;
+    cursor: default;
+    width: 43px;
+    animation: rotateToShow 0.5s ease-in-out ;
+    -moz-animation: rotateToShow 0.5s ease-in-out ;
+    -webkit-animation: rotateToShow 0.5s ease-in-out ;
+}
+.new-fence-btn:hover>span,
+.new-fence-btn.drawing>span {
+    opacity:0;
+    animation: rotateToHide 0.4s ease-in ;
+    -moz-animation: rotateToHide 0.4s ease-in ;
+    -webkit-animation: rotateToHide 0.4s ease-in ;
+}
+.new-fence-btn .btn-group{
+    /*display: inline-block;*/
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+.draw-btn-container{
+    display: none;
+    height: 43px;
+    width: 246px;
+}
+@keyframes  rotateToShow {
+    0%{opacity:0;transform: rotate(360deg);}
+    100%{opacity:1;transform: rotate(0deg)}
+}
+@keyframes  rotateToHide {
+    0%{opacity:1;transform: rotate(360deg);}
+    100%{opacity: 0;transform: rotate(0deg)}
+}
+@keyframes  hideToShow {
+    0%{opacity: 0}
+    40%{opacity: 0}
+    100%{opacity: 1}
+}
+
+.new-fence-btn.drawing>.draw-btn-container,
+.new-fence-btn:hover>.draw-btn-container {
+    display: block;
+    animation: hideToShow 0.5s ease ;
+    -moz-animation: hideToShow 0.5s ease ;
+    -webkit-animation: hideToShow 0.5s ease ;
+    transition: 0.5s;
+    -moz-transition: 0.5s;
+    -webkit-transition: 0.5s;
+}
+#draw-type-btn-group,
+#draw-status-btn-group{
+    height: 43px;
+}
+.draw-btn-container a.btn{
+    width: 33%;
+    border: none;
+    height: 43px;
+    line-height: 30px;
+    vertical-align: middle;
+    color: white;
+    background-color: transparent;
+}
+.draw-btn-container .btn-group>.btn {
+    /*border: 1px solid #cccccc;*/
+    border-top: none;
+    border-bottom: none;
+}
+.draw-btn-container .btn-group>.btn:hover,
+.draw-btn-container .btn-group>.btn.active{
+    background-color: #2ea1dc;
+}
+.draw-btn-container .btn-group>.btn:active{
+    background-color: #2a4c80;
+    color: #FFFFFF;
+    border-color: transparent;
+}

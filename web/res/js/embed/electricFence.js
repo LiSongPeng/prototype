@@ -38,6 +38,31 @@ var eleApp=angular.module('eleFence',[]);
 eleApp.controller('fenceCtrl',['$scope','$http','$rootScope',eleFenceCtrl]);
 function eleFenceCtrl($scope,$http,$rootScope) {
     $scope.mapstatus="none";
+    $scope.fenceList=[
+        {id:1,name:'围栏1',type:'circle',monitor:'#allentity',overlay:{
+            center:{lng:117.041,lat:39.108},
+            radius:5000
+        }},
+        {id:3,name:'围栏2',type:'circle',monitor:'实体1',overlay:{
+            center:{lng:117.041,lat:39.108},
+            radius:2500.0
+        }},
+        {id:4,name:'围栏3',type:'polygon',monitor:'实体2',overlay:{
+            path:[{lng:117.1,lat:39.1},{lng:117.2,lat:39.1},{lng:117.2,lat:39.2},{lng:117.1,lat:39.2}]
+        }},
+        {id:5,name:'围栏4',type:'polygon',monitor:'实体2',overlay:{
+            path:[{lng:117.2,lat:39.2},{lng:117.3,lat:39.2},{lng:117.3,lat:39.3},{lng:117.2,lat:39.3}]
+        }},
+        {id:6,name:'围栏5',type:'polygon',monitor:'实体2',overlay:{
+            path:[{lng:117.1,lat:39.1},{lng:117.4,lat:39.2},{lng:117.4,lat:39.4},{lng:117.2,lat:39.4}]
+        }}
+    ];
+    $scope.ctrlbarClps=function(){
+
+        $(".left-bot-container").slideToggle(300);
+        $(".new-fence-btn").toggle();
+        $(".toggle-icon i").toggleClass("rotated");
+    };
     $scope.mapstatusReset=function () {
         if($scope.mapstatus=="new"){
             $("#draw-edit").removeClass("active");
@@ -58,26 +83,9 @@ function eleFenceCtrl($scope,$http,$rootScope) {
         $scope.mapstatus="none";
         return true;
     };
-
-    $scope.fenceList=[
-        {id:1,name:'围栏1',type:'circle',monitor:'#allentity',overlay:{
-            center:{lng:117.041,lat:39.108},
-            radius:5000
-        }},
-        {id:3,name:'围栏2',type:'circle',monitor:'实体1',overlay:{
-            center:{lng:117.041,lat:39.108},
-            radius:2500.0
-        }},
-        {id:4,name:'围栏3',type:'polygon',monitor:'实体2',overlay:{
-            path:[{lng:117.1,lat:39.1},{lng:117.2,lat:39.1},{lng:117.2,lat:39.2},{lng:117.1,lat:39.2}]
-        }}
-    ];
     $scope.drawFence=function (e) {
-//            if(overlays.length>0){
-//                alert("请先完成当前围栏编辑！");
-//                return;
-//            }
         $scope.mapstatusReset();
+        $(".new-fence-btn").addClass("drawing");
         $scope.mapstatus="new";
         $("#draw-type-btn-group>.btn").removeClass("active");
         switch ($(e.target).attr('draw-type')){
@@ -98,6 +106,7 @@ function eleFenceCtrl($scope,$http,$rootScope) {
     };
     $scope.drawCancel=function(e){
         $scope.mapstatusReset();
+        $(".new-fence-btn").removeClass("drawing");
     };
     $scope.drawEdit=function(e) {
         if($(e.target).hasClass("active")){
@@ -116,11 +125,25 @@ function eleFenceCtrl($scope,$http,$rootScope) {
         }
         var fence=overlays[0];
         console.log(fence instanceof BMap.Circle);
-        console.log(fence.getCenter().lng);
-        console.log(fence.getCenter().lat);
-        console.log(fence.getRadius());
         if (fence instanceof BMap.Circle){
-
+            var data={
+                name:"围栏1",
+                monitor:"#allentity",
+                overlay:{
+                    center:overlays[0].getCenter(),
+                    radius:overlays[0].getRadius()
+                }
+            };
+            console.log(data);
+            $http.post("http://localhost:3000/elecFence/addFence",data,{
+                headers:{'Content-Type': 'application/json;charset=utf-8'}
+            }).then(function (res) {
+                console.log("ok!");
+                console.log(res.data);
+            },function (res) {
+                console.log("wrong!");
+                console.log(res.data);
+            });
             alert("start!");
 
         }
@@ -141,19 +164,27 @@ function eleFenceCtrl($scope,$http,$rootScope) {
                         styleOptions);
                     overlays.push(ovlay);
                     map.addOverlay(ovlay);
+                    console.log(map.getViewport([ovlay.getCenter()]));
+                    map.setViewport(map.getViewport([ovlay.getCenter()],{
+                        zoomFactor:-6,
+                        margins: [30,30,30,30]
+                    }));
                 }else if($scope.fenceList[i].type=='polygon'){
                     var path=$scope.fenceList[i].overlay.path;
                     var ovlay=new BMap.Polygon(path,styleOptions);
                     overlays.push(ovlay);
                     map.addOverlay(ovlay);
+                    console.log(map.getViewport([ovlay.getPath()]));
+                    map.setViewport(map.getViewport(ovlay.getPath()));
+
                 }
             }
         }
-    }
+    };
     $scope.editFence=function (e) {
         overlays[0].enableEditing();
         $(e.target).parent().parent().addClass("rotated");
-    }
+    };
     $scope.cancelEditFence= function (e) {
         for(var i = 0; i < overlays.length; i++){
             map.removeOverlay(overlays[i]);
@@ -172,9 +203,9 @@ function eleFenceCtrl($scope,$http,$rootScope) {
                 overlays.push(ovlay);
                 map.addOverlay(ovlay);
             }
-        })
+        });
         $(e.target).parent().parent().removeClass("rotated");
-    }
+    };
     $scope.commitEditFence=function (e) {
         overlays[0].disableEditing();
         var id=$(e.target).parents(".panel-body").attr("id").substring(8);
