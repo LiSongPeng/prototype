@@ -1,6 +1,41 @@
 /**
  * Created by Letg4 on 2017/8/14.
  */
+$(".left-top-container").mousedown(function (e) {
+    vbool = true;
+    vHeight = e.pageY;
+    vWidth = e.pageX;
+    cHeight = vHeight - $(".left-container").offset().top;
+    cWdith = vWidth - $(".left-container").offset().left;
+    //alert("divshow" + $(".left-container").offset().top + " divvHeight" + vHeight);
+    //alert("高" + cHeight + " 宽" + cWdith);
+})
+$(document).mouseup(function () {
+    vbool = false;
+})
+var showWidth = $(".left-container").width();
+var showHeight = $(".left-container").height();
+var documentWidth = $(document).width();
+var documentHeight = $(document).height();
+$(document).mousemove(function (e) {
+    if (vbool) {
+        var divheight = e.pageY - cHeight;//窗口要移动到的位置
+        var divwidth = e.pageX - cWdith;//窗口要移动到的位置
+        if (divwidth < 5) {
+            divwidth = 5;
+        }
+        if (divheight < 10) {
+            divheight = 10;
+        }
+        if (divwidth > documentWidth - showWidth) {
+            divwidth = documentWidth - showWidth - 5;
+        }
+        if (divheight > documentHeight ) {
+            divheight = documentHeight  - 5;
+        }
+        $(".left-container").css({ "left": divwidth, "top": divheight });
+    }
+})
 var map= new BMap.Map("map-container");
 var point=new BMap.Point(117.041,39.108);
 const YYAPIH="http://yingyan.baidu.com/api/v3/fence/";
@@ -58,10 +93,16 @@ function eleFenceCtrl($scope,$http,$rootScope) {
         }}
     ];
     $scope.ctrlbarClps=function(){
-
-        $(".left-bot-container").slideToggle(300);
-        $(".new-fence-btn").toggle();
-        $(".toggle-icon i").toggleClass("rotated");
+        if(!$(".left-bot-container").is(":visible")){
+            $(".left-bot-container").slideDown(300,function(){
+                $(".new-fence-btn").fadeIn(300);
+            });
+            $(".toggle-icon i").removeClass("rotated");
+        }else {
+            $(".new-fence-btn").fadeOut(200);
+            $(".left-bot-container").slideUp(300);
+            $(".toggle-icon i").addClass("rotated");
+        }
     };
     $scope.mapstatusReset=function () {
         if($scope.mapstatus=="new"){
