@@ -96,10 +96,12 @@
                                   </tbody>
                               </table>
                             </div>
-                            <div class="form-group" id="Approvalopinions" style="display: none">
-                                <label  class="col-sm-2 control-label">审批意见</label>
-                                <div class="col-sm-10 ">
-                                    <input type="text" class="form-control"  ng-model="opinions2">
+                            <div class="form-group" id="Approvalopinions" >
+                                <div  style="display: block " textarea="center">
+                                    <label  class="control-label">审批意见</label>
+                                </div>
+                                <div>
+                                    <textarea  class="form-control"  placeholder="输入审批意见（选填）" ng-model="opinions1"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -112,16 +114,10 @@
                                             ng-click="agree()">不同意
                                 </label>
                             </div>
-
-                            <div class="form-group">
-                                <div class="TextBox collapse">
-                                    <textarea  class="form-control" rows="3" id="opinions" placeholder="输入审批意见（选填）" ng-model="opinions1"></textarea>
-                                     <br><a class="btn btn-default" id="hold"  ng-click="hold()">保存</a>
-                                </div>
-                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
+                        <button type="reset"  class="btn btn-primary" ng-click="reset()">重置</button>
                         <button type="submit" class="btn btn-default" data-dismiss="modal">提交</button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -140,14 +136,14 @@
                 $scope.slctApproveContent={'Applicant':'aaa','Company':'Google'}
             }
         }
-        $scope.agree=function(){
-            $(".TextBox").collapse("show");
-        }
-        $scope.hold=function(){
-            $(".TextBox").collapse("hide");
-            $("#Approvalopinions").css("display","block");
-            $scope.opinions2=$scope.opinions1;
-        }
+//        $scope.agree=function(){
+//            $(".TextBox").collapse("show");
+//        }
+//        $scope.hold=function(){
+//            $(".TextBox").collapse("hide");
+//            $("#Approvalopinions").css("display","block");
+//            $scope.opinions2=$scope.opinions1;
+//        }
 
 
     })
