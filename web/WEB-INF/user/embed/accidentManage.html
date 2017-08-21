@@ -211,7 +211,7 @@
                 method: 'GET',
                 url: 'http://localhost:8080/prototype/queryAccident.do?searchKey=' + $scope.searchKey + '&&pageNumber=' + pageNumber,
             }).then(function successCallback(response) {
-                if (response.data.totalPages>0) {
+                if (response.data.totalPages > 0) {
                     $scope.pageBean = response.data;
                 } else {
                     Materialize.toast("未查找到!", 1000);
@@ -226,9 +226,13 @@
                 selectMonths: true,
                 selectYears: 15,
                 today: '今天',
-                clear: '清楚',
+                clear: '清除',
                 close: '确认',
                 closeOnSelect: false,
+                monthsFull: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                monthsShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                weekdaysFull: ['周日','周一', '周二', '周三', '周四', '周五', '周六'],
+                formatSubmit: 'yyyy-MM-dd',
             });
         $scope.jumpTo(1);
     }]);

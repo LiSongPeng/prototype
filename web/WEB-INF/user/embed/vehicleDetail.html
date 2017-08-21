@@ -80,7 +80,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="11"></td>
+                    <td colspan="10"></td>
                     <td><a class="btn-flat waves-effect waves-purple modal-trigger" href="#addDetail"
                            ng-click="addDetail()">添加</a></td>
                     <td><a class="btn-flat waves-effect waves-purple" ng-click="deleteDetail()">删除</a></td>
@@ -180,9 +180,9 @@
     </div>
 </div>
 
-<script model="application/javascript">
-    var deviceManage = angular.module('vehicleDetail', []);
-    deviceManage.controller('vehicleController', ['$scope', '$http', function ($scope, $http) {
+<script type="application/javascript">
+    var vehicleDetail = angular.module('vehicleDetail', []);
+    vehicleDetail.controller('vehicleController', ['$scope', '$http', function ($scope, $http) {
         /*  $scope.pageBean = {
               totalPages: 10,
               currentPage: 10,

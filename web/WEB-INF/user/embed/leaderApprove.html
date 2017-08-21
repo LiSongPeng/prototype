@@ -3,8 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-</head>
-<body>
+    <link href="../../../res/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../res/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../../res/css/bootstrap-select.css" rel="stylesheet">
+    <link href="../../../res/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="../../../res/css/embed/publicCss.css" rel="stylesheet">
+    <link href="../../../res/css/embed/leaderApprove.css" rel="stylesheet">
+    <script src="../../../res/js/jquery-3.0.0.min.js"></script>
+    <script src="../../../res/js/angular.min.js"></script>
+    <script src="../../../res/js/bootstrap.min.js"></script>
+    <script src="../../../res/js/bootstrap-select.js"></script>
+    <script src="../../../res/js/bootstrap-datetimepicker.js"></script>
+    <script src="../../../res/js/bootstrap-datetimepicker.zh-CN.js"></script>
 
+</head>
+
+<body ng-app="myApp" ng-controller="leaderApprove">
+
+   <div class=" container cardContainer" >
+        <div class="contentTop row">
+                <div class="col-sm-12 heading">
+                    <h3>领导审批</h3>
+                    <hr>
+                </div>
+        </div>
+       <div class="contentCenter row">
+            <table class="table table-hover table1">
+                <thead>
+                    <tr onclick="clickRowByInline(this)">
+                        <th>编号</th>
+                        <th>申请人</th>
+                        <th>审批状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="slcdic in ApplicationList">
+                        <td>{{slcdic.Id}}</td>
+                        <td>{{slcdic.Applicant}}</td>
+                        <td>{{slcdic.State}}</td>
+                        <td><a  id="{{slcdic.Id}}" style="cursor:pointer" data-toggle="modal" data-target="#myaddModal" ng-click="slctDicType($event)">点击查看</a></td>
+                    </tr>
+                </tbody>
+            </table>
+       </div>
+   </div>
+   <div class="modal fade text-center"  id="myaddModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="display: inline-block; width: auto;" >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel" >申请单</h4>
+                    </div>
+                    <div class="modal-body" style="overflow: auto; width: 1000px;">
+                        <form  role="form">
+                            <div class="form-group">
+                              <table class="table table-bordered table-responsive">
+                                  <tbody>
+                                        <tr class=“tab_tr>
+                                            <th>申请人</th>
+                                            <td colspan="2">{{slctApproveContent.Applicant}}</td>
+                                            <th>单位</th>
+                                            <td colspan="2">{{slctApproveContent.Company}}</td>
+                                            <th>日期</th>
+                                            <td colspan="2">{{slctApproveContent.DateApplication}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>用车理由</th>
+                                            <td colspan="3">{{slctApproveContent.Reason}}</td>
+                                            <th rowspan="2">出车时间</th>
+                                            <th>用车时间</th>
+                                            <td colspan="2">{{slctApproveContent.UseDate}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>行车路径</th>
+                                            <td colspan="3">{{slctApproveContent.VehiclePath}}</td>
+                                            <th>还车时间</th>
+                                            <td colspan="2">{{slctApproveContent.ReturnDate}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>用车区域</th>
+                                            <td colspan="2">{{slctApproveContent.CarArea}}</td>
+                                            <th>乘车人数</th>
+                                            <td colspan="2">{{slctApproveContent.Numbers}}</td>
+                                            <th>是否保密</th>
+                                            <td colspan="2">{{slctApproveContent.secrecy}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>申请人电话</th>
+                                            <td colspan="8">{{slctApproveContent.PhoneNumber}}</td>
+                                        </tr>
+                                  </tbody>
+                              </table>
+                            </div>
+                            <div class="form-group" id="Approvalopinions" >
+                                <div  style="display: block " textarea="center">
+                                    <label  class="control-label">审批意见</label>
+                                </div>
+                                <div>
+                                    <textarea  class="form-control"  placeholder="输入审批意见（选填）" ng-model="opinions1"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="radio-inline">
+                                    <input type="radio" name="optionsRadiosinline" id="optionsRadios1" value="option1"
+                                           ng-click="agree()" >同意
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optionsRadiosinline" id="optionsRadios2"  value="option2"
+                                            ng-click="agree()">不同意
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset"  class="btn btn-primary" ng-click="reset()">重置</button>
+                        <button type="submit" class="btn btn-default" data-dismiss="modal">提交</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+   </div>
+<script>
+    angular.module('myApp',[]).controller('leaderApprove',function($scope){
+        $scope.ApplicationList=[
+            {'Id':'1','Applicant':'aaa','State':'Yes'},
+            {'Id':'2','Applicant':'bbb','State':'No'},
+            {'Id':'3','Applicant':'ccc','State':'No'}
+        ]
+        $scope.slctDicType=function (event) {
+            $scope.slctApproveId=$(event.target).attr('id');
+            if ($scope.slctApproveId==1){
+                $scope.slctApproveContent={'Applicant':'aaa','Company':'Google'}
+            }
+        }
+//        $scope.agree=function(){
+//            $(".TextBox").collapse("show");
+//        }
+//        $scope.hold=function(){
+//            $(".TextBox").collapse("hide");
+//            $("#Approvalopinions").css("display","block");
+//            $scope.opinions2=$scope.opinions1;
+//        }
+
+
+    })
+//   $(function(){
+//    $(":radio").click(function(){
+//        $(".TextBox").collapse("show")
+//    });
+//    $("#hold").click(function(){
+//        $(".TextBox").collapse("hide")
+
+//    });
+//
+//});
+//    function toggle(id){
+//        var tb=$("#"+id)
+//        if(tb.css("display")=='none') tb.css("display","block");
+//        //$rootScope.yijian=angular.copy($rootScope.yijian2);
+//        senddata();
+//
+//    }
+//
+//    function senddata(){
+//        var inputobj=$("#opinions").val();
+//        $("#firstname").val(inputobj);
+//    }
+
+</script>
 </body>
 </html>

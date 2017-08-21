@@ -9,31 +9,45 @@ import dao.i.carMessageDao;
 import entity.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
+
 
 @Controller
 
 public class carMessageController {
     private carMessageDao carmessageDao;
-
-    //车辆信息表控制方法
-
     @Resource(name="carMessageDao")
     public void setCarmessageDao(carMessageDao carmessageDao) {
         this.carmessageDao = carmessageDao;
+    }
+    public carMessageDao getCarmessageDao() {
+        return carmessageDao;
     }
 
     /**
      * 车辆信息表控制方法
      * 1、按照车牌号码检索汽车
-     * 2、
-     * 3、
+     * 2、添加一条车辆信息
+     * 3、删除一条车辆信息
+     * 4、修改一条车辆信息
      */
 
     //1、按照车牌号码检索汽车
@@ -50,6 +64,73 @@ public class carMessageController {
         aa.setContent(list);
         return aa;
     }
+
+
+    //2、添加一条车辆信息
+    @RequestMapping(value="addCarMessage.do",method = RequestMethod.POST)
+
+    public String addCarMessage(@RequestParam("carImg") CommonsMultipartFile file,
+                                HttpServletRequest request){
+
+        MultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+        MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request);
+        // 获得原始文件名
+        String fileName = file.getOriginalFilename();
+        System.out.println("原始文件名:" + fileName);
+
+        // 新文件名·UUID含义是通用唯一识别码
+        String newFileName = UUID.randomUUID() + fileName;
+        carMessage carmessage=new carMessage();
+        carmessage.setCarImg(newFileName);
+        carmessage.setChassisNumber(multipartRequest.getParameter("chassisNumber"));
+        carmessage.setCompanyUnits(multipartRequest.getParameter("companyUnits"));
+        carmessage.setEngineNumber(multipartRequest.getParameter("engineNumber"));
+        carmessage.setLicenseId(multipartRequest.getParameter("licenseId"));
+        carmessage.setTerminalNumber(Integer.parseInt(multipartRequest.getParameter("TerminalNumber")));
+        carmessage.setTotalKilometers(Float.parseFloat(multipartRequest.getParameter("totalKilometers")));
+        carmessage.setTypeId(Integer.parseInt(multipartRequest.getParameter("typeId")));
+
+        // 获得项目的路径
+        ServletContext sc = request.getSession().getServletContext();
+        // 上传位置
+        String path = sc.getRealPath("/img") + "/"; // 设定文件保存的目录
+        System.out.println("path="+path);
+
+        File f = new File(path);
+        if (!f.exists())
+            f.mkdirs();
+        if (!file.isEmpty()) {
+            try {
+                FileOutputStream fos = new FileOutputStream(path + newFileName);
+                InputStream in = file.getInputStream();
+                int b = 0;
+                while ((b = in.read()) != -1) {
+                    fos.write(b);
+                }
+                fos.close();
+                in.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("上传图片到:" + path + newFileName);
+        carmessageDao.addCarMessage(carmessage);
+
+        return "forward:/index.jsp";
+
+    }
+
+    //3、删除一条车辆信息
+    @RequestMapping("deleteCarMessage.do")
+    public String deleteCarMessage(){
+
+
+
+
+
+        return "";
+    }
+
 
 
     //事故记录表控制方法

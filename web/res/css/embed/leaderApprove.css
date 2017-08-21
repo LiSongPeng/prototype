@@ -1,0 +1,39 @@
+.cardContainer{
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+    background-color: #e8eec9;
+}
+hr {
+    margin: 10px auto;
+    border: 0;
+    height: 2px;
+    background-color: #aac5cc;
+    width: 97%;
+}
+.row{
+    padding:10px 25px 10px 25px;
+}
+.heading {
+    text-align: center;
+}
+
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle!important;
+}
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #73a8ee !important;
+}
+.modal-content{
+    background-color: rgb(231, 237, 200);
+}
+.modal-header {
+    border-bottom: 1px solid #9E9E9E;
+}
+.modal-footer {
+    border-top: 1px solid #9E9E9E;
+}
