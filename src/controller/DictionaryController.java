@@ -21,10 +21,11 @@ public class DictionaryController {
     @Qualifier("dictionaryService")
     private DictionaryService dictionaryService;
 
-    @RequestMapping(value="/list")
+
+    @RequestMapping(value="/selectByDic_name")
     @ResponseBody
-    public List<Dictionary> list(){
-        List<Dictionary> dictionaryList=dictionaryService.showDictionary();
+    public List<Dictionary> list(@RequestParam String dic_name){
+        List<Dictionary> dictionaryList=dictionaryService.selectDictionaryByName(dic_name);
         return dictionaryList;
     }
     @RequestMapping(value="/add")
@@ -36,21 +37,8 @@ public class DictionaryController {
     }
     @RequestMapping(value="/delete")
     @ResponseBody
-    public String delete(@RequestParam Integer id){
-        dictionaryService.deleteDictionary(id);
+    public String delete(@RequestParam List<Integer> ids){
+        dictionaryService.deleteDictionaryByIds(ids);
         return "success";
-    }
-    @RequestMapping(value="/update")
-    @ResponseBody
-    public String update(@RequestParam Integer id,@RequestParam String dic_name,@RequestParam String dic_type){
-        Dictionary dictionary=new Dictionary(id,dic_name,dic_type);
-        dictionaryService.updateDictionary(dictionary);
-        return "success";
-    }
-    @RequestMapping(value="selectById")
-    @ResponseBody
-    public Dictionary selectById(@RequestParam Integer id){
-        Dictionary dictionary=dictionaryService.selectDictionaryById(id);
-        return dictionary;
     }
 }

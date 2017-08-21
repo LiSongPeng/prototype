@@ -43,7 +43,7 @@ public class carMessageController {
         PageBean aa=new PageBean();
         PageHelper.startPage(pageNumber,5);
         List<carMessage> list =carmessageDao.queryCarMessage(searchKey);
-        PageInfo<carMessage> p=new PageInfo<>(list);
+        PageInfo<carMessage> p=new PageInfo<carMessage>(list);
         aa.setTotalPages(p.getPages());
         aa.setPageSize(p.getPageSize());
         aa.setCurrentPage(p.getPageNum());
@@ -59,7 +59,7 @@ public class carMessageController {
     public PageBean queryAccident(@RequestParam("searchKey")String searchKey,@RequestParam("pageNumber")int pageNumber) throws  IOException {
         System.out.println("hello!!");
 
-        PageBean<accidentRecord> aa=new PageBean<>() ;
+        PageBean<accidentRecord> aa=new PageBean<accidentRecord>() ;
         PageHelper.startPage(pageNumber,5);
         List<accidentRecord> list =carmessageDao.queryAllByText(searchKey);
         PageInfo<accidentRecord> p=new PageInfo(list);
@@ -132,7 +132,7 @@ public class carMessageController {
     public PageBean queryCarType(@RequestParam("searchKey")String searchKey, @RequestParam("pageNumber") int pageNumber) throws  IOException {
 
         System.out.println("汽车品牌模糊检索!!");
-        PageBean<carType> aa=new PageBean<>() ;
+        PageBean<carType> aa=new PageBean<carType>() ;
         PageHelper.startPage(pageNumber,5);
         List<carType> list =carmessageDao.queryAllByBrand(searchKey);
         PageInfo<carType> p=new PageInfo(list);
@@ -151,7 +151,7 @@ public class carMessageController {
 @ResponseBody
 public PageBean addCarType(@RequestParam("searchKey")String searchKey, @RequestParam("pageNumber") int pageNumber) throws  IOException {
 
-   PageBean<carType> aa=new PageBean<>();
+   PageBean<carType> aa=new PageBean<carType>();
 
 
 
@@ -168,7 +168,7 @@ public PageBean addCarType(@RequestParam("searchKey")String searchKey, @RequestP
     @ResponseBody
     public PageBean deleteCarType(@RequestParam("searchKey")String searchKey, @RequestParam("pageNumber") int pageNumber) throws  IOException {
 
-        PageBean<carType> aa=new PageBean<>();
+        PageBean<carType> aa=new PageBean<carType>();
 
 
 

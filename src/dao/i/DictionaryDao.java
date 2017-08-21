@@ -11,8 +11,6 @@ import java.util.List;
 @Repository
 public interface DictionaryDao {
     int saveDictionary(Dictionary dictionary);
-    int deleteDictionaryById(Integer id);
-    List<Dictionary> listDictionary();
-    void updateDictionary(Dictionary dictionary);
-    Dictionary selectDictionaryById(Integer id);
+    int deleteDictionaryById(int id);
+    List<Dictionary> selectDictionaryByName(String name);
 }

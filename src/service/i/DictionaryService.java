@@ -9,9 +9,6 @@ import java.util.List;
  */
 public interface DictionaryService {
     void addDictionary(Dictionary dictionary);
-    void deleteDictionary(Integer id);
-    List<Dictionary> showDictionary();
-    void updateDictionary(Dictionary dictionary);
-    Dictionary selectDictionaryById(Integer id);
-
+    void deleteDictionaryByIds(List<Integer> ids);
+    List<Dictionary> selectDictionaryByName(String name);
 }

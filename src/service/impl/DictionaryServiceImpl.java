@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.i.DictionaryService;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -18,16 +19,14 @@ public class DictionaryServiceImpl implements DictionaryService {
     public void addDictionary(Dictionary dictionary){
         dictionaryDao.saveDictionary(dictionary);
     }
-    public void deleteDictionary(Integer id) {
-        dictionaryDao.deleteDictionaryById(id);
+    public void deleteDictionaryByIds(List<Integer> ids) {
+        Iterator it=ids.iterator();
+        while(it.hasNext()) {
+            int i = (Integer) it.next();
+            dictionaryDao.deleteDictionaryById(i);
+        }
     }
-    public List<Dictionary> showDictionary(){
-        return dictionaryDao.listDictionary();
-    }
-    public void updateDictionary(Dictionary dictionary){
-        dictionaryDao.updateDictionary(dictionary);
-    }
-    public Dictionary selectDictionaryById(Integer id) {
-        return dictionaryDao.selectDictionaryById(id);
+    public List<Dictionary> selectDictionaryByName(String name){
+        return (List<Dictionary>) dictionaryDao.selectDictionaryByName(name);
     }
 }
