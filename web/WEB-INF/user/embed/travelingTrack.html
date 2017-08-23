@@ -1,10 +1,210 @@
+<!-- author LiHuibo-->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../../../res/css/materialize.min.css">
+    <script type="application/javascript" src="../../../res/js/jquery-3.0.0.min.js"></script>
+    <script type="application/javascript" src="../../../res/js/materialize.min.js"></script>
+    <script type="application/javascript" src="../../../res/js/angular.min.js"/>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=Bvgj1Wo4jtGKViBuE9V3MQVQUc4EzdTo"></script>
+    <style type="text/css">
+        body, html, #container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+        #controlArea{
+            bottom: 30px;
+            right:30px;
+        }
+    </style>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=Bvgj1Wo4jtGKViBuE9V3MQVQUc4EzdTo"></script>
+    <title>车辆信息</title>
 </head>
-<body>
-
+<body ng-app="travelingTrack" ng-controller="travelingController">
+<div id="container"></div>
+<div id="controlArea" class="fixed-action-btn">
+    <a href="#chooseVehicle" class="btn-floating btn-large blue waves-effect waves-light" data-activates="modal modal-active"><i class="material-icons">mode_edit</i></a>
+</div>
+<div id="chooseVehicle" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <div class="row">
+            <div class="col s12 l12">
+                <table id="terminals" class="bordered highlight centered">
+                    <thead>
+                    <tr id="searchBar">
+                        <td colspan="4">
+                            <input type="text" ng-model="searchKey"/>
+                        </td>
+                        <td style="text-align: right;"><a class="waves-effect waves-purple btn-flat"
+                                                          ng-click="jumpTo(1)">搜索</a></td>
+                    </tr>
+                    <tr>
+                        <th>车辆编号</th>
+                        <th>终端编号</th>
+                        <th>操作</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="terminal in pageBean.content">
+                        <td>{{terminal.vehicle}}</td>
+                        <td>{{terminal.id}}</td>
+                        <td>
+                            <a class="modal-action modal-close btn-flat waves-effect waves-purple"
+                               ng-click="confirm(terminal.id)">选中</a>
+                        </td>
+                        <td>
+                            <input id="beginTime" type="text" class="datepicker"
+                                   ng-model="beginTime">
+                        </td>
+                        <td>
+                            <input id="endTime" type="text" class="datepicker"
+                                   ng-model="endTime">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-action modal-close waves-effect waves-purple btn-flat">取消</a>
+        <a class="waves-effect waves-purple btn-flat" ng-click="jumpTo(pageBean.currentPage+1)">下一页</a>
+        <a class="btn-flat waves-effect waves-light">{{pageBean.currentPage}}页</a>
+        <a class="waves-effect waves-purple btn-flat" ng-click="jumpTo(pageBean.currentPage-1)">上一页</a>
+    </div>
+</div>
 </body>
 </html>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("container");    // 创建Map实例
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
+    map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+    var navigationControl = new BMap.NavigationControl({
+        // 靠左上角位置
+        anchor: BMAP_ANCHOR_TOP_LEFT,
+        // LARGE类型
+        type: BMAP_NAVIGATION_CONTROL_LARGE,
+        // 启用显示定位
+        enableGeolocation: true,
+    });
+    map.addControl(navigationControl);
+/*    var menu = new bmap.contextmenu();
+    var txtmenuitem = [
+        {
+            text: '选择车辆显示轨迹',
+            callback: function () {
+                $('.modal').modal('open');
+            }
+        },
+    ];
+    for (var i = 0; i < txtmenuitem.length; i++) {
+        menu.additem(new bmap.menuitem(txtmenuitem[i].text, txtmenuitem[i].callback, 100));
+    }
+    map.addcontextmenu(menu);*/
+    map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    var travelingTrack = angular.module('travelingTrack', []);
+    travelingTrack.controller('travelingController', ['$scope', '$http', function ($scope, $http) {
+        $scope.pageBean = {
+            totalPages: 10,
+            currentPage: 10,
+            pageSize: 8,
+            content:
+                [{
+                    "vehicle": 1,
+                    "id": 2,
+                }, {
+                    "vehicle": 2,
+                    "id": 2,
+                }, {
+                    "vehicle": 3,
+                    "id": 2,
+                }, {
+                    "vehicle": 4,
+                    "id": 2,
+                }],
+        };
+        $scope.searchKey = "";
+        $scope.terminalId;
+        $scope.jumpTo = function (pageNumber) {
+            if (pageNumber < 1 || pageNumber > $scope.pageBean.totalPages) {
+                Materialize.toast('页码错误', 1000);
+                return;
+            }
+            $http({
+                method: 'GET',
+                //url: "http://localhost:8080/prototype/queryCarMessage.do?searchKey=" + $scope.searchKey + "&&pageNumber=" + pageNumber,
+            }).then(function successCallback(response) {
+                if (response.data.totalPages > 0) {
+                    $scope.pageBean = response.data;
+                } else {
+                    Materialize.toast("未查找到!", 1000);
+                }
+            }, function errorCallback(response) {
+                Materialize.toast("网络异常,稍后再试!", 1000);
+            });
+        };
+        var intervelId, preMarker;
+        var longitude = 116.404, latitude = 39.915;
+
+        function locateAndMoveTo() {//向后台取得选定终端的当前位置
+            longitude += 0.001, latitude;
+            /*$http({
+                method: 'GET',
+                url: '',
+            }).then(function successCallback(response) {
+                if (response.data) {
+                    longitude = response.data.longitude;
+                    latitude = response.data.latitude;
+                }
+            }, function errorCallback(response) {
+                Materialize.toast("网络异常,稍后再试!", 1000);
+            });*/
+            var point = new BMap.Point(longitude, latitude);
+            var marker = new BMap.Marker(point);
+            if (preMarker)
+                map.removeOverlay(preMarker);
+            map.addOverlay(marker);
+            preMarker = marker;
+            map.centerAndZoom(point, 15);
+        }
+
+        var mapRefreshRate = 1000;//后期从数据库获取
+
+        $scope.confirm = function (terminalId) {
+            $scope.terminalId = terminalId;
+            if (intervelId)
+                window.clearInterval(intervelId);
+            locateAndMoveTo();
+            intervelId = window.setInterval(locateAndMoveTo, mapRefreshRate);//
+        };
+        $('.modal').modal({
+            dismissible: false,
+        });
+        $('.datepicker').pickadate(
+            {
+                selectMonths: true,
+                selectYears: 15,
+                today: '今天',
+                clear: '清除',
+                close: '确认',
+                closeOnSelect: false,
+                monthsFull: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                monthsShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                weekdaysFull: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+                formatSubmit: 'yyyy-MM-dd',
+            }
+        );
+    }]);
+</script>

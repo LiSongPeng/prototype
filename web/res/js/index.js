@@ -2,7 +2,8 @@ angular.module('manager', ['ngRoute'])
     .controller('menuController', ['$scope', function ($scope) {
         $scope.link = "embed/main.html";
         $scope.navItems = ['首页'];//导航条
-        var lastClickedItem = null;
+        var lastClickedItem = null
+
         $scope.itemClicked = function (firstTitle, link, target, secondTitle) {
             if (secondTitle)
                 $scope.navItems = [firstTitle, secondTitle];

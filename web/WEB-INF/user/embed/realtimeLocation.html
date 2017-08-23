@@ -19,6 +19,10 @@
             margin: 0;
             font-family: "微软雅黑";
         }
+        #controlArea{
+            bottom: 30px;
+            right: 30px;
+        }
     </style>
     <script type="text/javascript"
             src="http://api.map.baidu.com/api?v=2.0&ak=Bvgj1Wo4jtGKViBuE9V3MQVQUc4EzdTo"></script>
@@ -26,6 +30,9 @@
 </head>
 <body ng-app="realTime" ng-controller="realTimeController">
 <div id="container"></div>
+<div id="controlArea" class="fixed-action-btn">
+    <a href="#chooseVehicle" class="btn-floating btn-large blue waves-effect waves-light" data-activates="modal modal-active"><i class="material-icons">mode_edit</i></a>
+</div>
 <div id="chooseVehicle" class="modal modal-fixed-footer">
     <div class="modal-content">
         <div class="row">
@@ -110,7 +117,7 @@
             alert(e.message);
         });
         map.addControl(geolocationControl);*/
-    var menu = new BMap.ContextMenu();
+/*    var menu = new BMap.ContextMenu();
     var txtMenuItem = [
         {
             text: '选择车辆进行显示',
@@ -122,7 +129,7 @@
     for (var i = 0; i < txtMenuItem.length; i++) {
         menu.addItem(new BMap.MenuItem(txtMenuItem[i].text, txtMenuItem[i].callback, 100));
     }
-    map.addContextMenu(menu);
+    map.addContextMenu(menu);*/
     map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
     map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
     var realTime = angular.module('realTime', []);
