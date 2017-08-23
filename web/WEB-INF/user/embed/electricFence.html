@@ -8,7 +8,6 @@
     <link href="../../../res/css/bootstrap.min.css" rel="stylesheet">
     <script src="../../../res/js/bootstrap.min.js"></script>
     <script src="../../../res/js/angular.min.js"></script>
-    <!--<script src="../../../res/js/BMap.js"></script>-->
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=EB5obNfdt8NXlRi4NyAsVsganppYga9v"></script>
     <link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
     <script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
@@ -19,179 +18,62 @@
 <body ng-app="eleFence" ng-controller="fenceCtrl">
     <div class="left-container" >
         <div class="left-top-container">
-            <div class="">
-                <h3>创建围栏</h3>
-            </div>
-            <div class="btn-flip-container">
-                <div class="btn-flipper">
-                    <div id="draw-type-btn-group" class="btn-group">
-                        <a draw-type="rectangle" ng-click="drawFence($event)" type="button" class="btn btn-default draw-toggle">矩形围栏</a>
-                        <a draw-type="circle" ng-click="drawFence($event)" type="button" class="btn btn-default draw-toggle">圆形围栏</a>
-                        <a draw-type="polygon" ng-click="drawFence($event)" type="button" class="btn btn-default draw-toggle">多边形围栏</a>
-                    </div>
-                    <div id="draw-status-btn-group" class="btn-group">
-                        <a id="draw-cancel" ng-click="drawCancel($event)"  type="button" class="btn btn-default">取消</a>
-                        <a id="draw-edit" ng-click="drawEdit($event)" type="button" class="btn btn-default">编辑</a>
-                        <a id="draw-submit" ng-click="drawSubmit($event)" type="button" class="btn btn-default">提交</a>
-                    </div>
-                </div>
+            <div class="ctrlbar-heading">
+                <div>电子围栏管理</div>
+                <div class="toggle-icon" ng-click="ctrlbarClps()"><i class="glyphicon glyphicon-chevron-up"></i></div>
             </div>
         </div>
         <div class="left-bot-container">
-            <div>
-                <h3>
-                    围栏列表
-                </h3>
+            <div class="left-bot-title">
+                围栏列表
             </div>
             <div class="panel-group" id="fenceListGroup" >
                 <div class="panel" ng-repeat="fence in fenceList" >
                         <div class="panel-heading fence-item-heading">
-                            <a class="btn btn-default" data-toggle="collapse" data-parent="#fenceListGroup" href="#{{'collapse'+fence.id}}">
-                                <span>{{fence.name}}</span>
+                            <a id="{{fence.id}}" class="btn btn-default"
+                               data-parent="#fenceListGroup" ng-click="slctFence($event)" >
+                                <span><span class="glyphicon glyphicon-move"></span> {{fence.name}}</span>
                             </a>
                         </div>
                         <div id="{{'collapse'+fence.id}}" class="collapse panel-body">
                             <div class="fence-info">
                                 监控对象:{{(fence.monitor=="#allentity")?"全部对象":fence.monitor}}
                             </div>
-                            <div class="fence-button">
-                                <div class="btn-group">
-                                    <a class="btn btn-danger">删除</a>
-                                    <a class="btn btn-primary">修改</a>
+                            <div class="fence-button btn-flip-container">
+                                <div class="btn-flipper">
+                                    <div class="front btn-group">
+                                        <a class="btn btn-danger">删除</a>
+                                        <a class="btn btn-primary" ng-click="editFence($event)">修改</a>
+                                    </div>
+                                    <div class="back btn-group">
+                                        <a class="btn btn-info"  ng-click="cancelEditFence($event)">取消</a>
+                                        <a class="btn btn-success" ng-click="commitEditFence($event)">完成</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                 </div>
             </div>
+            <div class="new-fence-btn ">
+                <span>+</span>
+                <div class="draw-btn-container btn-flip-container">
+                    <div class="btn-flipper">
+                        <div id="draw-type-btn-group" class="btn-group front">
+                            <a draw-type="rectangle" ng-click="drawFence($event)" type="button" class="btn  draw-toggle">矩形</a>
+                            <a draw-type="polygon" ng-click="drawFence($event)" type="button" class="btn  draw-toggle">多边形</a>
+                            <a draw-type="circle" ng-click="drawFence($event)" type="button" class="btn  draw-toggle">圆形</a>
+                        </div>
+                        <div id="draw-status-btn-group" class="btn-group back">
+                            <a id="draw-cancel" ng-click="drawCancel($event)"  type="button" class="btn ">取消</a>
+                            <a id="draw-edit" ng-click="drawEdit($event)" type="button" class="btn ">编辑</a>
+                            <a id="draw-submit" ng-click="drawSubmit($event)" type="button" class="btn ">提交</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="right-container" id="map-container" >
-    </div>
-<script>
-    var map= new BMap.Map("map-container");
-    var point=new BMap.Point(117.041,39.108);
-    const YYAPIH="http://yingyan.baidu.com/api/v3/fence/";
-    map.centerAndZoom(point,11);
-    map.enableScrollWheelZoom();
-    map.addControl(new BMap.NavigationControl());
-    var overlays=[];
-
-    var styleOptions = {
-        strokeColor:"red",    //边线颜色。
-        fillColor:"red",            //填充颜色。当参数为空时，圆形将没有填充效果。
-        strokeWeight: 2,       //边线的宽度，以像素为单位。
-        strokeOpacity: 0.8,	   //边线透明度，取值范围0 - 1。
-        fillOpacity: 0.6,      //填充的透明度，取值范围0 - 1。
-        strokeStyle: 'solid' //边线的样式，solid或dashed。
-    }
-    var drawingManager = new BMapLib.DrawingManager(map,{
-        isOpen: false, //是否开启绘制模式
-        drawingToolOptions: {
-            anchor: BMAP_ANCHOR_TOP_RIGHT, //位置
-            offset: new BMap.Size(5, 5), //偏离值
-        },//是否显示工具栏
-        enableCalculate: false,
-        circleOptions: styleOptions, //圆的样式
-        polylineOptions: styleOptions, //线的样式
-        polygonOptions: styleOptions, //多边形的样式
-        rectangleOptions: styleOptions //矩形的样式
-    });
-    drawingManager.addEventListener('overlaycomplete',function (e) {
-        overlays.push(e.overlay);
-       drawingManager.close();
-    });
-    var eleApp=angular.module('eleFence',[]);
-    eleApp.controller('fenceCtrl',['$scope','$http','$rootScope',eleFenceCtrl]);
-    function eleFenceCtrl($scope,$http,$rootScope) {
-        $scope.fenceList=[
-            {id:1,name:'围栏1',type:'circle',monitor:'#allentity'},
-            {id:3,name:'围栏2',type:'circle',monitor:'实体1'},
-            {id:4,name:'围栏3',type:'circle',monitor:'实体2'}
-        ];
-        $scope.drawFence=function (e) {
-            if(overlays.length>0){
-                alert("请先完成当前围栏编辑！");
-                return;
-            }
-            $("#draw-type-btn-group>.btn").removeClass("active");
-            switch ($(e.target).attr('draw-type')){
-                case "circle":
-                    drawingManager.setDrawingMode(BMAP_DRAWING_CIRCLE);
-                    break;
-                case "rectangle":
-                    drawingManager.setDrawingMode(BMAP_DRAWING_RECTANGLE);
-                    break;
-                case "polygon":
-                    drawingManager.setDrawingMode(BMAP_DRAWING_POLYGON);
-                    break;
-                default:
-                    return;
-            }
-//            $(e.target).addClass("active");
-//            $("#draw-status-btn-group").css({"display":"inline-block"});
-            $('.btn-flipper').addClass('rotated')
-            drawingManager.open();
-        };
-        $scope.drawCancel=function(e){
-            if($("#draw-edit").hasClass("active")){
-                overlays[0].disableEditing();
-                $("#draw-edit").removeClass("active");
-            }
-            for(var i = 0; i < overlays.length; i++){
-                map.removeOverlay(overlays[i]);
-            }
-            overlays.length = 0;
-            drawingManager.close();
-//            $("#draw-status-btn-group").css({"display":"none"});
-//            $("#draw-type-btn-group>.btn").removeClass("active");
-            $('.btn-flipper').removeClass('rotated');
-        };
-        $scope.drawEdit=function(e) {
-            if($(e.target).hasClass("active")){
-                overlays[0].disableEditing();
-                $(e.target).removeClass("active");
-            }else{
-                overlays[0].enableEditing();
-                $(e.target).addClass("active");
-            }
-        };
-        $scope.drawSubmit=function(e) {
-            if($("#draw-edit").hasClass("active")){
-                overlays[0].disableEditing();
-                $("#draw-edit").removeClass("active");
-            }
-            var fence=overlays[0];
-            console.log(fence instanceof BMap.Circle);
-            console.log(fence.getCenter().lng);
-            console.log(fence.getCenter().lat);
-            console.log(fence.getRadius());
-            if (fence instanceof BMap.Circle){
-                var data={
-                    ak:'GInueHbn4XvUxAzeFrlxN3uGA1W2aPBM',
-                    service_id:147802,
-                    monitored_person:'#allentity',
-                    longitude: overlays[0].getCenter().lng,
-                    latitude: overlays[0].getCenter().lat,
-                    radius: overlays[0].getRadius(),
-                    coord_type:'bd09ll'
-                }
-                alert("start!");
-                $http.post(YYAPIH+'createcirclefence/',data,{
-                    'Content-Type':'m'
-                }).then(
-                    function successCallBack(response) {
-                        console.log(response.data.status+response.data.message+"  编号"+response.data.fence_id);
-                        $scope.drawCancel(null);
-                    },
-                    function errorCallBack(response) {
-                        console.log(response.status);
-                        console.log(response.data.status+response.data.message);
-                    }
-                )
-            }
-        }
-    }
-
-</script>
+    <div class="right-container" id="map-container" ></div>
 </body>
+    <script src="../../../res/js/embed/electricFence.js"></script>
 </html>

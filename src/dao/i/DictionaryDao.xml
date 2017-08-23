@@ -10,20 +10,12 @@
     <delete id="deleteDictionaryById">
         delete from dic_form where id=#{id}
     </delete>
-    <select id="listDictionary" resultMap="dictionaryMap">
-        select * from dic_form
-    </select>
-    <select id="selectDictionaryById" parameterType="int" resultMap="dictionaryMap">
-        select * from dic_form where id=#{id}
+    <select id="selectDictionaryByName" parameterType="String" resultMap="dictionaryMap">
+        select * from dic_form where dic_name like #{dic_name}
     </select>
     <resultMap type="entity.Dictionary" id="dictionaryMap">
         <id column="id" property="id"/>
         <result column="dic_name" property="dic_name"/>
         <result column="dic_type" property="dic_type"/>
     </resultMap>
-    <update id="updateDictionary" parameterType="entity.Dictionary">
-        update dic_form
-        set dic_name=#{dic_name},dic_type=#{dic_type}
-        where id=#{id}
-    </update>
 </mapper>

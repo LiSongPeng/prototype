@@ -1,8 +1,258 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title></title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../../../res/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../res/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../../res/css/bootstrap-select.css" rel="stylesheet">
+    <link href="../../../res/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="../../../res/css/embed/publicCss.css" rel="stylesheet">
+    <link href="../../../res/css/embed/deployedVehicle.css" rel="stylesheet">
+    <script src="../../../res/js/jquery-3.0.0.min.js"></script>
+    <script src="../../../res/js/angular.min.js"></script>
+    <script src="../../../res/js/bootstrap.min.js"></script>
+    <script src="../../../res/js/bootstrap-select.js"></script>
+    <script src="../../../res/js/bootstrap-datetimepicker.js"></script>
+    <script src="../../../res/js/bootstrap-datetimepicker.zh-CN.js"></script>
 </head>
-<body>
+
+<body ng-app="myApp" ng-controller="vehicleDeploy">
+
+<div class=" container cardContainer" >
+    <div class="contentTop row">
+        <div class="col-sm-12 heading">
+            <h3>车辆派遣</h3>
+            <hr>
+        </div>
+    </div>
+    <div class="contentCenter row">
+        <table class="table table-hover table1">
+            <thead>
+            <tr onclick="clickRowByInline(this)">
+                <th>编号</th>
+                <th>申请人</th>
+                <th>审批结果</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="slcdic in ApplicationList">
+                <td>1</td>
+                <td>李明</td>
+                <td>已通过</td>
+                <td>
+                    <a  id="{{slcdic.Id}}" style="cursor:pointer" data-toggle="modal" data-target="#myaddModal1" ng-click="slctDicType($event)">申请单</a>
+                    &nbsp&nbsp&nbsp&nbsp<a style="cursor:pointer" data-toggle="modal" data-target="#myaddModal2" ng-click="slctDicType($event)">出车单</a>
+                    &nbsp&nbsp&nbsp&nbsp<a style="cursor:pointer" data-toggle="modal" data-target="#myaddModal3" ng-click="slctDicType($event)">还车单</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade text-center"  id="myaddModal1" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="display: inline-block; width: auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">申请单</h4>
+            </div>
+            <div class="modal-body" style="overflow: auto; width: 900px;">
+                <form  role="form">
+                    <div class="form-group">
+                        <table class="table table-bordered table-responsive">
+                            <tbody>
+                            <tr class=“tab_tr>
+                                <th>申请人</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                                <th>所属单位</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                                <th>联系电话</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>车辆种类</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                                <th>用车区域</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                                <th>用车理由</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>用车时间</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                                <th>还车时间</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                                <th>是否保密</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>乘车人数</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                                <th>行车路径</th>
+                                <td colspan="5">
+                                    <input class="intext" type="text">
+                                </td>
+
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<div class="modal fade text-center"  id="myaddModal2" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="display: inline-block; width: auto;" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabe2" >出车记录单</h4>
+            </div>
+            <div class="modal-body" style="overflow: auto; width: 900px;">
+                <form  role="form">
+                    <div class="form-group">
+                        <table class="table table-bordered table-responsive">
+                            <tbody>
+                            <tr class=“tab_tr>
+                                <th>领车人</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                                <th>出车里程</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                                <th>出车油量</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>驾驶员</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                                <th>驾驶员电话</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                                <th>驾驶员准驾车型</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>所派车辆</th>
+                                <td colspan="2">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optionsRadiosinline" id="optionsRadios1" value="option1"
+                                               ng-click="agree()" >普通
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optionsRadiosinline" id="optionsRadios2"  value="option2"
+                                               ng-click="agree()">紧急
+                                    </label>
+                                </td>
+                                <th>备注</th>
+                                <td colspan="5">
+                                    <input class="intext" type="text">
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<div class="modal fade text-center"  id="myaddModal3" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="display: inline-block; width: auto;" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabe3" >还车记录单</h4>
+            </div>
+            <div class="modal-body" style="overflow: auto; width: 900px;">
+                <form  role="form">
+                    <div class="form-group">
+                        <table class="table table-bordered table-responsive">
+                            <tbody>
+                            <tr class=“tab_tr>
+                                <th>还车油量</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                                <th>还车里程</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                                <th>验车人</th>
+                                <td colspan="2">
+                                    <input class="intext" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>是否完好</th>
+                                <td colspan="2">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optionsRadiosinline" id="optionsRadios1" value="option1"
+                                               ng-click="agree()" >是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optionsRadiosinline" id="optionsRadios2"  value="option2"
+                                               ng-click="agree()">否
+                                    </label>
+                                </td>
+                                <th>备注</th>
+                                <td colspan="5">
+                                    <input class="intext" type="text">
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default" data-dismiss="modal">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
 </body>
 </html>

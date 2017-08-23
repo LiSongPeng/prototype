@@ -46,4 +46,13 @@ public class Dictionary {
     public void setDic_type(String dic_type) {
         this.dic_type = dic_type;
     }
+
+    @Override
+    public String toString() {
+        return "Dictionary{" +
+                "id=" + id +
+                ", dic_name='" + dic_name + '\'' +
+                ", dic_type='" + dic_type + '\'' +
+                '}';
+    }
 }

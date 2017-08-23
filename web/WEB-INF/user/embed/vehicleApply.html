@@ -8,205 +8,204 @@
     <link href="../../../res/css/font-awesome.min.css" rel="stylesheet">
     <link href="../../../res/css/bootstrap-select.css" rel="stylesheet">
     <link href="../../../res/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="../../../res/css/embed/publicCss.css" rel="stylesheet">
+    <link href="../../../res/css/embed/vehicleApply.css" rel="stylesheet">
     <script src="../../../res/js/jquery-3.0.0.min.js"></script>
     <script src="../../../res/js/angular.min.js"></script>
     <script src="../../../res/js/bootstrap.min.js"></script>
     <script src="../../../res/js/bootstrap-select.js"></script>
     <script src="../../../res/js/bootstrap-datetimepicker.js"></script>
     <script src="../../../res/js/bootstrap-datetimepicker.zh-CN.js"></script>
-    <link href="../../../res/css/embed/publicCss.css" rel="stylesheet">
+
 
 </head>
 <style>
-    .cardContainer{
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-top: 10px;
-        padding-bottom: 20px;
-        margin-top: 20px;
-    }
 
-    .heading{
-        background-color: #a0c3ee;
-        text-align: center;
-        line-height:50px;
-    }
-    .contentCenter{
-        background-color: #a0c3ee;
-    }
-    .contentBottom{
-        background-color: #a0c3ee;
-    }
-    .datatime{
-        position: relative;
-        line-height: normal;
-        margin: auto 0;
-        display: inline-block;
-        padding-top: 10px;
-        float: left;
-    }
-    .tmpicker-container{
-        height: 100%;
-        line-height: 40px;
-        vertical-align: middle;
-    }
-
-    .input-append{
-        font-size: 0;
-    }
-    .input-append input{
-        position: relative;
-        display: inline-block;
-        font-size: 14px;
-        line-height: 20px;
-        padding: 4px 5px;
-        border: 1px solid #ccc;
-        border-radius: 6px 0 0 6px;
-        cursor: not-allowed;
-        background-color: #eee;
-    }
-
-    .input-append span{
-        margin-left: -1px;
-        border-radius:0 6px 6px 0;
-        display: inline-block;
-        width: auto;
-        min-width: 16px;
-        padding: 4px 5px;
-        font-size: 14px;
-        font-weight: normal;
-        line-height: 20px;
-        text-align: center;
-        text-shadow: 0 1px 0 #fff;
-        background-color: #eee;
-        border: 1px solid #ccc;
-    }
-    .bottomSubmit{
-        float: right;
-    }
-    .sbutton{
-        width: 80px;
-        height: 40px;
-        background-color: #8397ee;
-
-    }
 </style>
 <body ng-app="myApp" ng-controller="myCtrl">
    <div class="container cardContainer" >
-       <div class="row">
-           <div class="contentTop row">
-               <div class="col-sm-12 heading">
-                      <h2>用车申请单</h2>
-                       <hr>
+       <div class="contentTop">
+           <div class=" row">
+               <div class="col-sm-12 heading1">
+                   <h3>车辆申请</h3>
                </div>
            </div>
-           <div class="contentCenter row">
-               <form class="form-horizontal" role="form">
-                   <div class="form-group">
-                       <label for="firstname" class="col-sm-4 control-label">所属单位</label>
-                       <div class="col-sm-5 ">
-                           <input type="text" class="form-control" id="firstname" placeholder="请输入单位名称">
-                       </div>
-                   </div>
-                   <div class="form-group">
-                       <label for="VehicleType" class="col-sm-4 control-label">车辆种类</label>
-                       <div class="col-sm-5">
-                           <select class="form-control" id="VehicleType" ng-model="engineer.currentActivityId"
-                                   ng-options="engineer.currentActivityId as x.name for x in items">
-                           </select>
-
-                       </div>
-                   </div>
-                   <div class="form-group">
-                       <label  class="col-sm-4 control-label" for="optionsRadios1">用车区域</label>
-                       <div class="col-sm-5">
-                           <label class="radio-inline" >
-                               <input type="radio" name="optionsRadiosinline" id="optionsRadios1" value="option1" checked> 选项 1
-                           </label>
-                           <label class="radio-inline">
-                               <input type="radio" name="optionsRadiosinline" id="optionsRadios2"  value="option2"> 选项 2
-                           </label>
-                           <label class="radio-inline">
-                               <input type="radio" name="optionsRadiosinline" id="optionsRadios3"  value="option2"> 选项 2
-                           </label>
-                       </div>
-                   </div>
-                   <div class="form-group">
-                       <label  class="col-sm-4 control-label tmpicker-container" for="useTime">用车时间</label>
-                       <div class="col-sm-5 ">
-                           <div class="datatime">
-                               <div class="input-append date form_datetime" >
-                                   <input type="text" value="" size="16" id="useTime" readonly>
-                                   <span class="add-on "><i class="icon-th glyphicon glyphicon-th"></i></span>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-                   <div class="form-group">
-                       <label  class="col-sm-4 control-label tmpicker-container">还车时间</label>
-                       <div class="col-sm-5 ">
-                           <div class="datatime">
-                               <div class="input-append date form_datetime">
-                                   <input type="text" value="" size="16" readonly>
-                                   <span class="add-on "><i class="icon-th glyphicon glyphicon-th"></i></span>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-                   <div class="form-group">
-                       <label  class="col-sm-4 control-label tmpicker-container" for="Justification">用车理由</label>
-                       <div class="col-sm-5">
-                           <select class="form-control" id="Justification" ng-model="engineer.currentActivityId"
-                                   ng-options="engineer.currentActivityId as x.name for x in items">
-                           </select>
-                       </div>
-                   </div>
-                   <div class="form-group">
-                       <label  class="col-sm-4 control-label" for="optionsRadios4">是否保密</label>
-                       <div class="col-sm-5">
-                           <label class="radio-inline" >
-                               <input type="radio" name="optionsRadiosinline" id="optionsRadios4" value="option1" checked>是
-                           </label>
-                           <label class="radio-inline">
-                               <input type="radio" name="optionsRadiosinline" id="optionsRadios5"  value="option2"> 否
-                           </label>
-                       </div>
-                   </div>
-                   <div class="form-group">
-                       <label class="col-sm-4 control-label" for="passengersNum">乘车人数</label>
-                       <div class="col-sm-5 ">
-                           <input type="text" class="form-control" id="passengersNum" placeholder="请输入乘车人数">
-                       </div>
-                   </div>
-                   <div class="form-group">
-                       <label class="col-sm-4 control-label" for="Applicant">申请人</label>
-                       <div class="col-sm-5 ">
-                           <input type="text" class="form-control" id="Applicant" placeholder="请输入申请人姓名">
-                       </div>
-                   </div>
-                   <div class="form-group">
-                       <label class="col-sm-4 control-label" for="ApplicantTelNum">申请人电话</label>
-                       <div class="col-sm-5 ">
-                           <input type="text" id="ApplicantTelNum" class="form-control"  placeholder="请输入与申请人联动的电话号码">
-                       </div>
-                   </div>
-                   <div class="form-group">
-                       <label class="col-sm-4 control-label" for="Vehiclepath">行车路径</label>
-                       <div class="col-sm-5 ">
-                           <input type="text" id="Vehiclepath" class="form-control"  placeholder="请输入行车路径">
-                       </div>
-                   </div>
-               </form>
-           </div>
-           <div class="contentBottom row">
-               <div class="col-sm-2 col-lg-offset-8 bottomSubmit">
-                   <button  class="btn btn-default sbutton"><span style="font-size: 20px ;color: #effd49">提交</span></button>
+           <div class="row">
+               <div class="col-sm-10 heading2"></div>
+               <div class="col-sm-2 heading3">
+                   <button type="button" class="btn btn-default" style="cursor:pointer" data-toggle="modal" data-target="#myaddModal2">
+                       <i class="glyphicon glyphicon-plus"></i> 添加信息</button>
                </div>
            </div>
-
+           <hr>
+       </div>
+       <div class="contentCenter row">
+           <table class="table table-hover table1">
+               <thead>
+               <tr onclick="clickRowByInline(this)" >
+                   <th>编号</th>
+                   <th>申请人</th>
+                   <th>所在单位</th>
+                   <th>申请时间</th>
+                   <th>审批结果</th>
+                   <th>操作</th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr >
+                   <td>1</td>
+                   <td>李明</td>
+                   <td>网易</td>
+                   <td>2017-7-17</td>
+                   <td>通过</td>
+                   <td>
+                       <a  id="{{slcdic.Id}}" style="cursor:pointer" data-toggle="modal" data-target="#myaddModal1" ng-click="slctDicType($event)">点击查看</a>
+                   </td>
+               </tr>
+               </tbody>
+           </table>
+       </div>
+       <div class="contentBottom">
+           <div class=" row">
+               <div class="col-sm-12 bottoming">
+                   <ul class="pagination">
+                       <li><a href="#">«</a></li>
+                       <li><a href="#">1</a></li>
+                       <li><a href="#">2</a></li>
+                       <li><a href="#">3</a></li>
+                       <li><a href="#">4</a></li>
+                       <li><a href="#">5</a></li>
+                       <li><a href="#">6</a></li>
+                       <li><a href="#">»</a></li>
+                   </ul>
+               </div>
+           </div>
        </div>
    </div>
-<script>
+   <div class="modal fade" id="myaddModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal-dialog">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                   <h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
+               </div>
+               <div class="modal-body">在这里添加一些文本</div>
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+               </div>
+           </div><!-- /.modal-content -->
+       </div><!-- /.modal -->
+   </div>
+   <div class="modal fade text-center"  id="myaddModal2" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal-dialog" style="display: inline-block; width: auto;">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                   <h4 class="modal-title" id="myModalLabe2">申请单</h4>
+               </div>
+               <div class="modal-body" style="overflow: auto; width: 900px;">
+                   <form  role="form">
+                       <div class="form-group">
+                           <table class="table table-bordered table-responsive">
+                               <tbody>
+                               <tr class=“tab_tr>
+                                   <th>申请人</th>
+                                   <td colspan="2" id="selectbottom">
+                                       <input class="intext"  type="text" ng-model="applyname">
+                                   </td>
+                                   <th>所属单位</th>
+                                   <td colspan="2">
+                                       <input class="intext" type="text">
+                                   </td>
+                                   <th>联系电话</th>
+                                   <td colspan="2">
+                                       <input class="intext" type="text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <th>车辆种类</th>
+                                   <td colspan="2" class="selectborder">
+                                       <select class="form-control inselect"  ng-model="engineer.currentActivityId" ng-options="engineer.currentActivityId as x.name for x in items">
+                                       </select>
+                                   </td>
+                                   <th>用车区域</th>
+                                   <td colspan="2">
+                                       <div class="inradio">
+                                           <label class="radio-inline" >
+                                           <input type="radio" name="optionsRadiosinline" id="optionsRadios1" value="option1" checked> 选项 1
+                                           </label>
+                                           <label class="radio-inline">
+                                           <input type="radio" name="optionsRadiosinline" id="optionsRadios2"  value="option2"> 选项 2
+                                           </label>
+                                           <label class="radio-inline">
+                                           <input type="radio" name="optionsRadiosinline" id="optionsRadios3"  value="option2"> 选项 3
+                                           </label>
+                                       </div>
+                                   </td>
+                                   <th>用车时间</th>
+                                   <td colspan="2">
+                                       <div class="datatime ">
+                                           <div class="input-append date form_datetime intext" >
+                                               <input type="text" value="" size="20" id="useTime1" readonly >
+                                               <span class="add-on "><i class="icon-th glyphicon glyphicon-th"></i></span>
+                                           </div>
+                                       </div>
+                                   </td>
+
+                               </tr>
+                               <tr>
+                                   <th>用车理由</th>
+                                   <td colspan="2" class="selectborder">
+                                       <select class="form-control inselect" id="Justification" ng-model="engineer.currentActivityId"
+                                               ng-options="engineer.currentActivityId as x.name for x in items">
+                                       </select>
+                                   </td>
+                                   <th>是否保密</th>
+                                   <td colspan="2">
+                                       <div class="inradio">
+                                           <label class="radio-inline" >
+                                               <input type="radio" name="optionsRadiosinline" id="optionsRadios4" value="option1" checked>是
+                                           </label>
+                                           <label class="radio-inline">
+                                               <input type="radio" name="optionsRadiosinline" id="optionsRadios5"  value="option2">否
+                                           </label>
+                                       </div>
+                                   </td>
+                                   <th>还车时间</th>
+                                   <td colspan="2">
+                                       <div class="datatime ">
+                                           <div class="input-append date form_datetime intext" >
+                                               <input type="text" value="" size="20" id="useTime2" readonly >
+                                               <span class="add-on "><i class="icon-th glyphicon glyphicon-th"></i></span>
+                                           </div>
+                                       </div>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <th>乘车人数</th>
+                                   <td colspan="2">
+                                       <input class="intext" type="text">
+                                   </td>
+                                   <th>行车路径</th>
+                                   <td colspan="5">
+                                       <input class="intext" type="text">
+                                   </td>
+
+                               </tr>
+
+                               </tbody>
+                           </table>
+                       </div>
+                   </form>
+               </div>
+               <div class="modal-footer">
+                   <button type="reset"  class="btn btn-primary" ng-click="reset()">重置</button>
+                   <button type="submit" class="btn btn-default" data-dismiss="modal">提交</button>
+               </div>
+           </div><!-- /.modal-content -->
+       </div><!-- /.modal -->
+   </div>
+   <script>
     var app=angular.module("myApp",[]);
     app.controller('myCtrl',function($scope) {
         $scope.engineer = {
@@ -217,6 +216,9 @@
             {name : "bbbb", id : "2"},
             {name : "ccc", id : "3"}
         ];
+        $scope.reset=function(){
+            $scope.applyname="";
+        }
 
     });
     $(function() {
@@ -232,7 +234,6 @@
         });
     })
 </script>
-
 
 </body>
 </html>

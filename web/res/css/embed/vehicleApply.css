@@ -1,0 +1,119 @@
+
+.cardContainer{
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+    background-color: #e8eec9;
+}
+.row {
+    padding: 10px 25px 10px 25px;
+}
+hr {
+    margin: 10px auto;
+    border: 0;
+    height: 2px;
+    background-color: #aac5cc;
+    width: 97%;
+}
+.bottoming{
+    text-align: center;
+}
+
+
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle!important;
+
+}
+text{
+    border:none;
+    overflow:hidden;
+    height:100%;
+    width:100%;
+}
+
+.table-bordered td {
+    padding: 0px 0px 0px 0px !important;
+}
+#selectbottom{
+    border-bottom-width: 0!important;
+}
+.selectborder{
+    border: none !important;
+}
+
+.intext{
+    width:100%;
+    height:37px;
+    border: none;
+    padding-left: 23px;
+    text-align: left;
+    background-color:rgb(231, 237, 200);
+}
+.inselect{
+    border-radius: 0px;
+    height:38px;
+    border: 0px;
+    padding-left: 10% !important;
+    background-color: rgb(231, 237, 200);
+
+}
+.inradio{
+    padding-top: 3px;
+}
+.datatime{
+    position: relative;
+    line-height: normal;
+    margin: auto 0;
+    display: inline-block;
+    float: left;
+    width: 100%;
+}
+
+.input-append{
+    font-size: 0;
+    width: 100% ;
+}
+.input-append input{
+    position: relative;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 20px;
+    height:100%;
+    width: 80%;
+    padding: 4px 5px 4px  0px;
+    border: 0px solid ;
+    border-radius: 0 0 0 0;
+    cursor: not-allowed;
+    background-color:rgb(231, 237, 200);
+
+
+}
+
+.input-append span{
+    margin-left: -1px;
+    border-radius:0 0 0 0;
+    display: inline-block;
+    height:100%;
+    width: 20%;
+    min-width: 16px;
+    padding: 4px 0 4px 30px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 26px;
+    text-align: center;
+    text-shadow: 0 1px 0 #fff;
+    border: 0px solid ;
+}
+
+.modal-content{
+    background-color: rgb(231, 237, 200);
+}
+.modal-header {
+    border-bottom: 1px solid #9E9E9E;
+}
+.modal-footer {
+    border-top: 1px solid #9E9E9E;
+}

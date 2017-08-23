@@ -158,11 +158,11 @@
 
             }
             $scope.slctDicType=function (event) {
-                $(".list-group-item").removeClass('active');
-                $(event.target).addClass('active');
-                $scope.slctDicId=$(event.target).attr('id');
-                $scope.slctDicName=$(event.target).html();
-                if ($scope.slctDicId==1){
+                    $(".list-group-item").removeClass('active');
+                    $(event.target).addClass('active');
+                    $scope.slctDicId=$(event.target).attr('id');
+                    $scope.slctDicName=$(event.target).html();
+                    if ($scope.slctDicId==1){
                     $scope.slctDicContent=[
                         {'dicCttId':'1','dicCttName':'bentian'},
                         {'dicCttId':'2','dicCttName':'dazhong'},
