@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class Person {
 
-    private String uId;
+    private String id;
 
     private String name;
 
@@ -29,12 +29,21 @@ public class Person {
 
     private String password;
 
-    public String getuId() {
-        return uId;
+    public Person() {
     }
 
-    public void setuId(String uId) {
-        this.uId = uId;
+    public Person(String id, String loginName, String password) {
+        this.id = id;
+        this.loginName = loginName;
+        this.password = password;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -120,7 +129,7 @@ public class Person {
     @Override
     public String toString() {
         return "Person{" +
-                "uId='" + uId + '\'' +
+                "uId='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", sex='" + sex + '\'' +
                 ", age=" + age +
