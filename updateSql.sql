@@ -9,3 +9,5 @@ ALTER TABLE role CHANGE COLUMN r_id id VARCHAR(36);
 ALTER TABLE company CHANGE COLUMN c_id id VARCHAR (36);
 -- 修改company表中principal_id
 ALTER TABLE company CHANGE COLUMN principal_id p_id VARCHAR (36);
+-- 修改assets表中createPersonId
+ALTER TABLE assets CHANGE COLUMN createPersonId p_id VARCHAR (36);
