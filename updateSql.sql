@@ -7,3 +7,5 @@ ALTER TABLE person CHANGE COLUMN passWord password VARCHAR(32) NOT NULL ;
 ALTER TABLE role CHANGE COLUMN r_id id VARCHAR(36);
 -- 修改company表中c_id
 ALTER TABLE company CHANGE COLUMN c_id id VARCHAR (36);
+-- 修改company表中principal_id
+ALTER TABLE company CHANGE COLUMN principal_id p_id VARCHAR (36);
