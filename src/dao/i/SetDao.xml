@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dao.i.SetDao">
-    <update id="updateSet" parameterType="entity.Set">
+    <update id="updateSet" parameterType="entity.systemSetting">
         update syssetting_form
-        set
+        systemSetting
             annual_examination_time=#{annual_examination_time},
             state1=#{state1},
             renewal_time=#{renewal_time},
@@ -19,7 +19,7 @@
             state5=#{state5}
         where id=#{id}
     </update>
-    <select id="selectById" parameterType="int" resultType="entity.Set">
+    <select id="selectById" parameterType="int" resultType="entity.systemSetting">
         select * from syssetting_form where id=#{id}
     </select>
 </mapper>

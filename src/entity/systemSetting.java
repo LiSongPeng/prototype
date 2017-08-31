@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by luozhong on 2017/8/8.
  */
-public class Set {
+public class systemSetting {
     private Integer id;
     private Date annual_examination_time;
     private int state1;
@@ -107,7 +107,7 @@ public class Set {
         this.state5 = state5;
     }
 
-    public Set(Integer id, Date annul_examinatin_time, int state1, Date renewal_time, int state2, int maintenance_mileage, int state3, Date maintenance_time, int state4, String refresh_frequency, int state5) {
+    public systemSetting(Integer id, Date annul_examinatin_time, int state1, Date renewal_time, int state2, int maintenance_mileage, int state3, Date maintenance_time, int state4, String refresh_frequency, int state5) {
         this.id = id;
         this.annual_examination_time = annul_examinatin_time;
         this.state1 = state1;
@@ -123,7 +123,7 @@ public class Set {
 
     @Override
     public String toString() {
-        return "Set{" +
+        return "systemSetting{" +
                 "id=" + id +
                 ", annual_examination_time=" + annual_examination_time +
                 ", state1=" + state1 +

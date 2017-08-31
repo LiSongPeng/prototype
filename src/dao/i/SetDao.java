@@ -1,11 +1,14 @@
 package dao.i;
 
-import entity.Set;
+import entity.systemSetting;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by luozhong on 2017/8/8.
  */
+@Service("setDao")
 public interface SetDao {
-    void updateSet(Set set);
-    Set selectById(Integer id);
+
+    void updateSet(systemSetting systemSetting);
+    systemSetting selectById(Integer id);
 }
