@@ -1,6 +1,6 @@
 package controller;
 
-import entity.Set;
+import entity.systemSetting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -20,15 +20,15 @@ public class SetController {
 
     @RequestMapping(value = "update")
     @ResponseBody
-    public String update(@RequestParam Set set) {
-        setService.updateSet(set);
+    public String update(@RequestParam systemSetting systemSetting) {
+        setService.updateSet(systemSetting);
         return "success";
     }
 
     @RequestMapping(value = "selectById")
     @ResponseBody
-    public Set selectById(Integer id) {
-        Set set = setService.selectById(id);
-        return set;
+    public systemSetting selectById(Integer id) {
+        systemSetting systemSetting = setService.selectById(id);
+        return systemSetting;
     }
 }

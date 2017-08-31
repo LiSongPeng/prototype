@@ -1,7 +1,7 @@
 package service.impl;
 
 import dao.i.SetDao;
-import entity.Set;
+import entity.systemSetting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.i.SetService;
@@ -13,11 +13,11 @@ import service.i.SetService;
 public class SetServiceImpl implements SetService {
     @Autowired
     private SetDao setDao;
-    public void updateSet(Set set){
-        setDao.updateSet(set);
+    public void updateSet(systemSetting systemSetting){
+        setDao.updateSet(systemSetting);
     }
-    public Set selectById(Integer id){
-        Set set=setDao.selectById(id);
-        return set;
+    public systemSetting selectById(Integer id){
+        systemSetting systemSetting =setDao.selectById(id);
+        return systemSetting;
     }
 }
