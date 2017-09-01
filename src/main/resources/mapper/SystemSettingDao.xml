@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.prototype.dao.SystemSettingDao">
+    <update id="updateSet" parameterType="com.prototype.entity.SystemSetting">
+        update syssetting_form
+        SET
+            sysName=#{sysName},
+            sysKey=#{sysKey},
+            sysValue=#{sysValue},
+            modifyPerson=#{modifyPerson},
+            modifyTime=#{modifyTime},
+            status=#{status},
+            remarks=#{remarks}
+        where id=#{id}
+    </update>
+    <select id="selectById" parameterType="int" resultType="com.prototype.entity.SystemSetting">
+        select * from syssetting_form where id=#{id}
+    </select>
+</mapper>

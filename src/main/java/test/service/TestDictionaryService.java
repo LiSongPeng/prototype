@@ -1,3 +1,4 @@
+/*
 //package test.service;
 //
 //import main.java.entity.Dictionary;
@@ -10,9 +11,11 @@
 //import java.util.ArrayList;
 //import java.util.List;
 //
-///**
+//
+*
 // * Created by luozhong on 2017/8/13.
-// */
+//
+
 //public class TestDictionaryService extends BaseTest{
 //
 //    @Autowired
@@ -38,3 +41,4 @@
 //        dictionaryService.deleteDictionaryByIds(list);
 //    }
 //}
+*/

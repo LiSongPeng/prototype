@@ -28,7 +28,7 @@
     </bean>
 
     <!--4:扫描web相关的bean-->
-    <context:component-scan base-package="com.prototype.web"/>
+    <context:component-scan base-package="com.prototype.controller"/>
     <!--5.配置json-->
     <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
         <property name="contentType">

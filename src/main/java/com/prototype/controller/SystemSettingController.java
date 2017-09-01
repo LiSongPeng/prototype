@@ -1,7 +1,7 @@
-package com.prototype.web;
+package com.prototype.controller;
 
-import com.prototype.entity.systemSetting;
-import com.prototype.service.SetService;
+import com.prototype.entity.SystemSetting;
+import com.prototype.service.SystemSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by luozhong on 2017/8/8.
  */
 @Controller
-public class SetController {
+public class SystemSettingController {
     @Autowired
-    @Qualifier("setService")
-    private SetService setService;
+    @Qualifier("systemSettingService")
+    private SystemSettingService systemSettingService;
 
     @RequestMapping(value = "update")
     @ResponseBody
-    public String update(@RequestParam systemSetting systemSetting) {
-        setService.updateSet(systemSetting);
+    public String update(@RequestParam SystemSetting SystemSetting) {
+        systemSettingService.updateSet(SystemSetting);
         return "success";
     }
 
     @RequestMapping(value = "selectById")
     @ResponseBody
-    public systemSetting selectById(Integer id) {
-        systemSetting systemSetting = setService.selectById(id);
-        return systemSetting;
+    public SystemSetting selectById(Integer id) {
+        SystemSetting SystemSetting = systemSettingService.selectById(id);
+        return SystemSetting;
     }
 }

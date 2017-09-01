@@ -1,4 +1,4 @@
-package com.prototype.web;
+package com.prototype.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;

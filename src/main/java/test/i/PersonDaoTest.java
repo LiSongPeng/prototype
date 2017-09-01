@@ -11,7 +11,7 @@
 //
 //
 //@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(locations ={"file:E:\\study\\workspace\\prototype\\web\\WEB-INF\\applicationContext.xml"})
+//@ContextConfiguration(locations ={"file:E:\\study\\workspace\\prototype\\controller\\WEB-INF\\applicationContext.xml"})
 //
 //public class PersonDaoTest {
 //

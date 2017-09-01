@@ -1,4 +1,4 @@
-package com.prototype.web;
+package com.prototype.controller;
 
 import com.prototype.entity.Dictionary;
 import com.prototype.service.DictionaryService;

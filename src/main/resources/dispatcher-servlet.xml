@@ -7,14 +7,14 @@
     <!--&lt;!&ndash; 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 &ndash;&gt;-->
     <!--<context:component-scan base-package="controller"/>-->
     <!--<mvc:annotation-driven/>-->
-    <!--<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">-->
+    <!--<bean class="org.springframewcontroller.web.servlet.view.json.MappingJackson2JsonView">-->
         <!--<property name="contentType">-->
             <!--<value>json</value>-->
         <!--</property>-->
     <!--</bean>-->
 
     <!--<bean id="multipartResolver"-->
-          <!--class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+          <!--class="org.springframewcontroller.web.multipart.commons.CommonsMultipartResolver">-->
         <!--<property name="maxUploadSize" value="209715200" />-->
         <!--<property name="defaultEncoding" value="UTF-8" />-->
         <!--<property name="resolveLazily" value="true" />-->
