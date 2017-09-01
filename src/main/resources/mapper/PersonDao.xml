@@ -6,14 +6,6 @@
     <select id="queryByLoginName" resultType="Person" parameterType="String">
         SELECT loginName,password from person where loginName = #{loginName}
     </select>
-
-    <insert id="insertPerson1">
-        INSERT ignore INTO
-          person(id, loginName, password)
-        VALUES (
-        #{person.id}, #{person.loginName}, #{person.password}
-        )
-    </insert>
     <insert id="insertPerson">
         INSERT ignore INTO
         person
