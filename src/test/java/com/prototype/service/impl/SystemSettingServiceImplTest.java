@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 /**
@@ -29,6 +32,11 @@ public class SystemSettingServiceImplTest {
     }
     @Test
     public void updateSet() throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1=sdf.parse("2017-09-1");
+        SystemSetting systemSetting =new SystemSetting(1,"月审时间","1","4","hotDog",date1,"NO","大家注意");
+        System.out.println(systemSetting);
+        systemSettingService.updateSet(systemSetting);
 
     }
 
