@@ -1,7 +1,9 @@
 package com.prototype.dao;
 
 import com.prototype.entity.Person;
+import com.prototype.utils.MDfiveUtil;
 import com.prototype.utils.UUIDUtil;
+import org.apache.ibatis.annotations.Param;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -32,7 +34,8 @@ public class PersonDaoTest {
     public void insertPerson() throws Exception {
         String id = UUIDUtil.getUUID();
         String loginname = "root";
-        String password = "123456";
+        String password = MDfiveUtil.getMD5("123456");
+        //logger.info("password = {}"+password);
         Person person = new Person(id,loginname,password);
         int insertCount = personDao.insertPerson(person);
         logger.info("insertCount = "+ insertCount);
