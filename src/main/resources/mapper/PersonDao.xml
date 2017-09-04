@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prototype.dao.PersonDao">
+    <!--根据LoginName查询Person中的loginName和password-->
+    <select id="queryByLoginName" resultType="Person" parameterType="String">
+        SELECT loginName,password from person where loginName = #{loginName}
+    </select>
+    <!--根据loginName查询Person信息，密码除外-->
+    <select id="queryPerson" resultType="Person" parameterType="String">
+        SELECT
+          id,name,sex,age,number,phone,address,birthday,create_time,loginName
+        FROM
+          person
+        WHERE
+          loginName = #{loginName}
+    </select>
+    <insert id="insertPerson">
+        INSERT ignore INTO
+        person
+        <trim  prefix="(" suffix=")" suffixOverrides=",">
+            <if test="person.id">
+                id,
+            </if>
+            <if test="person.name">
+                name,
+            </if>
+            <if test="person.sex">
+                sex,
+            </if>
+            <if test="person.number">
+                number,
+            </if>
+            <if test="person.phone">
+                phone,
+            </if>
+            <if test="person.address">
+                address,
+            </if>
+            <if test="person.birthday">
+                birthday,
+            </if>
+            <if test="person.loginName">
+                loginName,
+            </if>
+            <if test="person.password">
+                password
+            </if>
+        </trim>
+        VALUES
+          <trim prefix="(" suffix=")" suffixOverrides=",">
+              <if test="person.id">
+                  #{person.id},
+              </if>
+              <if test="person.name">
+                  #{person.name},
+              </if>
+              <if test="person.sex">
+                  #{person.sex},
+              </if>
+              <if test="person.number">
+                  #{person.number},
+              </if>
+              <if test="person.phone">
+                  #{person.phone},
+              </if>
+              <if test="person.address">
+                  #{person.address},
+              </if>
+              <if test="person.birthday">
+                  #{person.birthday},
+              </if>
+              <if test="person.loginName">
+                  #{person.loginName},
+              </if>
+              <if test="person.password">
+                  #{person.password}
+              </if>
+          </trim>
+    </insert>
+    <update id="updatePerson">
+        UPDATE
+          person
+        SET
+          <trim suffixOverrides=",">
+              <if test="person.name != null">
+                  name,
+              </if>
+              <if test="person.sex">
+                  sex,
+              </if>
+              <if test="person.age">
+                  age,
+              </if>
+              <if test="person.number">
+                  number,
+              </if>
+              <if test="person.phone">
+                  phone,
+              </if>
+              <if test="person.address">
+                  address,
+              </if>
+              <if test="person.birthday">
+                  birthday,
+              </if>
+          </trim>
+        WHERE
+          loginName = #{person.loginName}
+    </update>
+</mapper>
