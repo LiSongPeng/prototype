@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class SystemSettingController {
     @Autowired
-    @Qualifier("systemSettingService")
     private SystemSettingService systemSettingService;
 
     @RequestMapping(value = "update")
