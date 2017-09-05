@@ -1,4 +1,3 @@
-/*
 package com.prototype.service.impl;
 
 import com.prototype.dao.DictionaryDao;
@@ -10,10 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.Iterator;
 import java.util.List;
 
-*/
-/**
- * Created by luozhong on 2017/8/6.
- *//*
+
+
 
 @Service("dictionaryService")
 public class DictionaryServiceImpl implements DictionaryService {
@@ -33,4 +30,3 @@ public class DictionaryServiceImpl implements DictionaryService {
         return (List<Dictionary>) dictionaryDao.selectDictionaryByName(name);
     }
 }
-*/
