@@ -38,6 +38,19 @@ public class Person {
         this.password = password;
     }
 
+    public Person(String id, String name, String sex, int age, String number, String phone, String address, Date birthday, String loginName, String password) {
+        this.id = id;
+        this.name = name;
+        this.sex = sex;
+        this.age = age;
+        this.number = number;
+        this.phone = phone;
+        this.address = address;
+        this.birthday = birthday;
+        this.loginName = loginName;
+        this.password = password;
+    }
+
     public String getId() {
         return id;
     }
