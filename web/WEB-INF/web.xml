@@ -23,6 +23,6 @@
     <servlet-mapping>
         <servlet-name>prototype-dispatcher</servlet-name>
         <!-- 默认匹配所有的请求 -->
-        <url-pattern>*.do</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 </web-app>
