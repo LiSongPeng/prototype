@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link href="../../../res/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../../res/css/embed/SystemSetting.css" rel="stylesheet">
+    <link href="../../../res/css/embed/systemSetting.css" rel="stylesheet">
     <link href="../../../res/css/embed/publicCss.css" rel="stylesheet">
     <link href="../../../res/css/font-awesome.min.css" rel="stylesheet">
     <link href="../../../res/css/bootstrap-switch.min.css" rel="stylesheet">
@@ -21,7 +21,7 @@
     <script src="../../../res/js/bootstrap-datetimepicker.zh-CN.js"></script>
 </head>
 <body>
-    <div class="container cardContainer" ng-app="sysSettingApp" ng-controller="sysSettingCtrl">
+    <div class="container cardContainer" ng-app="myApp" ng-controller="formCtrl">
             <div class="row">
                 <div class="col-sm-12 ">
                     <div class="heading">
@@ -36,25 +36,25 @@
                         <div class="row">
                             <div class="col-sm-3 col-sm-offset-2 setting-name">
                                 <label >
-                                    <span><i class="glyphicon glyphicon-cog" style="top:2px;padding: 0 2px"></i>年审时间提醒</span>
+                                    <span ng-model="list[0].sysName"><i class="glyphicon glyphicon-cog" style="top:2px;padding: 0 2px"></i>年审时间提醒</span>
                                 </label>
                             </div>
                             <div class="col-sm-3 col-sm-offset-2">
                                 <div class="setting-switch " name="mySwitch" >
-                                    <input type="checkbox" data-target="#demo1" class="form-control"  />
+                                    <input type="checkbox" data-target="#demo0" class="form-control"  />
                                 </div>
                             </div>
                         </div>
-                        <div id="demo1" class="collapse row">
+                        <div id="demo0" class="collapse row">
                             <div class="col-sm-3 col-sm-offset-2 " >
                                 <div class="set_time">
-                                    <span>设置距下次年审的时间间隔</span>
+                                    <span ng-model="list[0].remarks">设置距下次年审的时间间隔</span>
                                 </div>
                             </div>
-                            <div class="col-sm-5 tmpicker-container" >
+                            <div class="col-sm-5 tmpicker-container">
                                 <div class="datatime">
                                     <div class="input-group">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" ng-model="list[0].sysValue">
                                         <span class="input-group-addon">年</span>
                                     </div>
                                 </div>
@@ -66,25 +66,25 @@
                        <div class="row">
                         <div class="col-sm-3 col-sm-offset-2 setting-name">
                             <label >
-                                <span><i class="glyphicon glyphicon-cog" style="top:2px;padding: 0 2px"></i>续保时间提醒</span>
+                                <span ng-model="list[1].sysName"><i class="glyphicon glyphicon-cog" style="top:2px;padding: 0 2px"></i>续保时间提醒</span>
                             </label>
                         </div>
                         <div class="col-sm-3 col-sm-offset-2">
                             <div class="setting-switch " name="mySwitch" >
-                                <input type="checkbox" data-target="#demo2" class="form-control"  />
+                                <input type="checkbox" data-target="#demo1" class="form-control"  />
                             </div>
                         </div>
                     </div>
-                    <div id="demo2" class="collapse row">
+                    <div id="demo1" class="collapse row">
                         <div class="col-sm-3 col-sm-offset-2 " >
                             <div class="set_time">
-                                <span>设置距下次续保的时间间隔</span>
+                                <span ng-model="list[1].remarks">设置距下次续保的时间间隔</span>
                             </div>
                         </div>
                         <div class="col-sm-5 tmpicker-container" >
                                 <div class="datatime">
                                     <div class="input-group">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" ng-model="list[1].sysValue">
                                         <span class="input-group-addon">年</span>
                                     </div>
                                 </div>
@@ -95,26 +95,26 @@
                     <div class=" bottom row ">
                        <div class="row">
                         <div class="col-sm-3 col-sm-offset-2 setting-name">
-                            <label >
-                                <span><i class="glyphicon glyphicon-cog" style="top:2px;padding: 0 2px"></i>保养里程提醒</span>
+                            <label>
+                                <span><i class="glyphicon glyphicon-cog" style="top:2px;padding: 0 2px" ng-model="list[2].sysName"></i>保养里程提醒</span>
                             </label>
                         </div>
                         <div class="col-sm-3 col-sm-offset-2">
                             <div class="setting-switch " name="mySwitch" >
-                                <input type="checkbox" data-target="#demo3" class="form-control"  />
+                                <input type="checkbox" data-target="#demo2" class="form-control"  />
                             </div>
                         </div>
                     </div>
-                       <div id="demo3" class="collapse row">
+                       <div id="demo2" class="collapse row">
                            <div class="col-sm-3 col-sm-offset-2 " >
                                <div class="set_time">
-                                   <span>设置距下次保养所需的里程数</span>
+                                   <span ng-model="list[2].remarks">设置距下次保养所需的里程数</span>
                                </div>
                            </div>
                            <div class="col-sm-5 tmpicker-container" >
                                <div class="datatime">
                                    <div class="input-group">
-                                       <input type="text" class="form-control">
+                                       <input type="text" class="form-control" ng-model="list[2].sysValue">
                                        <span class="input-group-addon">Km</span>
                                    </div>
                                </div>
@@ -126,25 +126,25 @@
                         <div class="row">
                             <div class="col-sm-3 col-sm-offset-2 setting-name">
                                 <label >
-                                    <span><i class="glyphicon glyphicon-cog" style="top:2px;padding: 0 2px"></i>保养时间提醒</span>
+                                    <span ng-model="list[3].sysName"><i class="glyphicon glyphicon-cog" style="top:2px;padding: 0 2px"></i>保养时间提醒</span>
                                 </label>
                             </div>
                             <div class="col-sm-3 col-sm-offset-2">
                                 <div class="setting-switch " name="mySwitch" >
-                                    <input type="checkbox" data-target="#demo4" class="form-control"  />
+                                    <input type="checkbox" data-target="#demo3" class="form-control"  />
                                 </div>
                             </div>
                         </div>
-                        <div id="demo4" class="collapse row">
+                        <div id="demo3" class="collapse row">
                             <div class="col-sm-3 col-sm-offset-2 " >
                                 <div class="set_time">
-                                    <span>设置距下次保养的时间间隔</span>
+                                    <span ng-model="list[3].remarks">设置距下次保养的时间间隔</span>
                                 </div>
                             </div>
                             <div class="col-sm-5 tmpicker-container" >
                                 <div class="datatime">
                                     <div class="input-group">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" ng-model="list[3].sysValue">
                                         <span class="input-group-addon">年</span>
                                     </div>
                                 </div>
@@ -156,25 +156,25 @@
                         <div class="row">
                             <div class="col-sm-3 col-sm-offset-2 setting-name">
                                 <label >
-                                    <span><i class="glyphicon glyphicon-cog" style="top:2px;padding: 0 2px"></i>地图刷新频率</span>
+                                    <span ng-model="list[4].sysName"><i class="glyphicon glyphicon-cog" style="top:2px;padding: 0 2px"></i>地图刷新频率</span>
                                 </label>
                             </div>
                             <div class="col-sm-3 col-sm-offset-2">
                                 <div class="setting-switch " name="mySwitch" >
-                                    <input type="checkbox" data-target="#demo5" class="form-control"  />
+                                    <input type="checkbox" data-target="#demo4" class="form-control"  />
                                 </div>
                             </div>
                         </div>
-                        <div id="demo5" class="collapse row">
+                        <div id="demo4" class="collapse row">
                             <div class="col-sm-3 col-sm-offset-2 " >
                                 <div class="set_time">
-                                    <span>设置实时轨迹刷新时间间隔</span>
+                                    <span ng-model="list[4].remarks">设置实时轨迹刷新时间间隔</span>
                                 </div>
                             </div>
                             <div class="col-sm-5 tmpicker-container" >
                                 <div class="datatime" >
                                     <div class="input-group">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" ng-model="list[4].sysValue">
                                         <span class="input-group-addon">min</span>
                                     </div>
                                     </div>
@@ -184,7 +184,7 @@
                     </div>
                     <div class="bottom row">
                         <div>
-                            <button  class="btn btn-default sbutton"><span style="font-size: 20px ;color: #2e3bee">确定</span></button>
+                            <button  class="btn btn-default sbutton" ng-click="getRemind()"><span style="font-size: 20px ;color: #2e3bee">确定</span></button>
                         </div>
                     </div>
             </form>
@@ -197,48 +197,77 @@
             </div>
     </div>
     <script>
-    $(function() {
-        var nsState=[
-            {"settingName":"demo1","settingStatus":"on"},
-            {"settingName":"demo2","settingStatus":"off"},
-            {"settingName":"demo3","settingStatus":"off"},
-            {"settingName":"demo4","settingStatus":"on"},
-        ];
-        $('[name="mySwitch"] input').bootstrapSwitch({
-            'onSwitchChange': function(event, state){
-                var targetid=$(event.target).attr('data-target');
-                if(state==true){
-                    $(targetid).slideDown("fast")
-                }
-                else{
-                    $(targetid).slideUp("fast")
-                }
-            }
-        });
-        for (var i=0;i<nsState.length;i++){
-            if(nsState[i].settingStatus=="on"){
-                var setid='#'+nsState[i].settingName;
-                var findSwitch= "[data-target='"+setid+"']"
-                console.log(setid);
-                $(findSwitch).bootstrapSwitch('state',true);
-            }
-        }
-        $(".form_datetime").datetimepicker({
-            format: "yyyy-mm-dd",
-            autoclose: true,
-            todayBtn: true,
-            todayHighlight: true,
-            pickerPosition: "bottom-left",
-            language: 'zh-CN',//中文，需要引用zh-CN.js包
-            startView: 2,//月视图
-            minView: 2//日期时间选择器所能够提供的最精确的时间选择视图
-        });
-        $('.selectpicker').selectpicker({
-            style: 'btn-info',
-            size: 'auto',
-        });
+        var app = angular.module('myApp', []);
+        app.controller('formCtrl', function($scope,$http) {
 
-    });
-</script>
+            /*获取后台数据库的信息*/
+
+            $http({
+                method: 'POST',
+                url: 'systemSettingGET',
+                data: {}
+            }).then(function successCallback(response) {
+                console.log(response.data);
+                $scope.list = response.data;
+
+                /*开关控件逻辑*/
+                $('[name="mySwitch"] input').bootstrapSwitch({
+                    'onSwitchChange': function (event, state) {
+                        var targetid = $(event.target).attr('data-target');
+                        if (state == true) {
+                            $(targetid).slideDown("fast");
+                        }
+                        else {
+                            $(targetid).slideUp("fast");
+                        }
+                    }
+                });
+                for (var i = 0; i < $scope.list.length; i++) {
+                    if ($scope.list[i].status == "on") {
+                        var setid = '#demo' + i;
+                        console.log(setid);
+                        var findSwitch = "[data-target='" + setid + "']"
+                        console.log(setid);
+                        $(findSwitch).bootstrapSwitch('state', true);
+                    }
+                }
+            }), function errorCallback(response) {
+                alert("获取失败！");
+            }
+
+            /*$scope.systemSetting={
+             id:'',
+             sysName:"",
+             sysKey:"",
+             sysValue:[],
+             modifyPersonId:"",
+             modifyTime:"",
+             status:[],
+             remarks:"",
+             }*/
+            /*向后台发送信息*/
+
+            $scope.getRemind = function () {
+                /*                $http({
+                 url:'http://localhost:8080/systemSettingPOST?json='+JSON.stringify($scope.list),
+                 method: 'POST',
+                 data:{
+                 "json":,
+                 }
+                 }).then(function successCallback(response) {
+                 console.log(response.data);
+                 alert("success!")
+                 }, function errorCallback(response) {
+                 alert("error!")
+                 });*/
+                $('[name="mySwitch"] input').each(function (i) {
+                    $scope.list[i].status = $(this).bootstrapSwitch('state') ? "on" : "off";
+                });
+                $.post("http://localhost:8080/systemSettingPOST", {json: JSON.stringify($scope.list)}, function () {
+                    alert("success")
+                });
+            }
+        })
+   </script>
 </body>
 </html>
