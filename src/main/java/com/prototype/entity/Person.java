@@ -1,5 +1,8 @@
 package com.prototype.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -20,9 +23,9 @@ public class Person {
     private String phone;
 
     private String address;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date birthday;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     private String loginName;
@@ -93,7 +96,8 @@ public class Person {
     public void setAddress(String address) {
         this.address = address;
     }
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     public Date getBirthday() {
         return birthday;
     }
@@ -101,7 +105,8 @@ public class Person {
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     public String getLoginName() {
         return loginName;
     }
@@ -117,7 +122,8 @@ public class Person {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     public Date getCreateTime() {
         return createTime;
     }

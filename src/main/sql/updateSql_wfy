@@ -9,4 +9,4 @@ ALTER TABLE person CHANGE COLUMN value sysKeyValue VARCHAR(20);
 ALTER TABLE `syssetting_form`
 CHANGE COLUMN `modifyPerson` `modifyPersonId`  varchar(20)
 --修改syssetting_form表中的modifyPersonId为person表的外键
-ALTER TABLE `syssetting_form` ADD FOREIGN KEY (`modifyPersonId`) REFERENCES `person` (`u_id`);
+ALTER TABLE `syssetting_form` ADD FOREIGN KEY (`modifyPersonId`) REFERENCES `person` (`id`);
