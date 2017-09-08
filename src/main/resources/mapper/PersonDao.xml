@@ -20,61 +20,67 @@
         INSERT ignore INTO
         person
         <trim  prefix="(" suffix=")" suffixOverrides=",">
-            <if test="person.id">
+            <if test="person.id != null">
                 id,
             </if>
-            <if test="person.name">
+            <if test="person.name != null">
                 name,
             </if>
-            <if test="person.sex">
+            <if test="person.age != 0">
+                age,
+            </if>
+            <if test="person.sex != null">
                 sex,
             </if>
-            <if test="person.number">
+            <if test="person.number != null">
                 number,
             </if>
-            <if test="person.phone">
+            <if test="person.phone != null">
                 phone,
             </if>
-            <if test="person.address">
+            <if test="person.address != null">
                 address,
             </if>
-            <if test="person.birthday">
+            <if test="person.birthday != null">
                 birthday,
             </if>
-            <if test="person.loginName">
+            <if test="person.loginName != null">
                 loginName,
             </if>
-            <if test="person.password">
+            <if test="person.password != null">
                 password
             </if>
         </trim>
         VALUES
           <trim prefix="(" suffix=")" suffixOverrides=",">
-              <if test="person.id">
+              <if test="person.id != null">
                   #{person.id},
               </if>
-              <if test="person.name">
+              <if test="person.name != null">
                   #{person.name},
               </if>
-              <if test="person.sex">
+              <if test="person.age != 0">
+                  #{person.age},
+              </if>
+              <if test="person.sex != null">
                   #{person.sex},
               </if>
-              <if test="person.number">
+              <if test="person.number != null">
                   #{person.number},
               </if>
-              <if test="person.phone">
+              <if test="person.phone != null">
                   #{person.phone},
               </if>
-              <if test="person.address">
+              <if test="person.address != null">
                   #{person.address},
               </if>
-              <if test="person.birthday">
+              <if test="person.birthday != null">
                   #{person.birthday},
               </if>
-              <if test="person.loginName">
+              <if test="person.loginName != null">
                   #{person.loginName},
               </if>
-              <if test="person.password">
+              <if test="person.password != null">
                   #{person.password}
               </if>
           </trim>
@@ -85,25 +91,25 @@
         SET
           <trim suffixOverrides=",">
               <if test="person.name != null">
-                  name,
+                  name = #{person.name},
               </if>
-              <if test="person.sex">
-                  sex,
+              <if test="person.sex != null">
+                  sex = #{person.sex},
               </if>
-              <if test="person.age">
-                  age,
+              <if test="person.age != 0">
+                  age = #{person.age},
               </if>
-              <if test="person.number">
-                  number,
+              <if test="person.number != null">
+                  number = #{person.number},
               </if>
-              <if test="person.phone">
-                  phone,
+              <if test="person.phone != null">
+                  phone = #{person.phone},
               </if>
-              <if test="person.address">
-                  address,
+              <if test="person.address != null">
+                  address = #{person.address},
               </if>
-              <if test="person.birthday">
-                  birthday,
+              <if test="person.birthday != null">
+                  birthday = #{person.birthday},
               </if>
           </trim>
         WHERE
