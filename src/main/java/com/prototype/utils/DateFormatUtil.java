@@ -11,7 +11,7 @@ public class DateFormatUtil {
     }
 
     private static DateFormatUtil dateFormatUtil = new DateFormatUtil();
-
+//  String转Date
     public static Date StringFormatDate(String str){
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
@@ -26,9 +26,9 @@ public class DateFormatUtil {
         return date;
     }
 
+//    Date转String
     public static String DateFormatString(Date date,String type){
         String str = null;
-
 //        -----2017-09-05
 //        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 //        String str = format.format(date);
