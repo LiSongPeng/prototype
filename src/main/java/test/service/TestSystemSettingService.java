@@ -1,5 +1,5 @@
+///*
 //package test.service;
-//
 //import com.prototype.service.SystemSettingService;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,9 +10,8 @@
 //import java.util.Date;
 //
 //
-///**
-// * Created by luozhong on 2017/8/15.
-// */
+//
+//
 //public class TestSystemSettingService extends BaseTest{
 //    @Autowired
 //    @Qualifier("setService")
@@ -33,3 +32,4 @@
 //        setService.updateSet(SystemSetting);
 //    }
 //}
+//*/

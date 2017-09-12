@@ -7,16 +7,17 @@
     <update id="updateSet" parameterType="com.prototype.entity.SystemSetting">
         update syssetting_form
         SET
-            sysName=#{sysName},
-            sysKey=#{sysKey},
             sysValue=#{sysValue},
-            modifyPerson=#{modifyPerson},
+            modifyPersonId=#{modifyPersonId},
             modifyTime=#{modifyTime},
-            status=#{status},
-            remarks=#{remarks}
+            status=#{status}
         where id=#{id}
     </update>
-    <select id="selectById" parameterType="int" resultType="com.prototype.entity.SystemSetting">
-        select * from syssetting_form where id=#{id}
+    <insert id="insertSet" parameterType="com.prototype.entity.SystemSetting">
+         INSERT INTO syssetting_form(id,sysName,sysKey,sysValue,modifyPersonId,modifyTime,status,remarks)
+         VALUES (#{id},#{sysName},#{sysKey},#{sysValue},#{modifyPersonId},#{modifyTime},#{status},#{remarks})
+    </insert>
+    <select id="queryAll" resultType="com.prototype.entity.SystemSetting">
+        SELECT * FROM syssetting_form
     </select>
 </mapper>

@@ -2,6 +2,7 @@ package com.prototype.dao;
 
 import com.prototype.entity.Person;
 import com.prototype.utils.DateFormatUtil;
+import com.prototype.utils.MDfiveUtil;
 import com.prototype.utils.UUIDUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,11 +49,11 @@ public class PersonDaoTest {
 //        ------------
 //        空属性测试
         String id = UUIDUtil.getUUID();
-        String name = "张三";
+        String name = "王五";
         String sex = "男";
-        String number = "20170905";
+        String number = "20170911";
         String address = "天津西青区公安局交警大队";
-        String loginName = "root";
+        String loginName = "root2";
         String password = "123456";
         Person person = new Person();
         person.setId(id);
@@ -61,7 +62,7 @@ public class PersonDaoTest {
         person.setNumber(number);
         person.setAddress(address);
         person.setLoginName(loginName);
-        person.setPassword(password);
+        person.setPassword(MDfiveUtil.getMD5(password));
         int insertCount = personDao.insertPerson(person);
         logger.info("insertCount = {}",insertCount);
     }
