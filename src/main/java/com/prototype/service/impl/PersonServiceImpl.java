@@ -121,6 +121,9 @@ public class PersonServiceImpl implements PersonService {
      */
     public PersonExecution personInsertExecution(Person person) {
         try {
+            if (person == null || person.getLoginName() == null){
+                return new PersonExecution(PersonStateEnum.PERSON_REQUEST_ILLEGAL);
+            }
             person.setId(UUIDUtil.getUUID());
             int insertCount = personDao.insertPerson(person);
             if (insertCount == 1){
@@ -143,6 +146,9 @@ public class PersonServiceImpl implements PersonService {
      */
     public PersonExecution personUpdateExecution(Person person) {
         try {
+            if (person == null || person.getLoginName() == null){
+                return new PersonExecution(PersonStateEnum.PERSON_REQUEST_ILLEGAL);
+            }
             int updateCount = personDao.updatePerson(person);
             if (updateCount == 1){
                 return new PersonExecution(person.getId(), PersonStateEnum.PERSON_UPDATE_SUCCESS,person);

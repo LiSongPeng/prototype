@@ -19,6 +19,7 @@ public enum PersonStateEnum {
     PERSON_UPDATE_PASSWORD_SUCCESS(4,"密码修改成功"),
     PERSON_UPDATE_PASSWORD_FAIL(-4,"密码修改失败"),
 
+    PERSON_REQUEST_ILLEGAL(-416,"请求非法"),
     INNER_PERSON(-500,"系统异常,数据被篡改")
     ;
     private int state;

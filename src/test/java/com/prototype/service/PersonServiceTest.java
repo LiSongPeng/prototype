@@ -2,6 +2,7 @@ package com.prototype.service;
 
 import com.prototype.dto.PersonExecution;
 import com.prototype.entity.Person;
+import com.prototype.utils.DateFormatUtil;
 import com.prototype.utils.MDfiveUtil;
 import com.prototype.utils.UUIDUtil;
 import org.junit.Test;
@@ -11,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.Date;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({
@@ -93,8 +96,20 @@ public class PersonServiceTest {
      */
     @Test
     public void personUpdateExecution() throws Exception {
+        Person person = new Person();
+        String loginName = "root2";
+        String number = "20170913";
+        String address = "天津西青区公安局抓狗大队";
+        String phone = "13912345678";
+        String date ="1984-08-04";
+        Date birthday = DateFormatUtil.StringFormatDate(date);
+        person.setPhone(phone);
+        person.setBirthday(birthday);
+        person.setNumber(number);
+        person.setAddress(address);
+        person.setLoginName(loginName);
+        PersonExecution personExecution = personService.personUpdateExecution(person);
+        logger.info("personExecution = {}",personExecution);
+        logger.info("person = {}",personExecution.getPerson());
     }
-
-
-
 }
