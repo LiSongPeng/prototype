@@ -32,4 +32,11 @@ public interface PersonDao {
      */
     int updatePerson(@Param("person") Person person);
 
+    /**
+     * 修改密码
+     * @param person
+     * @return
+     */
+    int UpdatePersonPassword(@Param("person") Person person);
+
 }

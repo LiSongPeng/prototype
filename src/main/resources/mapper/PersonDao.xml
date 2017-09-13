@@ -3,9 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.prototype.dao.PersonDao">
-    <!--根据LoginName查询Person中的loginName和password-->
+    <!--根据LoginName查询Person中的id,loginName和password-->
     <select id="queryByLoginName" resultType="Person" parameterType="String">
-        SELECT loginName,password from person where loginName = #{loginName}
+        SELECT id,loginName,password from person where loginName = #{loginName}
     </select>
     <!--根据loginName查询Person信息，密码除外-->
     <select id="queryPerson" resultType="Person" parameterType="String">
@@ -16,6 +16,7 @@
         WHERE
           loginName = #{loginName}
     </select>
+    <!--插入人员信息-->
     <insert id="insertPerson">
         INSERT ignore INTO
         person
@@ -85,6 +86,7 @@
               </if>
           </trim>
     </insert>
+    <!--修改人员信息-->
     <update id="updatePerson">
         UPDATE
           person
@@ -112,6 +114,15 @@
                   birthday = #{person.birthday},
               </if>
           </trim>
+        WHERE
+          loginName = #{person.loginName}
+    </update>
+    <!--修改密码-->
+    <update id="UpdatePersonPassword">
+        UPDATE
+          person
+        SET
+          password = #{person.password}
         WHERE
           loginName = #{person.loginName}
     </update>

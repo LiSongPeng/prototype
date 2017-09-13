@@ -108,4 +108,15 @@ public class PersonDaoTest {
         logger.info("updateCount = {}" , updateCount);
     }
 
+    @Test
+    public void UpdatePersonPassword() throws Exception{
+        String loginName = "root2";
+        String password = MDfiveUtil.getMD5("654321");
+        Person person = new Person();
+        person.setLoginName(loginName);
+        person.setPassword(password);
+        int updateCount = personDao.UpdatePersonPassword(person);
+        logger.info("updateCount = {}",updateCount);
+    }
+
 }
