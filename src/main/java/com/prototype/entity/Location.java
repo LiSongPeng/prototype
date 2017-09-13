@@ -1,5 +1,6 @@
 package com.prototype.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -12,6 +13,9 @@ public class Location {
     private Double longitude;
     private Double latitude;
     private Date uploadTime;
+
+    public Location() {
+    }
 
     public Location(String id, String carId, Double longitude, Double latitude, Date uploadTime) {
         this.id = id;
@@ -61,4 +65,8 @@ public class Location {
         this.uploadTime = uploadTime;
     }
 
+    @Override
+    public String toString() {
+        return "Location{" + "id='" + id + '\'' + ", carId='" + carId + '\'' + ", longitude=" + longitude + ", latitude=" + latitude + ", uploadTime=" + uploadTime + '}';
+    }
 }

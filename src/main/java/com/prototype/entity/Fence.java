@@ -78,6 +78,11 @@ public class Fence {
     public void setType(Integer type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "Fence{" + "id='" + id + '\'' + ", fenceName='" + fenceName + '\'' + ", longitude=" + longitude + ", latitude=" + latitude + ", radius=" + radius + ", area='" + area + '\'' + ", type=" + type + '}';
+    }
 }
 
 
