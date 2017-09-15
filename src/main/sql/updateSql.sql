@@ -11,3 +11,8 @@ ALTER TABLE company CHANGE COLUMN c_id id VARCHAR (36);
 ALTER TABLE company CHANGE COLUMN principal_id p_id VARCHAR (36);
 -- 修改assets表中createPersonId
 ALTER TABLE assets CHANGE COLUMN createPersonId p_id VARCHAR (36);
+
+-- 2017-9-15
+-- 添加唯一索引
+ALTER TABLE terminal
+ADD CONSTRAINT uc_terminalNo UNIQUE (terminalNo);

@@ -4,6 +4,8 @@ import com.prototype.dto.PersonExecution;
 import com.prototype.entity.Person;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * Person服务
  */
@@ -40,5 +42,13 @@ public interface PersonService {
      * @return
      */
     PersonExecution personUpdateExecution(@Param("person") Person person);
+
+    /**
+     * 查询所有的人员信息
+     * @return
+     */
+    List<Person> queryPerson();
+
+    PersonExecution deletePerson(String loginName);
 
 }

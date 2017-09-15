@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Person人员信息接口实现
  */
@@ -33,11 +35,12 @@ public class PersonServiceImpl implements PersonService {
     public PersonExecution personExecution(String loginName, String password) {
         try {
             Person person = personDao.queryByLoginName(loginName);
-            String md5 = MDfiveUtil.getMD5(password);
-            boolean flag = md5.equals(person.getPassword());
             if (person == null){
                 return new PersonExecution(PersonStateEnum.PERSON_FAIL_0);
-            }else if(flag){
+            }
+            String md5 = MDfiveUtil.getMD5(password);
+            boolean flag = md5.equals(person.getPassword());
+            if(flag){
                 return new PersonExecution(person.getId(),PersonStateEnum.PERSON_SUCCESS,person);
             }else if (!flag){
                 return new PersonExecution(PersonStateEnum.PERSON_FIAL_1);
@@ -156,6 +159,45 @@ public class PersonServiceImpl implements PersonService {
                 return new PersonExecution(PersonStateEnum.PERSON_UPDATE_FAIL);
             }else {
                 throw new PersonException(PersonStateEnum.INNER_PERSON.getStateInfo());
+            }
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            throw new PersonException("运行时的内部错误:"+e.getMessage());
+        }
+    }
+
+    /**
+     * 查询所有人员信息接口实现
+     * @return
+     */
+    public List<Person> queryPerson() {
+        try {
+            List<Person> person = personDao.queryPerson();
+            return person;
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            throw new PersonException("运行时的内部错误:"+e.getMessage());
+        }
+    }
+
+    /**
+     * 删除人员信息接口实现
+     * @param loginName
+     * @return
+     */
+    public PersonExecution deletePerson(String loginName) {
+        try {
+            Person person = personDao.queryByLoginName(loginName);
+            if (person == null){
+                return new PersonExecution(PersonStateEnum.PERSON_FAIL_0);
+            }
+            int deleteCount = personDao.deletePerson(loginName);
+            if (deleteCount == 1){
+                return new PersonExecution(PersonStateEnum.PERSON_DELETE_SUCCESS);
+            }else if (deleteCount == 0){
+                return new PersonExecution(PersonStateEnum.PERSON_DELETE_FAIL);
+            }else {
+                return new PersonExecution(PersonStateEnum.INNER_PERSON);
             }
         }catch (Exception e){
             logger.error(e.getMessage());

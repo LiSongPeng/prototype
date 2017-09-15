@@ -8,7 +8,7 @@
         SELECT id,loginName,password from person where loginName = #{loginName}
     </select>
     <!--根据loginName查询Person信息，密码除外-->
-    <select id="queryPerson" resultType="Person" parameterType="String">
+    <select id="queryPersonByLoginName" resultType="Person" parameterType="String">
         SELECT
           id,name,sex,age,number,phone,address,birthday,create_time,loginName
         FROM
@@ -16,6 +16,21 @@
         WHERE
           loginName = #{loginName}
     </select>
+    <!--查询所有人员信息-->
+    <select id="queryPerson" resultType="Person">
+        SELECT
+          *
+        FROM
+          person
+    </select>
+    <!--删除人员信息-->
+    <delete id="deletePerson">
+        DELETE
+        FROM
+          person
+        WHERE
+          loginName = #{loginName}
+    </delete>
     <!--插入人员信息-->
     <insert id="insertPerson">
         INSERT ignore INTO

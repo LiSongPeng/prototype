@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prototype.dao.TerminalDao">
+
+    <!--添加Terminal信息-->
+    <insert id="insertTerminal">
+        INSERT ignore INTO
+          terminal(id,terminalNo,card)
+        VALUES(
+          #{terminal.id},#{terminal.terminalNo},#{terminal.card}
+        )
+    </insert>
+
+    <!--删除终端信息-->
+    <delete id="deleteTerminal">
+        DELETE FROM terminal WHERE terminalNo = #{terminalNo}
+    </delete>
+
+    <!--修改终端信息-->
+    <update id="updateTerminal">
+        UPDATE
+          terminal
+        SET
+          card = #{terminal.card}
+        WHERE
+          terminalNo = #{terminal.terminalNo}
+    </update>
+
+    <!--查询终端信息，通过terminalNo-->
+    <select id="queryTerminalByNo" resultType="Terminal">
+        SELECT
+          *
+        FROM
+          terminal
+        WHERE
+          terminalNo = #{terminalNo}
+    </select>
+
+    <!--查询终端信息，通过card-->
+    <select id="queryTerminalByCard" resultType="Terminal">
+        SELECT
+          *
+        FROM
+          terminal
+        WHERE
+          card = #{terminal.card}
+    </select>
+
+    <!--查询所有终端信息-->
+    <select id="findAllTerminal" resultType="Terminal">
+        SELECT
+          *
+        FROM
+          terminal
+    </select>
+</mapper>

@@ -8,6 +8,15 @@ public class Terminal {
 
     private String card;
 
+    public Terminal() {
+    }
+
+    public Terminal(String id, String terminalNo, String card) {
+        this.id = id;
+        this.terminalNo = terminalNo;
+        this.card = card;
+    }
+
     public String getId() {
         return id;
     }

@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/spring-dao.xml")
@@ -68,10 +69,24 @@ public class PersonDaoTest {
     }
 
     @Test
-    public void queryPerson() throws Exception {
+    public void queryPersonByLoginName() throws Exception {
         String loginname = "root";
-        Person person = personDao.queryPerson(loginname);
+        Person person = personDao.queryPersonByLoginName(loginname);
         logger.info("person = {}",person);
+    }
+
+    @Test
+    public void queryPerson() throws Exception {
+        List<Person> list = personDao.queryPerson();
+        for (Person person : list){
+            logger.info("person = {}",person);
+        }
+    }
+    @Test
+    public void deletePerson() throws Exception {
+        String loginName = "root2";
+        int deleteCount = personDao.deletePerson(loginName);
+        logger.info("deleteCount = {}",deleteCount);
     }
 
     @Test
