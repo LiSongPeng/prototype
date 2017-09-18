@@ -3,6 +3,8 @@ package com.prototype.dao;
 import com.prototype.entity.Person;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface PersonDao {
     /**
      * 根据LoginName查询密码
@@ -12,11 +14,17 @@ public interface PersonDao {
     Person queryByLoginName(String loginName);
 
     /**
-     * 查询Person的所有信息,密码除外
+     * 通过LoginName查询Person的所有信息,密码除外
      * @param loginName
      * @return
      */
-    Person queryPerson(String loginName);
+    Person queryPersonByLoginName(String loginName);
+
+    /**
+     * 查询所有人员信息
+     * @return
+     */
+    List<Person> queryPerson();
 
     /**
      * 插入人员信息
@@ -31,5 +39,19 @@ public interface PersonDao {
      * @return
      */
     int updatePerson(@Param("person") Person person);
+
+    /**
+     * 删除人员信息
+     * @param loginName
+     * @return
+     */
+    int deletePerson(String loginName);
+
+    /**
+     * 修改密码
+     * @param person
+     * @return
+     */
+    int UpdatePersonPassword(@Param("person") Person person);
 
 }

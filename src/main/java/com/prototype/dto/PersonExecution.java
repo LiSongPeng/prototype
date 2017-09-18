@@ -21,12 +21,18 @@ public class PersonExecution {
         this.state = personStateEnum.getState();
         this.stateInfo = personStateEnum.getStateInfo();
     }
-//登录成功
+//登录，插入人员信息成功
     public PersonExecution(String id, PersonStateEnum personStateEnum, Person person) {
         this.id = id;
         this.state = personStateEnum.getState();
         this.stateInfo = personStateEnum.getStateInfo();
         this.person = person;
+    }
+//    插入人员信息失败，修改密码失败/成功
+    public PersonExecution(String id, PersonStateEnum personStateEnum){
+        this.id = id;
+        this.state = personStateEnum.getState();
+        this.stateInfo = personStateEnum.getStateInfo();
     }
 
     public String getId() {
