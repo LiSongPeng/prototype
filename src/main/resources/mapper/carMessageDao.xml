@@ -6,7 +6,7 @@
 <!--车辆信息表-->
 
 <mapper namespace="com.prototype.dao.carMessageDao">
-<resultMap type="com.prototype.entity.carMessage" id="carMessageMap">
+<resultMap type="com.prototype.entity.carMessage.carMessage" id="carMessageMap">
     <id column="carId" property="carId"/>
     <result column="carImg" property="carImg"/>
     <result column="licenseId" property="licenseId"/>
@@ -19,9 +19,9 @@
     <result column="vehicleStatus" property="vehicleStatus"/>
 </resultMap>
 
-    <!--对车辆信息表的一系列的操作-->
+    <!---对车辆信息表的一系列的操作-->
     <!--查询汽车信息-->
-<select id="queryCarMessage" parameterType="int" resultType="com.prototype.entity.carMessage">
+<select id="queryCarMessage" parameterType="int" resultType="com.prototype.entity.carMessage.carMessage">
     SELECT * FROM carMessage
     <if test="_parameter!=null and _parameter!=''">
         WHERE licenseId =#{_parameter}
@@ -29,32 +29,32 @@
 </select>
 
     <!--添加汽车信息-->
-    <insert id="addCarMessage" parameterType="com.prototype.entity.carMessage">
+    <insert id="addCarMessage" parameterType="com.prototype.entity.carMessage.carMessage">
         INSERT INTO carMessage(carImg,licenseId,typeId,TerminalNumber,engineNumber,chassisNumber,totalKilometers,companyUnits,scrapVehicle,vehicleStatus)
         VALUES (#{carImg},#{licenseId},#{typeId},#{TerminalNumber},#{engineNumber},#{chassisNumber},#{totalKilometers},#{companyUnits},#{scrapVehicle},#{vehicleStatus})
     </insert>
 
     <!--<insert id="addCarMessage" parameterTymain.java.entitytity.carMessage">-->
         <!--insert into carMessage (licenseId,typeId) values (#{licenseId},#{typeId});-->
-
     <!--</insert>-->
 <!--事故记录表-->
 
-<resultMap type="com.prototype.entity.accidentRecord" id="accidentRecordMap">
+<resultMap type="com.prototype.entity.carMessage.accidentRecord" id="accidentRecordMap">
     <id column="accidentId" property="accidentId"/>
     <result column="licenseId" property="licenseId"/>
     <result column="accidentTime" property="accidentTime"/>
     <result column="acccidentText" property="acccidentText"/>
     <result column="processingState" property="processingState"/>
     <result column="claimStatus" property="claimStatus"/>
+    <result column="amount" property="amount"/>
 </resultMap>
     <!--对事故记录表的一系列的操作-->
     <!--查询事故信息-->
-    <select id="queryAccident" parameterType="int" resultType="com.prototype.entity.accidentRecord">
+    <select id="queryAccident" parameterType="int" resultType="com.prototype.entity.carMessage.accidentRecord">
         select * from accidentRecord where accidentId=#{accidentId}
     </select>
 
-    <select id="queryAllByText" parameterType="String" resultType="com.prototype.entity.accidentRecord">
+    <select id="queryAllByText" parameterType="String" resultType="com.prototype.entity.carMessage.accidentRecord">
 
         SELECT * FROM accidentRecord
         <if test="_parameter!=null and _parameter!=''">
@@ -66,7 +66,7 @@
 
  <!--年审记录表-->
 
-<resultMap type="com.prototype.entity.annualRecord" id="annualRecordMap">
+<resultMap type="com.prototype.entity.carMessage.annualRecord" id="annualRecordMap">
     <id column="annualId" property="annualId"/>
     <result column="licenseId" property="licenseId"/>
     <result column="annualTime" property="annualTime"/>
@@ -74,13 +74,13 @@
 </resultMap>
     <!--对年审记录表的一系列的操作-->
     <!--查询年审信息-->
-    <select id="queryAnnual" parameterType="int" resultType="com.prototype.entity.annualRecord">
+    <select id="queryAnnual" parameterType="int" resultType="com.prototype.entity.carMessage.annualRecord">
         select * from annualRecord where annualId=#{annualId}
     </select>
 
 <!--保险记录表-->
 
-    <resultMap type="com.prototype.entity.insuranceRecords" id="insuranceRecordsMap">
+    <resultMap type="com.prototype.entity.carMessage.insuranceRecords" id="insuranceRecordsMap">
 
         <id column="insuranceId" property="insuranceId"/>
         <result column="insuranceName" property="insuranceName"/>
@@ -91,13 +91,13 @@
 
     <!--对保险记录表的一系列的操作-->
     <!--查询保险信息-->
-    <select id="queryInsurance" parameterType="int" resultType="com.prototype.entity.insuranceRecords">
+    <select id="queryInsurance" parameterType="int" resultType="com.prototype.entity.carMessage.insuranceRecords">
         select * from insuranceRecords where insuranceId=#{insuranceId}
     </select>
 
     <!--车型记录表-->
 
-    <resultMap type="com.prototype.entity.carType" id="carTypeMap">
+    <resultMap type="com.prototype.entity.carMessage.carType" id="carTypeMap">
 
         <id column="typeId" property="typeId"/>
         <result column="carName" property="carName"/>
@@ -112,23 +112,23 @@
 
     <!--对车型记录表的一系列的操作-->
     <!--依照id查询车型信息-->
-    <select id="queryCarType" parameterType="int" resultType="com.prototype.entity.carType">
+    <select id="queryCarType" parameterType="int" resultType="com.prototype.entity.carMessage.carType">
         select * from carType where typeId=#{typeId}
     </select>
     <!--查询所有车型信息-->
-    <select id="queryAll" parameterType="int" resultType="com.prototype.entity.carType">
+    <select id="queryAll" parameterType="int" resultType="com.prototype.entity.carMessage.carType">
         select * from carType
     </select>
 
 
     <!--按照品牌车型信息-->
-    <select id="queryAllByBrand" parameterType="String" resultType="com.prototype.entity.carType">
+    <select id="queryAllByBrand" parameterType="String" resultType="com.prototype.entity.carMessage.carType">
         select * from carType where carType.brand like "%"#{brand}"%"
     </select>
 
     <!--保养记录表-->
 
-    <resultMap type="com.prototype.entity.maintenanceRecord" id="maintenanceRecordMap">
+    <resultMap type="com.prototype.entity.carMessage.maintenanceRecord" id="maintenanceRecordMap">
 
         <id column="maintenanceId" property="maintenanceId"/>
         <result column="licenseId" property="licenseId"/>
@@ -139,7 +139,7 @@
     </resultMap>
     <!--对保养记录表的一系列的操作-->
     <!--查询保养信息-->
-    <select id="queryMaintenance" parameterType="int" resultType="com.prototype.entity.maintenanceRecord">
+    <select id="queryMaintenance" parameterType="int" resultType="com.prototype.entity.carMessage.maintenanceRecord">
         select * from maintenanceRecord where maintenanceId=#{maintenanceId}
     </select>
 

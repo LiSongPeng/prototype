@@ -1,20 +1,27 @@
-package com.prototype.entity;
+package com.prototype.entity.carMessage;
 
 import java.util.Date;
 
 public class accidentRecord {
-    private int accidentId; //事故记录Id
+
+    public static final String PROCESSING = "未处理";
+    public static final String UNPROCESSING = "已处理";
+    public static final String CLAIM="已理赔";
+    public static final String UNCLAIM="未理赔";
+
+    private String accidentId; //事故记录Id
     private String licenseId; //车牌号码
     private Date accidentTime; //事故时间
     private String accidentText; //事故内容
     private String processingState;   //处理状态
     private String claimStatus;  //理赔状态
+    private float amount;  //理赔金额
 
-    public int getAccidentId() {
+    public String getAccidentId() {
         return accidentId;
     }
 
-    public void setAccidentId(int accidentId) {
+    public void setAccidentId(String accidentId) {
         this.accidentId = accidentId;
     }
 
@@ -56,5 +63,13 @@ public class accidentRecord {
 
     public void setClaimStatus(String claimStatus) {
         this.claimStatus = claimStatus;
+    }
+
+    public float getAmount() {
+        return amount;
+    }
+
+    public void setAmount(float amount) {
+        this.amount = amount;
     }
 }

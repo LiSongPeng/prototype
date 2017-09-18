@@ -1,20 +1,20 @@
-package com.prototype.entity;
+package com.prototype.entity.carMessage;
 
 import java.util.Date;
 
 public class insuranceRecords {
-    private int insuranceId;    //保险记录ID
+    private String  insuranceId;    //保险记录ID
     private String insuranceName;   //保险名称
     private String licenseId;   //车牌号码
     private Date insuranceTime;   //投保时间
     private float insuranceAmount;  //投保金额
     private String insuranceText;   //保险内容
 
-    public int getInsuranceId() {
+    public String  getInsuranceId() {
         return insuranceId;
     }
 
-    public void setInsuranceId(int insuranceId) {
+    public void setInsuranceId(String  insuranceId) {
         this.insuranceId = insuranceId;
     }
 

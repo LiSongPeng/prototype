@@ -1,11 +1,11 @@
-package com.prototype.entity;
+package com.prototype.entity.carMessage;
 
 import java.util.List;
 
 public class PageBean<T> {
-    private int  totalPages;
-    private int currentPage;
-    private int  pageSize;
+    private int  totalPages;  //页面总数
+    private int currentPage;  //当前页
+    private int  pageSize;   //页面大小
     private List<T> content;
 
     public int getTotalPages() {

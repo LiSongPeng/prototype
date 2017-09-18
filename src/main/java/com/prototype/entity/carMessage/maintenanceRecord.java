@@ -1,20 +1,20 @@
-package com.prototype.entity;
+package com.prototype.entity.carMessage;
 
 import java.util.Date;
 
 public class maintenanceRecord {
-    private int maintenanceId;  //保养记录ID
+    private String  maintenanceId;  //保养记录ID
     private String licenseId;   //车牌号码
     private Date maintenanceTime;   //保养时间
     private String maintenanceText; //保养内容
     private float maintenanceAmount;   //保养金额
     private float beforeKilometers;   //保养前公里数
 
-    public int getMaintenanceId() {
+    public String  getMaintenanceId() {
         return maintenanceId;
     }
 
-    public void setMaintenanceId(int maintenanceId) {
+    public void setMaintenanceId(String  maintenanceId) {
         this.maintenanceId = maintenanceId;
     }
 
