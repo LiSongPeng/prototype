@@ -137,12 +137,36 @@
         <result column="maintenanceAmount" property="maintenanceAmount"/>
         <result column="beforeKilometers" property="beforeKilometers"/>
     </resultMap>
-    <!--对保养记录表的一系列的操作-->
-    <!--查询保养信息-->
-    <select id="queryMaintenance" parameterType="int" resultType="com.prototype.entity.carMessage.maintenanceRecord">
-        select * from maintenanceRecord where maintenanceId=#{maintenanceId}
-    </select>
 
+
+    <!--对保养记录表的一系列的操作-->
+
+
+    <!--按照保养ID查询保养信息-->
+    <select id="queryMaintenanceById" parameterType="String" resultType="com.prototype.entity.carMessage.maintenanceRecord">
+        select * from maintenancerecord where maintenanceId=#{maintenanceId}
+    </select>
+    <!--按照车牌ID查询保养信息-->
+    <select id="queryMaintenanceByLid" parameterType="String" resultMap="maintenanceRecordMap">
+        select * from maintenancerecord where licenseId=#{Lid}
+    </select>
+    <!--查询所有保养信息-->
+    <select id="queryMaintenance" parameterType="String" resultMap="maintenanceRecordMap">
+        select * from maintenancerecord
+    </select>
+    <!--按照保养ID删除保养信息-->
+    <delete id="deleteMaintenance" parameterType="String">
+        delete from maintenancerecord where maintenanceId=#{maintenanceId}
+    </delete>
+    <!--添加保养信息-->
+    <insert id="addMaintenance">
+        insert into maintenancerecord(maintenanceId, licenseId, maintenanceTime, maintenanceText, maintenanceAmount, beforeKilometers)
+        where(#{maintenance.maintenanceId},#{maintenance.licenseId},#{maintenance.mintenanceTime},#{maintenance.maintenanceText},#{maintenance.maintenanceAmount},#{maintenance.beforeKilometers})
+    </insert>
+
+    <!--<update id="updateMaintenance">-->
+        <!--update maintenancerecord-->
+    <!--</update>-->
 </mapper>
 
 
