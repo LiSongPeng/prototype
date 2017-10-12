@@ -112,11 +112,11 @@
 
     <!--对车型记录表的一系列的操作-->
     <!--依照id查询车型信息-->
-    <select id="queryCarType" parameterType="int" resultType="com.prototype.entity.carMessage.carType">
+    <select id="queryCarTypeById"  resultType="com.prototype.entity.carMessage.carType">
         select * from carType where typeId=#{typeId}
     </select>
     <!--查询所有车型信息-->
-    <select id="queryAll" parameterType="int" resultType="com.prototype.entity.carMessage.carType">
+    <select id="queryCarType"  resultType="com.prototype.entity.carMessage.carType">
         select * from carType
     </select>
 
@@ -125,6 +125,10 @@
     <select id="queryAllByBrand" parameterType="String" resultType="com.prototype.entity.carMessage.carType">
         select * from carType where carType.brand like "%"#{brand}"%"
     </select>
+
+    <delete id="deleteCarType">
+        delete from cartype where typeId=#{typeId}
+    </delete>
 
     <!--保养记录表-->
 

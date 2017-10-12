@@ -1,5 +1,6 @@
 package com.prototype.controller;
 
+import com.prototype.entity.carMessage.carType;
 import com.prototype.entity.carMessage.maintenanceRecord;
 import com.prototype.service.carMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,64 @@ public class carMessageController {
 
     @Autowired
     private carMessageService carMessageService;
+
+
+
+
+    /**
+     * 车辆类型
+     * 1.按照车型ID查询车型信息
+     * 2.按照汽车品牌查询车型信息
+     * 3.查询所有车型信息
+     * 4.按照车型ID删除车型信息
+     * 5.添加车型信息
+     **/
+
+    //1.按照车型ID查询车型信息
+    @RequestMapping("/queryCarTypeById.form")
+    @ResponseBody
+    public carType queryCarTypeById(@RequestParam("typeId") String typeId) {
+
+        carType cartype=carMessageService.queryCarTypeById(typeId);
+
+        return cartype;
+    }
+
+    //2.按照汽车品牌查询车型信息
+    @RequestMapping("/queryAllByBrand.form")
+    @ResponseBody
+    public List<carType> queryAllByBrand(@RequestParam("brand")String brand) {
+
+        List<carType> aa=carMessageService.queryAllByBrand(brand);
+
+        return aa;
+    }
+
+    //3.查询所有车型信息
+    @RequestMapping("/queryCarType.form")
+    @ResponseBody
+    public List<carType> queryCarType() {
+        List<carType> aa=carMessageService.queryCarType();
+        return aa;
+    }
+
+    //4.按照车型ID删除车型信息
+    @RequestMapping("/deleteCarType.form")
+    @ResponseBody
+    public void deleteCarType(@RequestParam("typeId") String typeId) {
+
+        carMessageService.deleteCarType(typeId);
+
+    }
+
+    //5.添加车型信息
+    @RequestMapping("/addCarType.form")
+    @ResponseBody
+    public void addCarType(carType carType) {
+        carMessageService.addCarType(carType);
+
+    }
+
 
     /**
      * 车辆保养
